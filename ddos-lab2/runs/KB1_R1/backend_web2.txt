@@ -1,0 +1,6 @@
+Nov 09 10:52:47 web2 python3[736]: 10.10.20.1 - - [09/Nov/2026 10:52:47] &quot;GET /?case=KB1_K2 HTTP/1.1&quot; 200 -
+Nov 09 10:52:52 web2 python3[736]: 10.10.20.1 - - [09/Nov/2026 10:52:52] &quot;GET /load-test.txt?run=KB1_R1&amp;src=K1 HTTP/1.1&quot; 200 -
+Nov 09 10:52:53 web2 python3[736]: 10.10.20.1 - - [09/Nov/2026 10:52:53] &quot;GET /load-test.txt?run=KB1_R1&amp;src=K1 HTTP/1.1&quot; 200 -
+Nov 09 10:52:54 web2 python3[736]: 10.10.20.1 - - [09/Nov/2026 10:52:54] &quot;GET /load-test.txt?run=KB1_R1&amp;src=K1 HTTP/1.1&quot; 200 -
+Nov 09 10:52:55 web2 python3[736]: 10.10.20.1 - - [09/Nov/2026 10:52:55] &quot;GET /load-test.txt?run=KB1_R1&amp;src=K1 HTTP/1.1&quot; 200 -
+Nov 09 10:52:57 web2 python3[736]: 10.10.20.1 - - [09/Nov/2026 10:52:57] &quot;GET /load-test.txt?run=KB1_R1&amp;src=K1 HTTP/1.1&quot; 200 -

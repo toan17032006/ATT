@@ -1,0 +1,8 @@
+11/09/2026-10:58:43.054319  [Drop] [**] [1:1001002:1] LAB ALERT /load-test.txt high rate [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 10.10.10.11:57474 -&gt; 10.10.10.1:8080
+11/09/2026-11:18:40.256091  [Drop] [**] [1:1001002:1] LAB ALERT /load-test.txt high rate [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 10.10.10.10:39740 -&gt; 10.10.10.1:8080
+11/09/2026-11:18:42.379913  [Drop] [**] [1:1001002:1] LAB ALERT /load-test.txt high rate [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 10.10.10.10:39744 -&gt; 10.10.10.1:8080
+11/09/2026-11:18:44.700239  [Drop] [**] [1:1001002:1] LAB ALERT /load-test.txt high rate [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 10.10.10.10:39752 -&gt; 10.10.10.1:8080
+11/09/2026-11:18:46.735004  [Drop] [**] [1:1001002:1] LAB ALERT /load-test.txt high rate [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 10.10.10.10:52952 -&gt; 10.10.10.1:8080
+11/09/2026-11:18:55.138432  [Drop] [**] [1:1001002:1] LAB ALERT /load-test.txt high rate [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 10.10.10.11:51546 -&gt; 10.10.10.1:8080
+11/09/2026-11:18:57.177019  [Drop] [**] [1:1001002:1] LAB ALERT /load-test.txt high rate [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 10.10.10.11:51552 -&gt; 10.10.10.1:8080
+11/09/2026-11:18:59.487696  [Drop] [**] [1:1001002:1] LAB ALERT /load-test.txt high rate [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 10.10.10.11:34288 -&gt; 10.10.10.1:8080

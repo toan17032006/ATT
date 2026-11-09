@@ -1,0 +1,53 @@
+#cloud-config
+hostname: web1
+manage_etc_hosts: true
+users:
+  - name: ubuntu
+    plain_text_passwd: ubuntu
+    lock_passwd: false
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+ssh_pwauth: true
+chpasswd:
+  expire: false
+  users:
+    - {name: ubuntu, password: ubuntu, type: text}
+write_files:
+  - path: /opt/www/index.html
+    permissions: '0644'
+    content: |
+      <html><head><title>ATT DDoS Lab</title></head><body>
+      <h1>ATT DDoS LAB - WEB SERVER</h1>
+      <h2>SERVER 1</h2>
+      <p>Host: web1 (10.10.20.20)</p>
+      </body></html>
+  - path: /opt/www/ips-test.txt
+    permissions: '0644'
+    content: |
+      IPS TEST - SERVER 1
+  - path: /opt/www/load-test.txt
+    permissions: '0644'
+    content: |
+      LOAD TEST - SERVER 1
+  - path: /opt/www/health.txt
+    permissions: '0644'
+    content: |
+      OK SERVER 1
+  - path: /etc/systemd/system/att-web.service
+    permissions: '0644'
+    content: |
+      [Unit]
+      Description=ATT lab python http server
+      After=network-online.target
+      Wants=network-online.target
+      [Service]
+      WorkingDirectory=/opt/www
+      ExecStart=/usr/bin/python3 -m http.server 8080
+      Restart=always
+      StandardError=journal
+      [Install]
+      WantedBy=multi-user.target
+runcmd:
+  - systemctl daemon-reload
+  - systemctl enable --now att-web.service
+  - hostnamectl set-hostname web1

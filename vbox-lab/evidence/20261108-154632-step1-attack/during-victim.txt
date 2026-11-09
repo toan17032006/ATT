@@ -1,0 +1,22 @@
+2026-11-08T15:46:46+07:00
+ 15:46:46 up 6 min,  0 users,  load average: 0.26, 0.33, 0.19
+Total: 221
+TCP:   1230 (estab 63, closed 1160, orphaned 1, timewait 1160)
+
+Transport Total     IP        IPv6
+RAW	  2         0         2        
+UDP	  2         2         0        
+TCP	  70        69        1        
+INET	  74        71        3        
+FRAG	  0         0         0        
+
+
+last access log:
+10.10.10.21 - - [08/Nov/2026:15:46:46 +0700] "GET / HTTP/1.1" 200 44 "-" "python-requests/2.25.1"
+10.10.10.21 - - [08/Nov/2026:15:46:46 +0700] "GET / HTTP/1.1" 200 42 "-" "python-requests/2.25.1"
+10.10.10.21 - - [08/Nov/2026:15:46:46 +0700] "GET / HTTP/1.1" 200 44 "-" "python-requests/2.25.1"
+10.10.10.20 - - [08/Nov/2026:15:46:46 +0700] "GET / HTTP/1.1" 200 42 "-" "python-requests/2.25.1"
+10.10.10.21 - - [08/Nov/2026:15:46:46 +0700] "GET / HTTP/1.1" 200 42 "-" "python-requests/2.25.1"
+10.10.10.20 - - [08/Nov/2026:15:46:46 +0700] "GET / HTTP/1.1" 200 44 "-" "python-requests/2.25.1"
+10.10.10.20 - - [08/Nov/2026:15:46:46 +0700] "GET / HTTP/1.1" 200 44 "-" "python-requests/2.25.1"
+10.10.10.20 - - [08/Nov/2026:15:46:46 +0700] "GET / HTTP/1.1" 200 42 "-" "python-requests/2.25.1"

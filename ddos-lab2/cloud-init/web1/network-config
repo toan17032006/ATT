@@ -1,0 +1,20 @@
+version: 2
+ethernets:
+  lan0:
+    match:
+      macaddress: "08:00:27:fa:87:87"
+    set-name: eth0
+    addresses: [10.10.20.20/24]
+    routes:
+      - to: default
+        via: 10.10.20.1
+        metric: 100
+    nameservers:
+      addresses: [10.10.20.1]
+  mgmt0:
+    match:
+      macaddress: "08:00:27:df:0c:58"
+    set-name: eth1
+    dhcp4: true
+    dhcp4-overrides:
+      use-routes: false

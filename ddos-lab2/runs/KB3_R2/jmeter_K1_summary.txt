@@ -1,0 +1,2 @@
+2026-11-09 11:30:23,975 INFO o.a.j.JMeter: Creating summariser <summary>
+2026-11-09 11:30:28,090 INFO o.a.j.r.Summariser: summary =     40 in 00:00:04 =   10.8/s Avg:    40 Min:    21 Max:   189 Err:     0 (0.00%)

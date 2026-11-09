@@ -1,0 +1,5 @@
+upstream att_backend {
+    server 127.0.0.1:8081 max_fails=1 fail_timeout=5s;
+    server 10.10.10.40:8081 max_fails=1 fail_timeout=5s;
+}
+

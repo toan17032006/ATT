@@ -1,0 +1,2 @@
+Nov 09 10:57:11 web1 python3[738]: 10.10.20.1 - - [09/Nov/2026 10:57:11] &quot;GET /ips-test.txt?case=IPS_OFF_R1_K1 HTTP/1.1&quot; 200 -
+Nov 09 10:57:38 web1 python3[738]: 10.10.20.1 - - [09/Nov/2026 10:57:38] &quot;GET /health.txt?case=KB2_CTRL_R1 HTTP/1.1&quot; 200 -

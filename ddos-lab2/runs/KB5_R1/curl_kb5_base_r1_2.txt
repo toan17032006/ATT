@@ -1,0 +1,13 @@
+HTTP/1.0 200 OK
+server: SimpleHTTP/0.6 Python/3.12.3
+date: Mon, 09 Nov 2026 11:11:20 GMT
+content-type: text/html
+content-length: 153
+last-modified: Mon, 09 Nov 2026 08:12:29 GMT
+connection: keep-alive
+
+<html><head><title>ATT DDoS Lab</title></head><body>
+<h1>ATT DDoS LAB - WEB SERVER</h1>
+<h2>SERVER 1</h2>
+<p>Host: web1 (10.10.20.20)</p>
+</body></html>

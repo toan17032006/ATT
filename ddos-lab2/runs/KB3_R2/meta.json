@@ -1,0 +1,73 @@
+{
+  "run": "KB3_R2",
+  "policy": "off",
+  "start": "2026-11-09T11:27:11Z",
+  "sur_add": "posted, resp len 110291\nMSG: class=\"alert alert-danger\"> WARNING:  The 'admin' account password is set to the default value.    Change the password in the User Manager.  \n\t \n\n  Services  <a href=\"/suricata/suricata_interfaces.p\nhas 'Inline': True | has 'WAN inline IPS': True",
+  "post_errors": [
+    "stop: HTTPConnectionPool(host='127.0.0.1', port=8443): Read timed out. (read timeout=120)"
+  ],
+  "ps": 1,
+  "threshold_config": "",
+  "probe_K1": "200",
+  "probe_K2": "200",
+  "stats_before": {
+    "web1": {
+      "status": "UP",
+      "check_status": "L7OK",
+      "stot": "1",
+      "req_tot": "1",
+      "lastchg": "947",
+      "weight": "1",
+      "addr": "10.10.20.20:8080"
+    },
+    "web2": {
+      "status": "UP",
+      "check_status": "L7OK",
+      "stot": "1",
+      "req_tot": "1",
+      "lastchg": "8632",
+      "weight": "1",
+      "addr": "10.10.20.21:8080"
+    },
+    "BACKEND": {
+      "status": "UP",
+      "stot": "2",
+      "req_tot": "2"
+    }
+  },
+  "barrier_epoch": 1794223817,
+  "load_start": "2026-11-09T11:29:42Z",
+  "load_end": "2026-11-09T11:30:36Z",
+  "stats_after": {
+    "web1": {
+      "status": "UP",
+      "check_status": "L7OK",
+      "stot": "40",
+      "req_tot": "40",
+      "lastchg": "1005",
+      "weight": "1",
+      "addr": "10.10.20.20:8080"
+    },
+    "web2": {
+      "status": "UP",
+      "check_status": "L7OK",
+      "stot": "40",
+      "req_tot": "40",
+      "lastchg": "8690",
+      "weight": "1",
+      "addr": "10.10.20.21:8080"
+    },
+    "BACKEND": {
+      "status": "UP",
+      "stot": "80",
+      "req_tot": "80"
+    }
+  },
+  "drops_1001002": 0,
+  "drop_src_k1": 0,
+  "drop_src_k2": 40,
+  "eve_1001002": 20,
+  "backend_web1": 42,
+  "backend_web2": 42,
+  "end": "2026-11-09T11:31:15Z"
+}

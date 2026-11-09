@@ -1,0 +1,3 @@
+11/09/2026-09:07:01.962484  [Drop] [**] [1:1001001:1] LAB BLOCK GET /ips-test.txt from external [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 10.10.10.10:33420 -&gt; 10.10.10.1:8080
+11/09/2026-10:54:57.920197  [Drop] [**] [1:1001001:1] LAB BLOCK GET /ips-test.txt from external [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 10.10.10.10:35536 -&gt; 10.10.10.1:8080
+11/09/2026-10:55:04.234729  [Drop] [**] [1:1001001:1] LAB BLOCK GET /ips-test.txt from external [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 10.10.10.11:46388 -&gt; 10.10.10.1:8080

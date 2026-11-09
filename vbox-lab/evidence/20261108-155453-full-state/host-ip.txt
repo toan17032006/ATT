@@ -1,0 +1,4 @@
+att-c2
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp0s3           UP             10.10.10.10/24 fe80::a00:27ff:feaa:1/64 
+enp0s8           UP             10.0.3.15/24 metric 200 fd17:625c:f037:3:a00:27ff:feaa:101/64 fe80::a00:27ff:feaa:101/64 

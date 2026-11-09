@@ -1,0 +1,147 @@
+==================== TABLE 0 rows 5 cols 4
+  0 Thành viên || Mã sinh viên || Công việc phụ trách || Sản phẩm và mức hoàn thành
+  1 [ĐIỀN HỌ TÊN 1] || [ĐIỀN MÃ SV] || [ĐIỀN NHIỆM VỤ] || [ĐIỀN KẾT QUẢ]
+  2 [ĐIỀN HỌ TÊN 2] || [ĐIỀN MÃ SV] || [ĐIỀN NHIỆM VỤ] || [ĐIỀN KẾT QUẢ]
+  3 [ĐIỀN HỌ TÊN 3] || [ĐIỀN MÃ SV] || [ĐIỀN NHIỆM VỤ] || [ĐIỀN KẾT QUẢ]
+  4 [ĐIỀN HỌ TÊN 4] || [ĐIỀN MÃ SV] || [ĐIỀN NHIỆM VỤ] || [ĐIỀN KẾT QUẢ]
+==================== TABLE 1 rows 16 cols 2
+  0 Thuật ngữ || Tên đầy đủ hoặc ý nghĩa
+  1 DDoS || Distributed Denial of Service – tấn công từ chối dịch vụ phân tán
+  2 HTTP || Hypertext Transfer Protocol – giao thức truyền tải siêu văn bản
+  3 IDS || Intrusion Detection System – hệ thống phát hiện xâm nhập
+  4 IPS || Intrusion Prevention System – hệ thống ngăn chặn xâm nhập
+  5 VM || Virtual Machine – máy ảo
+  6 WAN / LAN || Tên hai phía giao diện mạng của pfSense trong mô hình
+  7 NAT || Network Address Translation – chuyển đổi địa chỉ mạng
+  8 URI || Uniform Resource Identifier – định danh tài nguyên
+  9 SID || Signature ID – mã định danh luật Suricata
+  10 RPS || Requests per second – số yêu cầu trong một giây
+  11 JTL / JMX || Tệp kết quả thực nghiệm / tệp kế hoạch kiểm thử của JMeter
+  12 EVE JSON || Định dạng nhật ký sự kiện JSON của Suricata
+  13 Frontend || Điểm HAProxy lắng nghe yêu cầu từ phía người dùng
+  14 Backend || Máy chủ hoặc nhóm máy chủ thực sự xử lý yêu cầu
+  15 Health check || Phép kiểm tra định kỳ trạng thái backend
+==================== TABLE 2 rows 9 cols 3
+  0 Chỉ số || Cách xác định || Ý nghĩa và giới hạn
+  1 Tổng mẫu N || Số mẫu hoàn tất trong JTL của từng Kali || Phân biệt với số dự kiến theo Thread Group
+  2 Tỷ lệ lỗi || Mẫu không thành công / tổng mẫu × 100% || Có thể do timeout, IPS, backend hoặc cấu hình
+  3 Thời gian đáp ứng || Thời gian hoàn tất từng mẫu; xét trung bình và P95 || Cần tách nhóm thành công và nhóm timeout
+  4 Throughput || Số mẫu hoàn tất chia khoảng đo || Phụ thuộc thời gian chờ của nguồn tạo tải
+  5 Yêu cầu tới backend || Log HTTP lọc đúng URI và mã lần chạy || Loại health check và truy cập ngoài lần chạy
+  6 Phân bố backend || Nweb1 và Nweb2 trong cùng lần chạy || Kiểm chứng hai server cùng tham gia xử lý
+  7 Hành động chặn || SID, thời gian, nguồn, đích và action trong log IPS || Cảnh báo đơn thuần chưa đủ chứng minh chặn
+  8 Trạng thái dịch vụ || Phản hồi của yêu cầu đối chứng và health check || UP chỉ thể hiện điều kiện health check đạt
+==================== TABLE 3 rows 4 cols 3
+  0 Phương án || Ý nghĩa || Đánh giá đối với mô hình
+  1 IPS ở đường vào trước HAProxy || Quan sát nguồn Kali trước kết nối proxy tới backend || Phù hợp kiểm tra theo IP nguồn và URI frontend
+  2 Kiểm tra chủ yếu ở phía backend || Quan sát yêu cầu sau khi proxy đã xử lý || HAProxy vẫn tiếp nhận tải; nguồn kết nối thường là proxy
+  3 IPS và HAProxy cùng pfSense || Kết hợp hai vai trò tại một VM, IPS gắn WAN || Ít VM bổ sung, dễ đối chiếu log; chia sẻ CPU và RAM
+==================== TABLE 4 rows 7 cols 3
+  0 Thành phần || CPU và RAM thực cấp || Hệ điều hành hoặc phiên bản
+  1 Máy thật || [ĐIỀN CPU, RAM, DUNG LƯỢNG TRỐNG] || [ĐIỀN HỆ ĐIỀU HÀNH, VIRTUALBOX]
+  2 Kali 1 || [ĐIỀN vCPU VÀ RAM] || [ĐIỀN KALI, JAVA, JMETER]
+  3 Kali 2 || [ĐIỀN vCPU VÀ RAM] || [ĐIỀN KALI, JAVA, JMETER]
+  4 pfSense || [ĐIỀN vCPU VÀ RAM] || [ĐIỀN PFSENSE, SURICATA, HAPROXY]
+  5 Web 1 || [ĐIỀN vCPU VÀ RAM] || Windows 11; Python [ĐIỀN PHIÊN BẢN]
+  6 Web 2 || [ĐIỀN vCPU VÀ RAM] || Windows 11; Python [ĐIỀN PHIÊN BẢN]
+==================== TABLE 5 rows 7 cols 4
+  0 Máy hoặc giao diện || Mạng VirtualBox || Địa chỉ IPv4 || Gateway hoặc vai trò
+  1 Kali 1 || ATTACKER-LAN || 10.10.10.10/24 || 10.10.10.1
+  2 Kali 2 || ATTACKER-LAN || 10.10.10.11/24 || 10.10.10.1
+  3 pfSense WAN || ATTACKER-LAN || 10.10.10.1/24 || Không đặt upstream gateway trong lab cô lập
+  4 pfSense LAN || SERVER-LAN || 10.10.20.1/24 || Điểm quản trị và phía backend
+  5 Web 1 || SERVER-LAN || 10.10.20.20/24 || 10.10.20.1
+  6 Web 2 || SERVER-LAN || 10.10.20.21/24 || 10.10.20.1
+==================== TABLE 6 rows 6 cols 3
+  0 Nguồn || Nội dung cần lưu || Mục đích đối chiếu
+  1 JMeter K1 và K2 || JMX; JTL; giờ bắt đầu và kết thúc; số mẫu; lỗi; thời gian đáp ứng || Xác nhận đầu vào và kết quả tại từng nguồn
+  2 Suricata || SID, action, nguồn, đích, cổng, thời gian; EVE nếu có || Xác định luật nào đã khớp hoặc chặn
+  3 HAProxy Stats || Trạng thái, LastChk, bộ đếm trước/sau, thời gian chụp || Đánh giá backend tham gia xử lý và lỗi
+  4 Python HTTP Server || Log của cả web1, web2 chứa URI và mã lần chạy || Xác định yêu cầu đã tới ứng dụng
+  5 Máy thật và pfSense || CPU, RAM, sự cố treo hoặc khởi động lại || Nhận biết ảnh hưởng tài nguyên ngoài chính sách
+==================== TABLE 7 rows 10 cols 3
+  0 Tham số || Kiểm tra truy cập bình thường || Tải dùng đối chứng chính sách
+  1 Threads trên mỗi Kali || 1 || 2
+  2 Loop Count || 5 || 20
+  3 Ramp-up || 1 giây || 1 giây
+  4 Constant Timer || 1000 ms || 100 ms
+  5 HTTP Request mỗi vòng || 1 GET tới /load-test.txt || 1 GET tới /load-test.txt
+  6 Đích || http, 10.10.10.1, port 8080 || Giữ nguyên
+  7 Connect / Response timeout || 3000 / 5000 ms || Giữ nguyên
+  8 Mẫu dự kiến mỗi nguồn || 5 || 40
+  9 Tổng dự kiến hai nguồn || 10 || 80
+==================== TABLE 8 rows 9 cols 3
+  0 Điều kiện || Cách xác nhận || Kết quả ghi nhận
+  1 Đủ hai nguồn, không trùng IP || ip -br addr trên K1 và K2 || [ĐIỀN KẾT QUẢ]
+  2 Backend HTTP hoạt động || Truy cập /health.txt từ phía pfSense || [ĐIỀN KẾT QUẢ]
+  3 HAProxy có hai server UP || Stats và LastChk || [ĐIỀN KẾT QUẢ]
+  4 Đường đi đúng frontend || URL, cấu hình NAT và log proxy/backend || [ĐIỀN KẾT QUẢ]
+  5 Suricata đang ở WAN inline || Settings và log khởi động || [ĐIỀN KẾT QUẢ]
+  6 Hai SID không xung đột || Nội dung luật và kết quả nạp || [ĐIỀN KẾT QUẢ]
+  7 Hai Kali được chính sách bao phủ || Alias firewall và danh sách nguồn trong luật || [ĐIỀN KẾT QUẢ]
+  8 Tài nguyên và đồng hồ ổn định || CPU, RAM và thời gian của các VM || [ĐIỀN KẾT QUẢ]
+==================== TABLE 9 rows 6 cols 4
+  0 Kịch bản || Suricata và chính sách || Backend || Câu hỏi kiểm chứng
+  1 KB1 – Bình thường || Inline hoạt động; tải dưới ngưỡng || Hai server UP || Hai Kali có truy cập đúng dịch vụ không?
+  2 KB2 – Kiểm tra IPS || Đối chứng instance WAN tắt/bật; dùng SID 1001001 || Hai server UP || Luật URI có thực sự chặn không?
+  3 KB3 – Chưa chặn theo ngưỡng || Inline và luật ALERT hoạt động; không áp dụng rate_filter || Hai server UP || Hai nguồn có đồng thời tạo tải và tải được phân phối ra sao?
+  4 KB4 – Có chặn theo ngưỡng || Giữ KB3, thêm rate_filter của SID 1001002 || Hai server UP || Hành động có chuyển sang chặn và lượng tới backend thay đổi thế nào?
+  5 KB5 – Lỗi backend || Giữ đường kiểm tra ổn định; tạm không áp dụng rate_filter || Web 1 dừng rồi khôi phục; Web 2 hoạt động || HAProxy có loại và đưa backend trở lại không?
+==================== TABLE 10 rows 7 cols 4
+  0 Đại lượng || Kali 1 || Kali 2 || Tổng hoặc cách đối chiếu
+  1 Mẫu dự kiến || 40 || 40 || 80 nếu giữ Bảng 4.1
+  2 Mẫu thực tế || [ĐIỀN] || [ĐIỀN] || N1 + N2
+  3 Số mẫu lỗi || [ĐIỀN] || [ĐIỀN] || E1 + E2
+  4 Bắt đầu / kết thúc || [ĐIỀN GIỜ] || [ĐIỀN GIỜ] || Xác định khoảng chồng lấn
+  5 Thời gian TB / P95 || [ĐIỀN ms] || [ĐIỀN ms] || Gộp từ dữ liệu gốc
+  6 Yêu cầu tại web1 / web2 || Không tách bằng IP TCP backend || Lọc bằng src trong URI || [ĐIỀN Nweb1] / [ĐIỀN Nweb2]
+==================== TABLE 11 rows 9 cols 4
+  0 Chỉ tiêu || KB3 chưa áp dụng rate_filter || KB4 có rate_filter || Cách diễn giải
+  1 Tổng mẫu thực tế hai Kali || [ĐIỀN] || [ĐIỀN] || Ghi rõ nếu dừng sớm hoặc khác nhau
+  2 Tổng mẫu thành công / lỗi || [ĐIỀN] || [ĐIỀN] || Đối chiếu mã lỗi và thời gian
+  3 P95 mẫu thành công || [ĐIỀN ms] || [ĐIỀN ms] || Không trộn timeout vào rồi kết luận tốt hơn
+  4 Thời gian hoàn tất hai nguồn || [ĐIỀN] || [ĐIỀN] || Giải thích thay đổi tốc độ nguồn gửi
+  5 Yêu cầu tới web1 || [ĐIỀN] || [ĐIỀN] || Log đúng run và URI
+  6 Yêu cầu tới web2 || [ĐIỀN] || [ĐIỀN] || Loại health check
+  7 DROP SID 1001002 của K1 / K2 || [ĐIỀN] || [ĐIỀN] || Đếm sự kiện, không gọi là số request
+  8 Yêu cầu đối chứng bình thường || [ĐIỀN] || [ĐIỀN] || Giới hạn theo URI đã kiểm tra
+==================== TABLE 12 rows 8 cols 2
+  0 Sự kiện hoặc chỉ số || Giá trị thực tế
+  1 Thời điểm dừng Python Web 1 || [ĐIỀN GIỜ]
+  2 Thời điểm HAProxy đánh dấu web1 DOWN || [ĐIỀN GIỜ]
+  3 Độ trễ phát hiện quan sát || [ĐIỀN SỐ GIÂY]
+  4 Yêu cầu thành công / lỗi trong giai đoạn chuyển đổi || [ĐIỀN SỐ MẪU]
+  5 Phản hồi qua frontend khi chỉ Web 2 phục vụ || [ĐIỀN MÃ HTTP VÀ NỘI DUNG]
+  6 Thời điểm bật lại Python / thời điểm UP || [ĐIỀN HAI MỐC GIỜ]
+  7 Log Web 1 nhận mã KB5_AFTER || [ĐIỀN CÓ HAY KHÔNG VÀ THỜI ĐIỂM]
+==================== TABLE 13 rows 7 cols 3
+  0 Nội dung || Bằng chứng hiện có hoặc cần bổ sung || Kết luận phù hợp
+  1 Chặn URI tại WAN || Timeout và SID 1001001 có hành động chặn của nguồn .10 || Đã có bằng chứng chức năng; bổ sung kiểm tra .11
+  2 Phân phối tới hai backend || Log /load-test.txt trên cả hai; Stats UP, 96 và 95 phiên tích lũy || Đã có bằng chứng hai backend tham gia, chưa phải số liệu riêng của lần hai nguồn
+  3 Hai Kali hoạt động đồng thời || Cần JTL và log có nhãn K1/K2 cùng run || Chỉ kết luận sau khi xác nhận khoảng chồng lấn
+  4 Chặn theo ngưỡng của cả hai nguồn || Cần SID 1001002 và action cho .10, .11 || Không dùng SID 1001001 thay thế
+  5 Mức giảm yêu cầu tới backend || Cần Bảng 5.3 từ log đầy đủ || Chưa điền tỷ lệ khi chưa có phép đo
+  6 Tiếp tục phục vụ khi backend hỏng || Cần chuỗi ảnh và số liệu Bảng 5.4 || Phân biệt kế hoạch kiểm chứng với kết quả đã đo
+==================== TABLE 14 rows 10 cols 2
+  0 Trường thông tin || Nội dung
+  1 Mã lần chạy || [ĐIỀN KBx_Ry]
+  2 Người thực hiện và thời gian || [ĐIỀN]
+  3 Cấu hình tải trên mỗi Kali || [ĐIỀN THREAD, LOOP, TIMER, RAMP-UP, TIMEOUT]
+  4 Trạng thái Suricata và chính sách || [ĐIỀN INLINE, SID, RATE_FILTER]
+  5 Trạng thái backend trước chạy || [ĐIỀN WEB1, WEB2, HEALTH CHECK]
+  6 Tệp JTL của hai nguồn || [ĐIỀN TÊN TỆP K1 VÀ K2]
+  7 Log hai backend và IPS || [ĐIỀN TÊN TỆP]
+  8 Thay đổi hoặc sự cố || [ĐIỀN, KỂ CẢ DỪNG SỚM]
+  9 Kết luận của lần chạy || [ĐIỀN KÈM DẪN CHIẾU ẢNH HOẶC LOG]
+==================== TABLE 15 rows 3 cols 3
+  0 SID || Điều kiện chính || Vai trò
+  1 1001001 || Hai IP Kali; frontend:8080; URI bắt đầu /ips-test.txt || Kiểm chứng chặn trực tiếp; không dùng làm phép đo theo ngưỡng
+  2 1001002 || Hai IP Kali; GET tới URI bắt đầu /load-test.txt || Theo dõi và chuyển hành động thông qua rate_filter
+==================== TABLE 16 rows 7 cols 5
+  0 Lần chạy || Tổng mẫu thực tế || Mẫu lỗi || GET tại web1 / web2 || Kết quả DROP đúng SID
+  1 KB3_R1 || [ĐIỀN] || [ĐIỀN] || [ĐIỀN] || [ĐIỀN]
+  2 KB3_R2 || [ĐIỀN] || [ĐIỀN] || [ĐIỀN] || [ĐIỀN]
+  3 KB3_R3 || [ĐIỀN] || [ĐIỀN] || [ĐIỀN] || [ĐIỀN]
+  4 KB4_R1 || [ĐIỀN] || [ĐIỀN] || [ĐIỀN] || [ĐIỀN]
+  5 KB4_R2 || [ĐIỀN] || [ĐIỀN] || [ĐIỀN] || [ĐIỀN]
+  6 KB4_R3 || [ĐIỀN] || [ĐIỀN] || [ĐIỀN] || [ĐIỀN]

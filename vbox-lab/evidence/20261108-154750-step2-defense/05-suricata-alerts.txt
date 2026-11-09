@@ -1,0 +1,22 @@
+=== fast.log ===
+11/08/2026-15:48:12.277345  [**] [1:1000001:1] ATT LAB HTTP FLOOD [**] [Classification: Attempted Denial of Service] [Priority: 2] {TCP} 10.10.10.20:39572 -> 10.10.10.30:80
+11/08/2026-15:48:12.302675  [**] [1:1000001:1] ATT LAB HTTP FLOOD [**] [Classification: Attempted Denial of Service] [Priority: 2] {TCP} 10.10.10.21:48926 -> 10.10.10.30:80
+11/08/2026-15:48:15.094191  [**] [1:1000003:1] ATT LAB SLOW CONNECTION FLOOD [**] [Classification: Attempted Denial of Service] [Priority: 2] {TCP} 10.10.10.20:37892 -> 10.10.10.30:80
+11/08/2026-15:48:19.671364  [**] [1:1000001:1] ATT LAB HTTP FLOOD [**] [Classification: Attempted Denial of Service] [Priority: 2] {TCP} 10.10.10.20:39572 -> 10.10.10.30:80
+
+=== ufw ===
+Status: active
+
+     To                         Action      From
+     --                         ------      ----
+[ 1] Anywhere                   DENY IN     10.10.10.21                # att-autoblock
+[ 2] Anywhere                   DENY IN     10.10.10.20                # att-autoblock
+[ 3] 22/tcp                     ALLOW IN    Anywhere                  
+[ 4] 80/tcp                     ALLOW IN    Anywhere                  
+[ 5] 22/tcp (v6)                ALLOW IN    Anywhere (v6)             
+[ 6] 80/tcp (v6)                ALLOW IN    Anywhere (v6)             
+
+
+=== autoblock log ===
+2026-11-08T15:48:13+07:00 BLOCK 10.10.10.20
+2026-11-08T15:48:14+07:00 BLOCK 10.10.10.21

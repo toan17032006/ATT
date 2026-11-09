@@ -1,0 +1,1 @@
+tail: cannot open '/var/log/nginx/error.log' for reading: Permission denied

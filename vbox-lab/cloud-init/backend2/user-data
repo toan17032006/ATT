@@ -1,0 +1,53 @@
+#cloud-config
+# VM: ATT-Backend2 (10.10.10.40) - second web backend for load balancing
+hostname: att-backend2
+manage_etc_hosts: true
+timezone: Asia/Ho_Chi_Minh
+
+users:
+  - name: defender
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    lock_passwd: false
+    plain_text_passwd: "Defend@123"
+    ssh_authorized_keys:
+      - __SSH_PUBKEY__
+
+chpasswd:
+  list: |
+    root:Defend@123
+    defender:Defend@123
+  expire: false
+
+ssh_pwauth: true
+
+write_files:
+  - path: /etc/nginx/sites-available/att-backend2
+    permissions: '0644'
+    content: |
+      server {
+          listen 8081 default_server;
+          server_name _;
+          access_log /var/log/nginx/att-backend2-access.log;
+          default_type application/json;
+          location / {
+              return 200 '{"server":"backend-2","host":"att-backend2"}';
+          }
+      }
+
+runcmd:
+  - |
+    set -u
+    for i in 1 2 3 4 5; do apt-get update -y -q && break; sleep 5; done
+    DEBIAN_FRONTEND=noninteractive apt-get install -y -q nginx ufw curl iproute2
+    ln -sf /etc/nginx/sites-available/att-backend2 /etc/nginx/sites-enabled/att-backend2
+    rm -f /etc/nginx/sites-enabled/default
+    nginx -t && systemctl restart nginx
+    ufw --force reset >/dev/null 2>&1
+    ufw default deny incoming >/dev/null
+    ufw default allow outgoing >/dev/null
+    ufw allow 22/tcp >/dev/null
+    ufw allow from 10.10.10.30 to any port 8081 proto tcp >/dev/null
+    ufw allow from 10.10.10.1 to any port 8081 proto tcp >/dev/null
+    ufw --force enable >/dev/null
+    echo "STATUS: READY $(date -Is) role=backend2" > /var/log/att-setup.log

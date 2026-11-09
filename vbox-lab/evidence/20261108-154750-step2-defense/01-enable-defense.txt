@@ -1,0 +1,22 @@
+[1] Switch nginx to protected config
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+[2] Configure and start Suricata on enp0s3
+suricata: active
+[3] Enable UFW
+Status: active
+Logging: on (low)
+Default: deny (incoming), allow (outgoing), disabled (routed)
+New profiles: skip
+
+To                         Action      From
+--                         ------      ----
+22/tcp                     ALLOW IN    Anywhere                  
+80/tcp                     ALLOW IN    Anywhere                  
+22/tcp (v6)                ALLOW IN    Anywhere (v6)             
+80/tcp (v6)                ALLOW IN    Anywhere (v6)             
+
+[4] Start auto-block
+Created symlink /etc/systemd/system/multi-user.target.wants/att-autoblock.service → /etc/systemd/system/att-autoblock.service.
+active
+DEFENSE ENABLED

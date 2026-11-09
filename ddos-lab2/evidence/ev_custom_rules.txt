@@ -1,0 +1,5 @@
+# Lab custom rules - DDoS mitigation exercise (pfSense + Suricata Inline IPS)
+# SID 1001001: hard-block the test URI used in KB1/KB2/KB4
+drop http $EXTERNAL_NET any -&gt; $HOME_NET any (msg:&quot;LAB BLOCK GET /ips-test.txt from external&quot;; flow:to_server,established; content:&quot;/ips-test.txt&quot;; http_uri; nocase; classtype:policy-violation; sid:1001001; rev:1;)
+# SID 1001002: alert on the load-test URI; rate_filter turns it into a drop (see suppress list)
+alert http $EXTERNAL_NET any -&gt; $HOME_NET any (msg:&quot;LAB ALERT /load-test.txt high rate&quot;; flow:to_server,established; content:&quot;/load-test.txt&quot;; http_uri; nocase; classtype:policy-violation; sid:1001002; rev:1;)

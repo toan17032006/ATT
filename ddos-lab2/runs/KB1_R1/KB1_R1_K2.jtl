@@ -1,0 +1,11 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1794221009635,68,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,1,1,http://10.10.10.1:8080/load-test.txt?run=KB1_R1&src=K2,61,0,41
+1794221010710,15,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,1,1,http://10.10.10.1:8080/load-test.txt?run=KB1_R1&src=K2,15,0,0
+1794221011742,13,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,1,1,http://10.10.10.1:8080/load-test.txt?run=KB1_R1&src=K2,12,0,0
+1794221012761,11,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,1,1,http://10.10.10.1:8080/load-test.txt?run=KB1_R1&src=K2,11,0,0
+1794221013775,23,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,1,1,http://10.10.10.1:8080/load-test.txt?run=KB1_R1&src=K2,22,0,0
+1794221563202,64,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,1,1,http://10.10.10.1:8080/load-test.txt?run=KB1_R1&src=K2,57,0,36
+1794221564281,19,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,1,1,http://10.10.10.1:8080/load-test.txt?run=KB1_R1&src=K2,19,0,0
+1794221565322,13,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,1,1,http://10.10.10.1:8080/load-test.txt?run=KB1_R1&src=K2,13,0,0
+1794221566344,17,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,1,1,http://10.10.10.1:8080/load-test.txt?run=KB1_R1&src=K2,17,0,0
+1794221567366,19,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,1,1,http://10.10.10.1:8080/load-test.txt?run=KB1_R1&src=K2,19,0,0

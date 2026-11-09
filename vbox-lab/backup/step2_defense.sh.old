@@ -1,0 +1,61 @@
+#!/bin/bash
+# =====================================================
+# Script: Bước 2 - Phòng chống DDoS
+# Kích hoạt Suricata + UFW trên Victim
+# =====================================================
+
+VICTIM_IP="10.10.10.30"
+C2_IP="10.10.10.10"
+BOT_IP="10.10.10.20"
+
+echo "==========================================="
+echo " BƯỚC 2: PHÒNG CHỐNG DDOS (ATT Lab)"
+echo "==========================================="
+echo ""
+echo "Chạy các lệnh sau trên VM3 (ATT-Victim):"
+echo ""
+
+cat << 'CMDS'
+# ===== Trên VM3 (SSH: defender@10.10.10.30) =====
+
+# 1. Kiểm tra Suricata đang chạy
+sudo systemctl status suricata
+sudo tail -20 /var/log/suricata/fast.log
+
+# 2. Xem alerts trong thời gian thực
+sudo tail -f /var/log/suricata/fast.log
+
+# 3. Kích hoạt tường lửa UFW
+sudo ufw status verbose
+
+# 4. Tay: Block IP tấn công
+sudo ufw deny from 10.10.10.10 to any   # Block C2
+sudo ufw deny from 10.10.10.20 to any   # Block Bot
+sudo ufw status
+
+# 5. Bật auto-block (kết hợp Suricata + UFW)
+sudo /opt/defense/auto_block.sh &
+
+# 6. Xem thống kê phòng thủ
+sudo /opt/defense/show_stats.sh
+
+# 7. Nginx rate limiting - kiểm tra
+sudo nginx -t
+sudo tail -f /var/log/nginx/error.log | grep -i "limiting"
+
+# 8. Fail2ban - xem bans
+sudo fail2ban-client status
+sudo fail2ban-client status sshd
+
+# 9. Thống kê kết nối hiện tại
+ss -tn state established | wc -l
+netstat -an | grep :80 | grep ESTABLISHED | wc -l
+
+CMDS
+
+echo ""
+echo "=== Script tự động chặn từ WSL ==="
+echo "Chặn C2 và Bot qua port forwarding VirtualBox:"
+echo ""
+echo "  VBoxManage natnetwork modify --netname att-lab-net \\"
+echo "    --port-forward-4 'block-c2:tcp:[]:0:[10.10.10.10]:0'"

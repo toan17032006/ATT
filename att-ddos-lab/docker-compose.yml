@@ -1,0 +1,77 @@
+version: '3.8'
+
+networks:
+  att-lab-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.100.0/24
+
+services:
+
+  # ============================================
+  # VICTIM: .NET 9 Web API (mục tiêu bị tấn công)
+  # ============================================
+  victim-webapi:
+    build:
+      context: ./VictimWebApi
+      dockerfile: Dockerfile
+    container_name: att-victim
+    hostname: victim-webapi
+    networks:
+      att-lab-network:
+        ipv4_address: 192.168.100.10
+    ports:
+      - "8080:8080"       # Truy cập từ host: http://localhost:8080
+      - "8081:8080"       # Port dự phòng
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    restart: unless-stopped
+    # Giới hạn tài nguyên để quan sát hiệu ứng DDoS rõ hơn
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+
+  # ============================================
+  # ATTACKER: Máy tấn công với các tool DDoS
+  # ============================================
+  attacker:
+    build:
+      context: ./AttackerTools
+      dockerfile: Dockerfile
+    container_name: att-attacker
+    hostname: attacker
+    networks:
+      att-lab-network:
+        ipv4_address: 192.168.100.20
+    # Cần NET_ADMIN để dùng hping3
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    volumes:
+      - ./AttackerTools/attack_scripts:/attack_scripts
+    stdin_open: true
+    tty: true
+    command: bash
+
+  # ============================================
+  # MONITOR: Xem thống kê real-time (tùy chọn)
+  # ============================================
+  monitor:
+    image: alpine/curl:latest
+    container_name: att-monitor
+    networks:
+      - att-lab-network
+    command: >
+      sh -c "
+        echo 'Monitor khởi động...';
+        while true; do
+          echo '--- $(date +%H:%M:%S) ---';
+          curl -s http://victim-webapi:8080/stats 2>/dev/null || echo 'Victim không phản hồi!';
+          echo '';
+          sleep 5;
+        done
+      "
+    restart: unless-stopped

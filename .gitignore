@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.docx-build/
+*.lnk
+vbox-lab/keys/*
+!vbox-lab/keys/*.pub

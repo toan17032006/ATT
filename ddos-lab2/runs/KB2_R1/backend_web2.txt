@@ -1,0 +1,1 @@
+Nov 09 10:57:12 web2 python3[736]: 10.10.20.1 - - [09/Nov/2026 10:57:12] &quot;GET /ips-test.txt?case=IPS_OFF_R1_K2 HTTP/1.1&quot; 200 -

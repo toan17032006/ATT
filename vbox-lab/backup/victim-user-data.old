@@ -1,0 +1,184 @@
+#cloud-config
+# VM3: ATT-Victim - Nạn nhân với Nginx LB + Suricata IDS
+hostname: att-victim
+users:
+  - name: defender
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    lock_passwd: false
+    plain_text_passwd: "Defend@123"
+
+chpasswd:
+  list: |
+    root:Defend@123
+    defender:Defend@123
+  expire: false
+
+ssh_pwauth: true
+
+write_files:
+  # Nginx config - Web Server + Load Balancer
+  - path: /etc/nginx/sites-available/att-lab
+    content: |
+      # ATT Lab - Nginx Load Balancer + Web Server
+      upstream backend {
+          least_conn;                        # Thuật toán cân bằng tải: Least Connection
+          server 127.0.0.1:8081 weight=1;   # Backend 1
+          server 127.0.0.1:8082 weight=1;   # Backend 2
+          keepalive 32;
+      }
+
+      # Rate limiting (phòng chống DDoS)
+      limit_req_zone $binary_remote_addr zone=ddos_limit:10m rate=10r/s;
+      limit_conn_zone $binary_remote_addr zone=conn_limit:10m;
+
+      server {
+          listen 80;
+          server_name _;
+
+          # Giới hạn kết nối & request rate
+          limit_req zone=ddos_limit burst=20 nodelay;
+          limit_conn conn_limit 20;
+
+          # Header bảo mật
+          add_header X-Frame-Options "SAMEORIGIN";
+          add_header X-Content-Type-Options "nosniff";
+
+          # Chặn User-Agent đáng ngờ
+          if ($http_user_agent ~* (hping|nmap|nikto|sqlmap|masscan|LOIC)) {
+              return 403;
+          }
+
+          location / {
+              proxy_pass http://backend;
+              proxy_set_header Host $host;
+              proxy_set_header X-Real-IP $remote_addr;
+              proxy_connect_timeout 5s;
+              proxy_read_timeout 10s;
+          }
+
+          location /status {
+              stub_status on;
+              allow 127.0.0.1;
+              allow 10.10.10.0/24;
+              deny all;
+          }
+      }
+
+      # Backend 1 - App server 1
+      server {
+          listen 8081;
+          location / {
+              return 200 '{"server":"backend-1","status":"ok","time":"$time_iso8601"}';
+              add_header Content-Type application/json;
+          }
+      }
+
+      # Backend 2 - App server 2
+      server {
+          listen 8082;
+          location / {
+              return 200 '{"server":"backend-2","status":"ok","time":"$time_iso8601"}';
+              add_header Content-Type application/json;
+          }
+      }
+
+  # Suricata rules - phát hiện DDoS
+  - path: /etc/suricata/rules/att-ddos.rules
+    content: |
+      # ATT Lab - Suricata DDoS Detection Rules
+
+      # HTTP Flood detection
+      alert http any any -> $HOME_NET 80 (msg:"ATT HTTP FLOOD DETECTED"; \
+          threshold:type both, track by_src, count 100, seconds 10; \
+          classtype:attempted-dos; sid:1000001; rev:1;)
+
+      # SYN Flood detection
+      alert tcp any any -> $HOME_NET 80 (msg:"ATT SYN FLOOD DETECTED"; \
+          flags:S; threshold:type both, track by_src, count 200, seconds 5; \
+          classtype:attempted-dos; sid:1000002; rev:1;)
+
+      # Slowloris detection (nhiều kết nối từ 1 IP)
+      alert tcp any any -> $HOME_NET 80 (msg:"ATT SLOWLORIS DETECTED"; \
+          flags:S; threshold:type both, track by_src, count 50, seconds 60; \
+          classtype:attempted-dos; sid:1000003; rev:1;)
+
+      # LOIC User-Agent detection
+      alert http any any -> $HOME_NET any (msg:"ATT LOIC TOOL DETECTED"; \
+          http.user_agent; content:"LOIC"; nocase; \
+          classtype:attempted-dos; sid:1000004; rev:1;)
+
+      # hping3 detection (SYN with specific TTL pattern)
+      alert tcp any any -> $HOME_NET any (msg:"ATT HPING3 SYN SCAN"; \
+          flags:S; ttl:<10; \
+          classtype:network-scan; sid:1000005; rev:1;)
+
+      # UDP Flood
+      alert udp any any -> $HOME_NET any (msg:"ATT UDP FLOOD DETECTED"; \
+          threshold:type both, track by_src, count 500, seconds 5; \
+          classtype:attempted-dos; sid:1000006; rev:1;)
+
+  # Script tự động block IP tấn công (kết hợp Suricata + UFW)
+  - path: /opt/defense/auto_block.sh
+    permissions: '0755'
+    content: |
+      #!/bin/bash
+      # Đọc Suricata alert log và tự động block IP tấn công
+      SURICATA_LOG="/var/log/suricata/fast.log"
+      BLOCKED_IPS="/tmp/blocked_ips.txt"
+      touch $BLOCKED_IPS
+
+      echo "[DEFENSE] Bắt đầu auto-block từ Suricata alerts..."
+      tail -F "$SURICATA_LOG" 2>/dev/null | while read line; do
+          if echo "$line" | grep -qE "FLOOD|SCAN|LOIC"; then
+              # Trích xuất IP nguồn
+              SRC_IP=$(echo "$line" | grep -oP '\d+\.\d+\.\d+\.\d+' | head -1)
+              if [ -n "$SRC_IP" ] && ! grep -q "$SRC_IP" "$BLOCKED_IPS"; then
+                  echo "$SRC_IP" >> "$BLOCKED_IPS"
+                  ufw deny from "$SRC_IP" to any
+                  echo "[BLOCK] Đã chặn IP: $SRC_IP"
+                  echo "$(date): BLOCKED $SRC_IP" >> /var/log/att-blocks.log
+              fi
+          fi
+      done
+
+  # Script xem thống kê phòng thủ
+  - path: /opt/defense/show_stats.sh
+    permissions: '0755'
+    content: |
+      #!/bin/bash
+      echo "========================================"
+      echo " ATT Lab - Defense Stats"
+      echo "========================================"
+      echo ""
+      echo "--- Nginx Connections ---"
+      curl -s http://localhost/status 2>/dev/null || echo "Nginx chưa chạy"
+      echo ""
+      echo "--- UFW Blocked IPs ---"
+      ufw status | grep DENY
+      echo ""
+      echo "--- Suricata Alerts (10 mới nhất) ---"
+      tail -10 /var/log/suricata/fast.log 2>/dev/null || echo "Suricata chưa có alert"
+      echo ""
+      echo "--- Active Connections ---"
+      ss -tn state established | wc -l
+      echo "connections đang mở"
+
+runcmd:
+  - apt-get update -y -q
+  - apt-get install -y nginx suricata ufw fail2ban curl wget python3 net-tools tcpdump iputils-ping
+  # Cấu hình Nginx
+  - ln -sf /etc/nginx/sites-available/att-lab /etc/nginx/sites-enabled/att-lab
+  - rm -f /etc/nginx/sites-enabled/default
+  - nginx -t && systemctl restart nginx
+  # Cấu hình UFW
+  - ufw --force enable
+  - ufw allow ssh
+  - ufw allow 80/tcp
+  - ufw allow from 10.10.10.0/24
+  # Cấu hình Suricata
+  - sed -i 's/HOME_NET: \[192.168.0.0\/16\]/HOME_NET: [10.10.10.0\/24]/' /etc/suricata/suricata.yaml
+  - cp /etc/suricata/rules/att-ddos.rules /var/lib/suricata/rules/ || true
+  - systemctl restart suricata || suricata -D -c /etc/suricata/suricata.yaml -i eth0 &
+  - chmod +x /opt/defense/*.sh
+  - echo "Victim/Defense setup complete" > /var/log/att-setup.log

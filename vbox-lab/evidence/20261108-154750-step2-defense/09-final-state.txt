@@ -1,0 +1,55 @@
+=== services ===
+nginx          active
+suricata       active
+ufw            active
+att-autoblock  active
+
+=== ufw (first 30 lines) ===
+Status: active
+
+     To                         Action      From
+     --                         ------      ----
+[ 1] Anywhere                   DENY IN     10.10.10.21                # att-autoblock
+[ 2] Anywhere                   DENY IN     10.10.10.20                # att-autoblock
+[ 3] 22/tcp                     ALLOW IN    Anywhere                  
+[ 4] 80/tcp                     ALLOW IN    Anywhere                  
+[ 5] 22/tcp (v6)                ALLOW IN    Anywhere (v6)             
+[ 6] 80/tcp (v6)                ALLOW IN    Anywhere (v6)             
+
+
+=== suricata alerts (last 15) ===
+11/08/2026-15:48:12.277345  [**] [1:1000001:1] ATT LAB HTTP FLOOD [**] [Classification: Attempted Denial of Service] [Priority: 2] {TCP} 10.10.10.20:39572 -> 10.10.10.30:80
+11/08/2026-15:48:12.302675  [**] [1:1000001:1] ATT LAB HTTP FLOOD [**] [Classification: Attempted Denial of Service] [Priority: 2] {TCP} 10.10.10.21:48926 -> 10.10.10.30:80
+11/08/2026-15:48:15.094191  [**] [1:1000003:1] ATT LAB SLOW CONNECTION FLOOD [**] [Classification: Attempted Denial of Service] [Priority: 2] {TCP} 10.10.10.20:37892 -> 10.10.10.30:80
+11/08/2026-15:48:19.671364  [**] [1:1000001:1] ATT LAB HTTP FLOOD [**] [Classification: Attempted Denial of Service] [Priority: 2] {TCP} 10.10.10.20:39572 -> 10.10.10.30:80
+11/08/2026-15:48:22.231132  [**] [1:1000001:1] ATT LAB HTTP FLOOD [**] [Classification: Attempted Denial of Service] [Priority: 2] {TCP} 10.10.10.21:49024 -> 10.10.10.30:80
+11/08/2026-15:48:28.970085  [**] [1:1000003:1] ATT LAB SLOW CONNECTION FLOOD [**] [Classification: Attempted Denial of Service] [Priority: 2] {TCP} 10.10.10.21:56458 -> 10.10.10.30:80
+11/08/2026-15:48:29.205909  [**] [1:1000002:1] ATT LAB SYN FLOOD [**] [Classification: Attempted Denial of Service] [Priority: 2] {TCP} 10.10.10.20:40774 -> 10.10.10.30:80
+
+=== autoblock log ===
+2026-11-08T15:48:13+07:00 BLOCK 10.10.10.20
+2026-11-08T15:48:14+07:00 BLOCK 10.10.10.21
+
+=== connections ===
+Total: 164
+TCP:   286 (estab 1, closed 280, orphaned 0, timewait 280)
+
+Transport Total     IP        IPv6
+RAW	  2         0         2        
+UDP	  2         2         0        
+TCP	  6         5         1        
+INET	  10        7         3        
+FRAG	  0         0         0        
+
+
+=== nginx access log (last 10) ===
+10.10.10.21 - - [08/Nov/2026:15:48:30 +0700] "GET / HTTP/1.1" 503 206 "-" "python-requests/2.25.1"
+10.10.10.21 - - [08/Nov/2026:15:48:30 +0700] "GET / HTTP/1.1" 503 206 "-" "python-requests/2.25.1"
+10.10.10.21 - - [08/Nov/2026:15:48:30 +0700] "GET / HTTP/1.1" 503 206 "-" "python-requests/2.25.1"
+10.10.10.21 - - [08/Nov/2026:15:48:30 +0700] "GET / HTTP/1.1" 503 206 "-" "python-requests/2.25.1"
+10.10.10.21 - - [08/Nov/2026:15:48:30 +0700] "GET / HTTP/1.1" 503 206 "-" "python-requests/2.25.1"
+10.10.10.21 - - [08/Nov/2026:15:48:30 +0700] "GET / HTTP/1.1" 503 206 "-" "python-requests/2.25.1"
+10.10.10.21 - - [08/Nov/2026:15:48:30 +0700] "GET / HTTP/1.1" 200 44 "-" "python-requests/2.25.1"
+10.10.10.21 - - [08/Nov/2026:15:48:30 +0700] "GET / HTTP/1.1" 503 206 "-" "python-requests/2.25.1"
+10.10.10.10 - - [08/Nov/2026:15:48:55 +0700] "GET / HTTP/1.1" 200 42 "-" "curl/7.81.0"
+10.10.10.10 - - [08/Nov/2026:15:48:55 +0700] "GET / HTTP/1.1" 200 44 "-" "curl/7.81.0"

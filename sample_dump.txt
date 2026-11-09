@@ -1,0 +1,631 @@
+P000 [normal] HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG
+P001 [normal] CƠ SỞ ĐÀO TẠO PHÍA BẮC
+P002 [normal] [ĐIỀN KHOA HOẶC BỘ MÔN]
+P003 [normal] 
+P004 [Title] BÁO CÁO BÀI TẬP LỚN
+P005 [normal] Môn học Cơ sở an toàn thông tin
+P006 [normal] 
+P007 [Title] MÔ PHỎNG TẤN CÔNG DDoS TẦNG ỨNG DỤNG
+VÀ TRIỂN KHAI GIẢI PHÁP PHÁT HIỆN
+GIẢM THIỂU BẰNG SURICATA IPS
+KẾT HỢP HAPROXY TRÊN PFSENSE
+P008 [normal] 
+P009 [normal] Giảng viên hướng dẫn: [ĐIỀN HỌ VÀ TÊN]
+P010 [normal] Nhóm thực hiện: [ĐIỀN SỐ NHÓM]
+P011 [normal] Lớp học phần: [ĐIỀN MÃ LỚP]
+P012 [normal] Học kỳ và năm học: [ĐIỀN THÔNG TIN]
+P013 [normal] 
+P014 [normal] Hà Nội, năm 2026
+P015 [normal] DANH SÁCH THÀNH VIÊN VÀ PHÂN CÔNG
+P016 [normal] Báo cáo thuộc chủ đề “Kỹ thuật tấn công từ chối dịch vụ phân tán (DDoS) và giải pháp phát hiện, giảm thiểu tác động”. Phần thực hành tập trung vào lưu lượng HTTP từ hai máy Kali, cơ chế chặn của Suricata IPS và phân phối yêu cầu bằng HAProxy trên pfSense.
+TABLE 0 (5x4)
+  | Thành viên || Mã sinh viên || Công việc phụ trách || Sản phẩm và mức hoàn thành
+  | [ĐIỀN HỌ TÊN 1] || [ĐIỀN MÃ SV] || [ĐIỀN NHIỆM VỤ] || [ĐIỀN KẾT QUẢ]
+  | [ĐIỀN HỌ TÊN 2] || [ĐIỀN MÃ SV] || [ĐIỀN NHIỆM VỤ] || [ĐIỀN KẾT QUẢ]
+  | [ĐIỀN HỌ TÊN 3] || [ĐIỀN MÃ SV] || [ĐIỀN NHIỆM VỤ] || [ĐIỀN KẾT QUẢ]
+  | [ĐIỀN HỌ TÊN 4] || [ĐIỀN MÃ SV] || [ĐIỀN NHIỆM VỤ] || [ĐIỀN KẾT QUẢ]
+P017 [normal] 
+P018 [normal] Phân công cần phản ánh phần việc thực tế của từng thành viên, bao gồm xây dựng môi trường, cấu hình công cụ, thực hiện phép thử, thu thập minh chứng và biên soạn báo cáo. Số dòng được điều chỉnh theo số thành viên của nhóm.
+P019 [normal] TÓM TẮT
+P020 [normal] Tính sẵn sàng là một yêu cầu quan trọng của an toàn thông tin: dịch vụ phải tiếp tục phục vụ người dùng hợp lệ trong điều kiện vận hành đã xác định. Tấn công từ chối dịch vụ phân tán có thể làm suy giảm yêu cầu này bằng cách tạo lưu lượng từ nhiều nguồn và gây áp lực lên tài nguyên của hệ thống. Báo cáo nghiên cứu vấn đề trong phạm vi HTTP và xây dựng mô hình thực nghiệm có kiểm soát trên VirtualBox.
+P021 [normal] Mô hình gồm hai máy Kali Linux sử dụng Apache JMeter, một máy pfSense chạy đồng thời Suricata Inline IPS và HAProxy, cùng hai máy Windows 11 cung cấp dịch vụ web bằng Python HTTP Server. Hai nguồn gửi yêu cầu tới cùng địa chỉ frontend. Suricata kiểm tra lưu lượng tại WAN của pfSense; HAProxy phân phối những yêu cầu được tiếp nhận tới các backend đang hoạt động. Cách bố trí này cho phép quan sát vai trò bổ sung của kiểm tra nội dung, chính sách theo ngưỡng và cân bằng tải.
+P022 [normal] Quá trình kiểm chứng được chia thành các phép thử độc lập: truy cập bình thường, đối chứng tắt/bật IPS đối với một URI kiểm tra, tạo lưu lượng đồng thời từ hai Kali khi chưa áp dụng chính sách ngưỡng, lặp lại với chính sách ngưỡng và kiểm tra khi một backend ngừng hoạt động. Dữ liệu được đối chiếu giữa JMeter, cảnh báo Suricata, HAProxy Stats và log HTTP của hai server.
+P023 [normal] Các minh chứng cấu hình và phép thử chức năng đã ghi nhận khả năng chặn URI kiểm tra, đồng thời cho thấy cả hai backend nhận và xử lý yêu cầu qua HAProxy. Việc xác định mức giảm tải, ảnh hưởng tới độ trễ và mức duy trì dịch vụ khi hai nguồn cùng hoạt động cần dựa trên các lần đo có cùng cấu hình đầu vào. Báo cáo phân biệt kết quả đã quan sát với tiêu chí kiểm chứng, tránh đồng nhất một cảnh báo với một hành động chặn hoặc đồng nhất việc phân phối yêu cầu với khả năng chống mọi dạng DDoS.
+P024 [normal] Từ khóa: DDoS HTTP; Suricata; Inline IPS; HAProxy; pfSense; JMeter; cân bằng tải.
+P025 [normal] MỤC LỤC
+P026 [normal] DANH MỤC HÌNH
+P027 [normal] DANH MỤC BẢNG
+P028 [normal] DANH MỤC TỪ VIẾT TẮT
+TABLE 1 (16x2)
+  | Thuật ngữ || Tên đầy đủ hoặc ý nghĩa
+  | DDoS || Distributed Denial of Service – tấn công từ chối dịch vụ phân tán
+  | HTTP || Hypertext Transfer Protocol – giao thức truyền tải siêu văn bản
+  | IDS || Intrusion Detection System – hệ thống phát hiện xâm nhập
+  | IPS || Intrusion Prevention System – hệ thống ngăn chặn xâm nhập
+  | VM || Virtual Machine – máy ảo
+  | WAN / LAN || Tên hai phía giao diện mạng của pfSense trong mô hình
+  | NAT || Network Address Translation – chuyển đổi địa chỉ mạng
+  | URI || Uniform Resource Identifier – định danh tài nguyên
+  | SID || Signature ID – mã định danh luật Suricata
+  | RPS || Requests per second – số yêu cầu trong một giây
+  | JTL / JMX || Tệp kết quả thực nghiệm / tệp kế hoạch kiểm thử của JMeter
+  | EVE JSON || Định dạng nhật ký sự kiện JSON của Suricata
+  | Frontend || Điểm HAProxy lắng nghe yêu cầu từ phía người dùng
+  | Backend || Máy chủ hoặc nhóm máy chủ thực sự xử lý yêu cầu
+  | Health check || Phép kiểm tra định kỳ trạng thái backend
+P029 [normal] 
+P030 [Heading 1] MỞ ĐẦU
+P031 [Heading 2] 1. Lý do lựa chọn đề tài
+P032 [normal] Một website có thể có dữ liệu chính xác và cơ chế xác thực tốt nhưng vẫn không đáp ứng mục đích sử dụng nếu người dùng không truy cập được. Khi nhiều nguồn đồng thời gửi yêu cầu, tài nguyên xử lý, số kết nối và các hàng đợi có thể trở thành giới hạn của dịch vụ. Vì vậy, bảo đảm tính sẵn sàng cần được xem xét cùng với việc phát hiện lưu lượng bất thường và tổ chức năng lực phục vụ.
+P033 [normal] Nhóm lựa chọn DDoS HTTP vì loại lưu lượng này gắn trực tiếp với một dịch vụ web có thể xây dựng trong phòng thực hành. Các yêu cầu có thể đúng cú pháp nhưng được gửi với cường độ không phù hợp. Đây là tình huống thuận lợi để khảo sát mối quan hệ giữa phát hiện theo ngưỡng, ngăn chặn và phân phối tải, thay vì chỉ chứng minh một công cụ có thể phát sinh nhiều gói tin. Cách tiếp cận phòng vệ nhiều lớp cũng phù hợp với định hướng giảm thiểu tác động đối với tính sẵn sàng được CERT-EU trình bày [1].
+P034 [Heading 2] 2. Mục tiêu thực hiện
+P035 [normal] Mục tiêu của đề tài là xây dựng và kiểm chứng một chuỗi xử lý HTTP gồm hai nguồn tạo lưu lượng, một điểm kiểm tra IPS và một nhóm hai backend. Các câu hỏi thực nghiệm là: yêu cầu có đi qua đúng frontend hay không; Suricata có thực sự chặn lưu lượng khớp chính sách hay chỉ ghi cảnh báo; HAProxy có phân phối lưu lượng đến cả hai server; và dịch vụ có tiếp tục đáp ứng khi một backend ngừng hoạt động hay không.
+P036 [normal] Để trả lời các câu hỏi trên, báo cáo xác định rõ điều kiện đầu vào, cấu hình giữ nguyên giữa các lần chạy và loại bằng chứng cần thu thập. Kết quả giảm thiểu chỉ được đánh giá trong phạm vi môi trường, tải và luật đã kiểm tra; không suy rộng thành khả năng chống DDoS trên Internet.
+P037 [Heading 2] 3. Đối tượng và phạm vi nghiên cứu
+P038 [normal] Đối tượng nghiên cứu là lưu lượng HTTP rõ trên cổng 8080, cơ chế kiểm tra HTTP của Suricata, chính sách chuyển hành động theo ngưỡng và cân bằng tải ở tầng ứng dụng bằng HAProxy. Hai Kali có địa chỉ 10.10.10.10 và 10.10.10.11 cùng gửi yêu cầu tới 10.10.10.1:8080. Các backend tại 10.10.20.20 và 10.10.20.21 phục vụ cùng tập tài nguyên thử nghiệm.
+P039 [normal] JMeter đóng vai trò bộ tạo tải có kiểm soát. Mô hình không triển khai phần mềm botnet hoặc cơ chế chiếm quyền thiết bị. Việc có hai địa chỉ nguồn thể hiện tính phân tán ở mức phòng thực hành; mức suy giảm dịch vụ phải được chứng minh riêng bằng phép đo. Đề tài không triển khai phản xạ, khuếch đại, khai thác giao thức khác hay phân tích HTTP bên trong TLS.
+P040 [Heading 2] 4. Phương pháp thực hiện
+P041 [normal] Nhóm sử dụng phương pháp thực nghiệm có đối chứng. Trước hết, từng thành phần được kiểm tra ở mức chức năng. Sau đó, cùng một kế hoạch gửi yêu cầu được chạy trong hai trạng thái chính sách: chưa chuyển hành động sang chặn và đã bật chuyển hành động theo ngưỡng. Bằng chứng thu được từ nhiều vị trí giúp phân biệt lỗi máy chủ, lỗi mạng, sự chặn của IPS và tác dụng của cân bằng tải.
+P042 [normal] Ảnh chụp được gắn với mã lần chạy và nội dung cần chứng minh. Bên dưới mỗi ảnh có phần giải thích, nhận xét và đánh giá. Những trường dữ liệu chưa đo được ghi bằng ký hiệu [ĐIỀN…]; các đoạn “Tiêu chí đối chiếu” mô tả điều kiện cần đạt, không thay thế kết quả thực tế. Quy ước hoàn thiện ảnh và số liệu được trình bày tại Phụ lục F.
+P043 [Heading 2] 5. Bố cục báo cáo
+P044 [normal] Chương 1 trình bày cơ sở lý thuyết trực tiếp phục vụ thực nghiệm DDoS HTTP. Chương 2 giải thích giải pháp phối hợp Suricata và HAProxy. Chương 3 mô tả kiến trúc, địa chỉ mạng và cách đo. Chương 4 trình bày quá trình cài đặt, cấu hình và xác nhận hệ thống. Chương 5 tổ chức các kịch bản, đối chiếu minh chứng và đánh giá kết quả. Phần cuối gồm kết luận, tài liệu tham khảo và các phụ lục phục vụ tái lập.
+P045 [Heading 1] CHƯƠNG 1. CƠ SỞ LÝ THUYẾT VỀ DDoS HTTP
+P046 [Heading 2] 1.1. Khái niệm và đặc điểm của DDoS
+P047 [normal] DDoS là hành vi phối hợp nhiều nguồn nhằm làm cho tài nguyên hoặc dịch vụ không còn đáp ứng được nhu cầu của người sử dụng hợp lệ [1]. Trong phạm vi HTTP, tác động có thể biểu hiện ở thời gian phản hồi tăng, kết nối bị từ chối, yêu cầu chờ quá lâu hoặc phản hồi lỗi. Tài nguyên bị gây áp lực có thể nằm ở web server, proxy, thiết bị kiểm tra lưu lượng hoặc hạ tầng mạng trước máy chủ.
+P048 [normal] Hai đặc điểm cần được xem xét riêng là sự phân tán của nguồn gửi và tác động tới tính sẵn sàng. Trong mô hình này, sự phân tán được xác định bằng hai IP nguồn độc lập cùng hướng tới một frontend trong khoảng thời gian chồng lấn. Tác động tới dịch vụ được xác định bằng số liệu phản hồi và khả năng phục vụ, không chỉ bằng số máy tham gia.
+P049 [normal] Một lần gửi 40 yêu cầu có thể đủ để kiểm chứng phân phối tải hoặc kích hoạt một ngưỡng thấp được đặt riêng cho bài thực hành. Tuy nhiên, số lượng này không tự chứng minh website bị quá tải. Vì vậy, thuật ngữ “mô phỏng DDoS HTTP” trong báo cáo mô tả cách tổ chức nguồn và lưu lượng thử nghiệm; kết luận về gián đoạn chỉ được đưa ra khi có dữ liệu tương ứng.
+P050 [Heading 2] 1.2. Nguyên lý gây tải bằng yêu cầu HTTP
+P051 [Heading 3] 1.2.1. Quá trình xử lý và tài nguyên liên quan
+P052 [normal] Đối với mỗi yêu cầu, phía phục vụ phải tiếp nhận kết nối, đọc thông tin HTTP, xác định tài nguyên và gửi phản hồi. Trong mô hình reverse proxy, quá trình còn có bước HAProxy chọn một backend và chuyển yêu cầu đến backend đó. Nếu tốc độ yêu cầu tới lớn hơn năng lực xử lý trong một khoảng thời gian, hàng đợi có thể tăng và người dùng phải chờ lâu hơn.
+P053 [normal] Với Python HTTP Server phục vụ file tĩnh, công việc phía ứng dụng tương đối đơn giản. Mô hình phù hợp để quan sát đường đi và kết quả HTTP, nhưng không đại diện cho mọi ứng dụng có cơ sở dữ liệu, xác thực hay xử lý nghiệp vụ. Nếu file đã nằm trong bộ nhớ đệm hệ điều hành, mức tải CPU và đĩa cũng khác với một website động.
+P054 [Heading 3] 1.2.2. Tốc độ gửi và mức đồng thời
+P055 [normal] Số yêu cầu, tốc độ yêu cầu và số tác vụ đồng thời là ba đại lượng khác nhau. Cùng 80 yêu cầu, việc gửi trải đều trong một phút tạo áp lực khác với việc dồn trong vài giây. Nhiều luồng JMeter có thể làm tăng số yêu cầu đang chờ, nhưng tốc độ thực tế còn phụ thuộc vào độ trễ, timer, giới hạn tài nguyên và timeout.
+P056 [normal] Với mô hình gửi và chờ phản hồi thông thường, mỗi luồng thường phải hoàn tất một mẫu trước khi chuyển sang mẫu tiếp theo. Khi IPS khiến một số yêu cầu chờ hết timeout, nguồn tạo tải có thể tự gửi chậm lại. Bởi vậy, throughput giảm sau khi bật IPS cần được giải thích bằng cả số yêu cầu được backend nhận lẫn cơ chế chờ ở phía JMeter.
+P057 [Heading 3] 1.2.3. Phân biệt với truy cập hợp lệ
+P058 [normal] Một yêu cầu GET hợp lệ không mang sẵn thuộc tính “tấn công”. Cùng một đường dẫn có thể được truy cập bởi người dùng thật, công cụ giám sát hoặc nguồn tạo tải. Ngưỡng được đặt quá thấp có thể ảnh hưởng cả truy cập hợp lệ; ngưỡng đặt quá cao có thể không phát hiện được tổng lưu lượng từ nhiều nguồn.
+P059 [normal] Trong thực nghiệm, nhóm chủ động giới hạn địa chỉ nguồn và URI kiểm tra để tạo điều kiện đo rõ ràng. Đây là chính sách dành cho lab. Khả năng khái quát sang hệ thống thật còn phụ thuộc vào việc đo hành vi truy cập bình thường, đặc điểm tài nguyên và chính sách chấp nhận rủi ro.
+P060 [Heading 2] 1.3. Tạo lưu lượng từ nhiều nguồn bằng JMeter
+P061 [normal] JMeter sử dụng Thread Group để quy định số luồng người dùng ảo, thời gian tăng số luồng và số lần lặp. HTTP Request mô tả yêu cầu gửi tới dịch vụ. Timer bổ sung thời gian chờ và Listener thu thập kết quả. Các thành phần này cho phép xây dựng một kế hoạch có thể lưu thành tệp JMX và thực hiện lặp lại [2].
+P062 [normal] Trong mô hình, hai máy Kali giữ cùng địa chỉ đích, đường dẫn và các tham số tải; mỗi máy có nhãn nguồn riêng. Hai kế hoạch được khởi chạy gần cùng thời điểm và kiểm tra bằng dấu thời gian thực tế. Đây là hai tiến trình tạo tải độc lập. Chỉ sử dụng tên gọi JMeter Remote Testing khi thực sự triển khai bộ điều khiển và các máy chạy từ xa theo cơ chế của JMeter.
+P063 [normal] Nếu một Thread Group gồm T luồng, L vòng lặp và đúng một HTTP Request ở mỗi vòng, số mẫu dự kiến trên một máy là N = T × L. Công thức này cần điều chỉnh nếu có nhiều sampler, vòng lặp bổ sung, dừng sớm hoặc cấu hình chạy theo thời gian. Tổng hai nguồn bằng N1 + N2; số thực tế được xác nhận bằng tệp kết quả của từng nguồn.
+P064 [normal] GUI phù hợp để xây dựng và kiểm tra kế hoạch nhỏ. Khi thu số liệu tải lặp lại, chế độ dòng lệnh giúp giảm chi phí giao diện; các Listener lưu quá nhiều nội dung phản hồi cũng cần được hạn chế [3]. Trong mọi trường hợp, báo cáo phải ghi đúng chế độ đã sử dụng, bởi bản thân máy phát tải có thể là điểm nghẽn.
+P065 [Heading 2] 1.4. Các chỉ số sử dụng để đánh giá
+P066 [normal] Bảng 1.1. Chỉ số và ý nghĩa trong thực nghiệm
+TABLE 2 (9x3)
+  | Chỉ số || Cách xác định || Ý nghĩa và giới hạn
+  | Tổng mẫu N || Số mẫu hoàn tất trong JTL của từng Kali || Phân biệt với số dự kiến theo Thread Group
+  | Tỷ lệ lỗi || Mẫu không thành công / tổng mẫu × 100% || Có thể do timeout, IPS, backend hoặc cấu hình
+  | Thời gian đáp ứng || Thời gian hoàn tất từng mẫu; xét trung bình và P95 || Cần tách nhóm thành công và nhóm timeout
+  | Throughput || Số mẫu hoàn tất chia khoảng đo || Phụ thuộc thời gian chờ của nguồn tạo tải
+  | Yêu cầu tới backend || Log HTTP lọc đúng URI và mã lần chạy || Loại health check và truy cập ngoài lần chạy
+  | Phân bố backend || Nweb1 và Nweb2 trong cùng lần chạy || Kiểm chứng hai server cùng tham gia xử lý
+  | Hành động chặn || SID, thời gian, nguồn, đích và action trong log IPS || Cảnh báo đơn thuần chưa đủ chứng minh chặn
+  | Trạng thái dịch vụ || Phản hồi của yêu cầu đối chứng và health check || UP chỉ thể hiện điều kiện health check đạt
+P067 [normal] 
+P068 [normal] Thời gian đáp ứng trung bình được tính bằng tổng thời gian hoàn tất chia số mẫu. P95 là mức thời gian mà khoảng 95% mẫu không vượt quá. Nếu cần gộp kết quả hai Kali, phải tính từ tập mẫu gốc; không lấy trung bình cộng hai giá trị P95. Tương tự, tỷ lệ lỗi chung bằng tổng số mẫu lỗi chia tổng số mẫu của cả hai nguồn.
+P069 [normal] Gọi Nweb1 và Nweb2 là số yêu cầu thử nghiệm được ghi tại mỗi backend. Tỷ lệ phân phối của web1 là Nweb1/(Nweb1 + Nweb2) × 100%, nếu tổng khác 0. Độ lệch có thể mô tả bằng |Nweb1 − Nweb2|/(Nweb1 + Nweb2) × 100%. Đây là phép đo phân phối, chưa phải phép đo tăng năng lực xử lý.
+P070 [normal] Khi so sánh hai trạng thái chính sách với số yêu cầu đầu vào thực tế tương đương, mức giảm yêu cầu tới backend có thể được tính từ chênh lệch tổng log của hai lần chạy. Không gọi đại lượng này là “tỷ lệ IPS chặn chính xác”, bởi mất kết nối, thử lại và giới hạn thời gian đều có thể ảnh hưởng đến kết quả.
+P071 [Heading 1] CHƯƠNG 2. GIẢI PHÁP PHÁT HIỆN VÀ GIẢM THIỂU
+P072 [Heading 2] 2.1. Vai trò của các thành phần
+P073 [normal] pfSense là điểm kết nối giữa hai mạng nội bộ và là nơi triển khai dịch vụ kiểm tra, phân phối lưu lượng. Các luật firewall xác định đường truy cập được phép; Suricata thực hiện kiểm tra HTTP và chính sách chặn; HAProxy tiếp nhận yêu cầu tại frontend và chọn backend. Việc phân định vai trò giúp tránh quy kết mọi yêu cầu thất bại cho cùng một công cụ.
+P074 [normal] HAProxy tổ chức điểm lắng nghe phía khách và nhóm server phía sau, phù hợp với việc đưa một dịch vụ web ra một địa chỉ truy cập chung [7]. Trong mô hình này, Windows Firewall không được sử dụng làm cơ chế phát hiện DDoS. Nếu hệ điều hành cần quy tắc cho phép TCP/8080 từ pfSense, đó là điều kiện kết nối tới dịch vụ, không phải kết quả phòng chống của Suricata.
+P075 [Heading 2] 2.2. Cơ chế kiểm tra và chặn của Suricata
+P076 [Heading 3] 2.2.1. Inline IPS và vị trí trên đường truyền
+P077 [normal] Suricata ở chế độ Inline IPS tham gia vào đường đi của lưu lượng để có thể thực thi hành động chặn. Trên pfSense, chế độ này sử dụng netmap và phụ thuộc khả năng hỗ trợ của driver giao diện. Vì vậy, đánh dấu “Enable” hoặc nhìn thấy tiến trình chạy chưa đủ: cần có luật thích hợp và một phép thử xác nhận gói hoặc luồng thực sự bị chặn. Mã nguồn giao diện cấu hình của gói Suricata cũng phân biệt luật ALERT với luật DROP trong Inline Mode [11].
+P078 [normal] Trong thiết kế, Suricata kiểm tra lưu lượng đi vào WAN trước khi HAProxy xử lý yêu cầu HTTP ở frontend. Cụm từ “lọc trước” diễn tả thứ tự kiểm tra ở đường vào, không có nghĩa HAProxy hoàn toàn không tiêu tốn tài nguyên cho một kết nối bị chặn sau đó. Chẳng hạn, bắt tay TCP có thể đã hoàn tất trước khi nội dung URI đủ để khớp luật.
+P079 [Heading 3] 2.2.2. Luật, SID và hành động
+P080 [normal] Một luật được xác định bởi phần điều kiện mạng và phần điều kiện nội dung. Địa chỉ nguồn giúp khoanh vùng hai Kali; địa chỉ đích là WAN của pfSense; cổng 8080 xác định dịch vụ; các bộ đệm HTTP cho phép kiểm tra phương thức hoặc URI. Suricata hỗ trợ các từ khóa như http.method và http.uri để kiểm tra đúng trường của giao thức [5].
+P081 [normal] SID giúp truy ngược một sự kiện về luật sinh ra nó. Trong đề tài, SID 1001001 dành cho phép kiểm tra chặn URI; SID 1001002 dành cho lưu lượng kiểm tra theo ngưỡng. Tách hai SID giúp xác định rõ nguyên nhân của mỗi hành vi. alert phục vụ ghi nhận; drop là hành động chặn khi được thực thi trong chế độ IPS phù hợp. Việc chỉ thấy tên luật ở trang Alerts không thay thế việc xem hành động.
+P082 [Heading 3] 2.2.3. Kiểm chứng chặn URI
+P083 [normal] Luật kiểm tra URI được thiết kế khớp đường dẫn /ips-test.txt. Khi luật có hiệu lực, một yêu cầu duy nhất cũng có thể bị chặn. Phép thử này trả lời câu hỏi Suricata có nằm đúng trên đường truyền và có thực thi DROP hay không. Nó không cần làm quá tải máy chủ và không phải là bằng chứng phát hiện DDoS theo cường độ.
+P084 [normal] Các chuỗi như IPS_ON_001 hoặc IPS_OFF_001 được thêm vào query string để đối chiếu log giữa các máy. Chuỗi này là nhãn thực nghiệm. Nếu luật khớp phần đầu /ips-test.txt, việc đổi nhãn không làm yêu cầu thoát khỏi luật. Trạng thái tắt/bật trong phép đối chứng phải được thay đổi ở IPS hoặc luật, không chỉ thay chữ trong URL.
+P085 [Heading 3] 2.2.4. Chính sách chuyển hành động theo ngưỡng
+P086 [normal] Chính sách thực nghiệm sử dụng một luật ALERT nhận diện GET tới /load-test.txt, kết hợp rate_filter. Khi số lần luật khớp đạt điều kiện cấu hình trong khoảng theo dõi, hành động được chuyển sang DROP trong thời gian timeout quy định. track by_src theo dõi riêng theo IP nguồn; nó không tự cộng tổng hai IP thành một bộ đếm chung [6].
+P087 [normal] Ngưỡng 20 lần khớp trong 10 giây và thời gian chuyển hành động 15 giây được chọn làm tham số kiểm chứng chức năng trong lab. Các giá trị này không được suy ra từ năng lực thực tế của Python server. Một chính sách vận hành thật cần có số liệu nền và quá trình hiệu chỉnh để cân bằng giữa phát hiện và chặn nhầm.
+P088 [normal] Vì theo dõi riêng từng nguồn, cần kiểm tra kết quả cho cả 10.10.10.10 và 10.10.10.11. Nếu mỗi IP gửi dưới ngưỡng nhưng tổng lưu lượng vượt năng lực backend, chính sách hiện tại có thể không kích hoạt. Đây là giới hạn trực tiếp của thiết kế, đồng thời là lý do không kết luận đã giải quyết đầy đủ vấn đề DDoS phân tán.
+P089 [Heading 2] 2.3. Cơ chế cân bằng tải của HAProxy
+P090 [normal] Frontend cung cấp điểm truy cập duy nhất 10.10.10.1:8080. Backend pool gồm web1 và web2 với cùng trọng số. Thuật toán round-robin phân phối lượt chọn theo vòng giữa các server đủ điều kiện [8]. Tỷ lệ quan sát có thể không tuyệt đối 50/50 do điều kiện kết nối, tái sử dụng kết nối, thay đổi trạng thái hoặc truy cập khác trong thời gian đo. Bởi vậy, log có mã lần chạy đáng tin cậy hơn việc nhìn riêng một bộ đếm tích lũy.
+P091 [normal] Health check là lưu lượng do HAProxy tạo để kiểm tra backend. Đề tài dùng GET /health.txt và kiểm tra HTTP 200. Khi số lần kiểm tra thất bại liên tiếp đạt điều kiện cấu hình, backend bị loại khỏi danh sách phục vụ; khi đạt số lần thành công cần thiết, server được đưa trở lại [9]. Các yêu cầu health check phải được loại khỏi số yêu cầu do JMeter tạo.
+P092 [normal] HAProxy còn giúp chuyển yêu cầu mới sang backend còn hoạt động khi một server gặp sự cố. Điều này không bảo đảm các yêu cầu đang xử lý trên server hỏng được bảo toàn hoặc người dùng hoàn toàn không thấy lỗi trong thời gian phát hiện. Bằng chứng cần có chuỗi trạng thái UP, DOWN, UP cùng phản hồi HTTP trong các giai đoạn tương ứng.
+P093 [Heading 2] 2.4. Phối hợp Suricata và HAProxy trên pfSense
+P094 [normal] Thiết kế lựa chọn một pfSense có hai card mạng. Luồng từ phía nguồn đi vào WAN, được Suricata kiểm tra, sau đó những yêu cầu được tiếp nhận bởi frontend HAProxy mới được chuyển tới LAN và một backend. Với reverse proxy thông thường, server thấy địa chỉ kết nối từ pfSense LAN là 10.10.20.1. Vì vậy, việc Python log không hiển thị trực tiếp IP Kali không có nghĩa lưu lượng đã mất nguồn ở phía WAN.
+P095 [normal] Bảng 2.1. Đối chiếu vị trí kiểm tra và lựa chọn của đề tài
+TABLE 3 (4x3)
+  | Phương án || Ý nghĩa || Đánh giá đối với mô hình
+  | IPS ở đường vào trước HAProxy || Quan sát nguồn Kali trước kết nối proxy tới backend || Phù hợp kiểm tra theo IP nguồn và URI frontend
+  | Kiểm tra chủ yếu ở phía backend || Quan sát yêu cầu sau khi proxy đã xử lý || HAProxy vẫn tiếp nhận tải; nguồn kết nối thường là proxy
+  | IPS và HAProxy cùng pfSense || Kết hợp hai vai trò tại một VM, IPS gắn WAN || Ít VM bổ sung, dễ đối chiếu log; chia sẻ CPU và RAM
+P096 [normal] 
+P097 [normal] Ba cách mô tả trên không hoàn toàn loại trừ nhau: “cùng pfSense” nói về nơi triển khai, còn “trước HAProxy” nói về vị trí kiểm tra. Đề tài kết hợp hai đặc điểm này. Cấu hình cần bảo đảm yêu cầu tới cổng 8080 không bị một NAT Port Forward cũ chuyển thẳng đến Windows. Port forward có thể thay đổi đích trước khi dịch vụ cục bộ của firewall xử lý [10].
+P098 [normal] Firewall WAN chỉ cho phép hai Kali truy cập đúng frontend; không cần mở một đường cho Kali tới trực tiếp backend. Web GUI quản trị được truy cập từ LAN. Nhờ vậy, việc nhìn thấy log ở backend và frontend có thể được giải thích theo cùng một luồng đã thiết kế.
+P099 [Heading 2] 2.5. Giới hạn và điều kiện đánh giá
+P100 [normal] Suricata và HAProxy bổ sung cho nhau: thành phần thứ nhất quyết định đối với lưu lượng khớp chính sách, thành phần thứ hai sử dụng nhóm backend để phục vụ yêu cầu được tiếp nhận. Cân bằng tải không tự xác định mọi yêu cầu có mục đích gây hại; lọc theo URI hoặc ngưỡng cũng không tạo thêm băng thông cho đường truyền.
+P101 [normal] Một pfSense duy nhất là điểm tập trung tài nguyên và điểm sự cố chung. Nếu CPU, RAM hoặc đường vào của nó bị bão hòa, việc có hai backend không khắc phục được toàn bộ vấn đề. Tương tự, khi các VM cùng chạy trên một máy thật, sự cạnh tranh tài nguyên có thể làm máy phát tải và máy phục vụ cùng chậm. Những yếu tố này phải được ghi nhận để tránh diễn giải sai kết quả.
+P102 [normal] Do thử nghiệm sử dụng HTTP rõ, Suricata có thể kiểm tra URI ở WAN. Khi thay bằng HTTPS, nội dung ứng dụng được mã hóa và mô hình cần thiết kế lại vị trí giải mã, kiểm tra hoặc giới hạn lưu lượng. Báo cáo không suy rộng kết quả kiểm tra URI HTTP sang HTTPS.
+P103 [Heading 1] CHƯƠNG 3. MÔI TRƯỜNG VÀ KIẾN TRÚC THỰC NGHIỆM
+P104 [Heading 2] 3.1. Yêu cầu và thành phần môi trường
+P105 [normal] Môi trường gồm năm máy ảo: hai Kali, một pfSense và hai Windows 11. Các VM được nối qua hai Internal Network độc lập. Chỉ pfSense có giao diện ở cả hai mạng. Trong giai đoạn đo, lưu lượng được giới hạn trong lab; các card NAT phục vụ tải phần mềm được ngắt hoặc tắt trước khi chạy kịch bản.
+P106 [normal] Môi trường phải đủ tài nguyên để các VM hoạt động ổn định đồng thời. Gói kiểm tra lưu lượng có nhu cầu bộ nhớ riêng ngoài hệ điều hành và các dịch vụ khác [4]. Không dùng các mức RAM hoặc CPU dự kiến như số liệu đã đo. Bảng 3.1 được điền từ VirtualBox Settings và thông tin của máy thật trước khi thực nghiệm; thay đổi tài nguyên giữa các lần đối chứng phải được ghi rõ.
+P107 [normal] Bảng 3.1. Thông tin phần cứng và phiên bản thực nghiệm
+TABLE 4 (7x3)
+  | Thành phần || CPU và RAM thực cấp || Hệ điều hành hoặc phiên bản
+  | Máy thật || [ĐIỀN CPU, RAM, DUNG LƯỢNG TRỐNG] || [ĐIỀN HỆ ĐIỀU HÀNH, VIRTUALBOX]
+  | Kali 1 || [ĐIỀN vCPU VÀ RAM] || [ĐIỀN KALI, JAVA, JMETER]
+  | Kali 2 || [ĐIỀN vCPU VÀ RAM] || [ĐIỀN KALI, JAVA, JMETER]
+  | pfSense || [ĐIỀN vCPU VÀ RAM] || [ĐIỀN PFSENSE, SURICATA, HAPROXY]
+  | Web 1 || [ĐIỀN vCPU VÀ RAM] || Windows 11; Python [ĐIỀN PHIÊN BẢN]
+  | Web 2 || [ĐIỀN vCPU VÀ RAM] || Windows 11; Python [ĐIỀN PHIÊN BẢN]
+P108 [normal] 
+P109 [Heading 2] 3.2. Kiến trúc mạng tổng thể
+P110 [normal] 
+P111 [normal] Hình 3.1. Kiến trúc hai nguồn HTTP và hai backend qua pfSense
+P112 [normal] Giải thích: Hai Kali cùng truy cập một dịch vụ tại WAN của pfSense. Suricata và HAProxy nằm trên cùng máy ảo nhưng đảm nhiệm hai bước khác nhau. Các backend chỉ nối với mạng SERVER-LAN. Mũi tên mô tả chiều xử lý yêu cầu; phản hồi được trả lại qua HAProxy tới phía nguồn.
+P113 [normal] Nhận xét và đánh giá: Cách tách hai mạng giúp kiểm soát đường đi và giảm khả năng gửi nhầm trực tiếp đến Windows. Sơ đồ thể hiện một dịch vụ có hai backend, không phải hai cuộc thử nghiệm độc lập mỗi Kali chỉ hướng đến một server. Mô hình phù hợp để quan sát cơ chế, song vẫn phụ thuộc tài nguyên của pfSense và máy thật.
+P114 [Heading 2] 3.3. Quy hoạch IP và cổng dịch vụ
+P115 [normal] Bảng 3.2. Kế hoạch địa chỉ của mô hình
+TABLE 5 (7x4)
+  | Máy hoặc giao diện || Mạng VirtualBox || Địa chỉ IPv4 || Gateway hoặc vai trò
+  | Kali 1 || ATTACKER-LAN || 10.10.10.10/24 || 10.10.10.1
+  | Kali 2 || ATTACKER-LAN || 10.10.10.11/24 || 10.10.10.1
+  | pfSense WAN || ATTACKER-LAN || 10.10.10.1/24 || Không đặt upstream gateway trong lab cô lập
+  | pfSense LAN || SERVER-LAN || 10.10.20.1/24 || Điểm quản trị và phía backend
+  | Web 1 || SERVER-LAN || 10.10.20.20/24 || 10.10.20.1
+  | Web 2 || SERVER-LAN || 10.10.20.21/24 || 10.10.20.1
+P116 [normal] 
+P117 [normal] Trong mô hình này, tên WAN chỉ giao diện phía Kali, không đồng nghĩa với một địa chỉ Internet công cộng. Hai máy cùng mạng phải dùng IP riêng; sao chép VM mà giữ nguyên địa chỉ sẽ gây xung đột. Ký hiệu /24 tương ứng subnet mask 255.255.255.0. Địa chỉ loopback 127.0.0.1 luôn chỉ chính máy đang sử dụng nó, vì vậy Kali không thể dùng loopback của mình để mở server trên Windows.
+P118 [normal] Frontend và hai HTTP server đều dùng cổng 8080, nhưng trên các địa chỉ khác nhau. Web GUI pfSense được quản trị qua https://10.10.20.1. Các phép thử dùng IP trực tiếp nên không phụ thuộc phân giải DNS trong mạng cô lập.
+P119 [Heading 2] 3.4. Luồng xử lý và phạm vi quan sát
+P120 [normal] Một yêu cầu từ Kali có địa chỉ nguồn .10 hoặc .11, đích 10.10.10.1:8080. Suricata tại WAN quan sát nguồn thật này và kiểm tra điều kiện HTTP. Nếu yêu cầu không bị chặn, HAProxy tiếp nhận và chọn web1 hoặc web2. Kết nối từ HAProxy tới Python server đi qua phía LAN, do đó log Windows thường ghi 10.10.20.1 làm địa chỉ khách.
+P121 [normal] Các yêu cầu /health.txt phát sinh từ HAProxy tới backend phục vụ giám sát trạng thái. Chúng không chứng minh Kali đã gửi được yêu cầu và không được tính vào tổng mẫu JMeter. Để đối chiếu một lần chạy, URI cần có nhãn như run=KB3_R1&src=K1; khi đó log ứng dụng vẫn phân biệt được nguồn thử nghiệm dù địa chỉ TCP tại backend là pfSense.
+P122 [Heading 2] 3.5. Phối hợp hai nguồn tạo lưu lượng
+P123 [normal] Hai Kali sử dụng cùng bản test plan với các tham số kiểm tra tương đương. Điểm khác biệt là nhãn src=K1 hoặc src=K2 và tên tệp kết quả. Nhóm thống nhất mã lần chạy, kiểm tra giờ hệ thống, sau đó khởi chạy trên cả hai máy. Dấu thời gian trong JTL được dùng để xác nhận khoảng giao nhau thực tế, thay vì chỉ căn cứ việc bấm nút gần nhau.
+P124 [normal] Với phép kiểm chứng ban đầu, mỗi nguồn dự kiến tạo 40 yêu cầu bằng hai luồng và 20 vòng lặp, mỗi vòng một HTTP Request. Tổng dự kiến là 80 yêu cầu. Đây là bộ tham số nhỏ để kiểm tra chính sách lab; mọi lần dừng sớm hoặc mẫu bổ sung phải được ghi trong bảng kết quả. Giá trị 40 của các ảnh thử nghiệm cũ không tự động trở thành 40 cho mỗi máy của mô hình mới.
+P125 [normal] Khoảng đồng thời được tính từ thời điểm bắt đầu muộn hơn giữa hai nguồn tới thời điểm kết thúc sớm hơn. Nếu khoảng này không tồn tại, lần chạy chưa đáp ứng điều kiện hai nguồn hoạt động đồng thời. Việc hai VM cùng bật nguồn không đủ để thay thế điều kiện này.
+P126 [Heading 2] 3.6. Thu thập và đối chiếu dữ liệu
+P127 [normal] Bảng 3.3. Nguồn dữ liệu và trường cần ghi nhận
+TABLE 6 (6x3)
+  | Nguồn || Nội dung cần lưu || Mục đích đối chiếu
+  | JMeter K1 và K2 || JMX; JTL; giờ bắt đầu và kết thúc; số mẫu; lỗi; thời gian đáp ứng || Xác nhận đầu vào và kết quả tại từng nguồn
+  | Suricata || SID, action, nguồn, đích, cổng, thời gian; EVE nếu có || Xác định luật nào đã khớp hoặc chặn
+  | HAProxy Stats || Trạng thái, LastChk, bộ đếm trước/sau, thời gian chụp || Đánh giá backend tham gia xử lý và lỗi
+  | Python HTTP Server || Log của cả web1, web2 chứa URI và mã lần chạy || Xác định yêu cầu đã tới ứng dụng
+  | Máy thật và pfSense || CPU, RAM, sự cố treo hoặc khởi động lại || Nhận biết ảnh hưởng tài nguyên ngoài chính sách
+P128 [normal] 
+P129 [normal] Nhật ký EVE có thể chứa nhiều loại sự kiện khác nhau; khi phân tích cần chọn đúng sự kiện cảnh báo và trường hành động thay vì chỉ đếm mọi dòng JSON [14]. Một cảnh báo có thể liên quan đến một luồng, trong khi một luồng có nhiều gói; do đó không chuyển trực tiếp số cảnh báo thành số yêu cầu bị chặn.
+P130 [normal] Ảnh chụp được đặt tên theo cấu trúc KBx_Ry_thietbi_noidung.png. Cần giữ bản gốc và tạo bản đánh dấu để đưa vào báo cáo. Màu xanh dùng cho phản hồi thành công hoặc UP; màu đỏ cho DROP, DOWN hoặc lỗi cần phân tích. Mỗi ảnh có thêm khoanh vùng, nhãn hoặc mũi tên để thông tin vẫn hiểu được khi in đen trắng.
+P131 [Heading 2] 3.7. Điều kiện lặp lại và giới hạn đo
+P132 [normal] Giữa hai trạng thái so sánh, giữ nguyên số backend, trọng số, nội dung file, timeout, số luồng, số vòng lặp, timer và tài nguyên VM. Mỗi cấu hình nên được lặp lại ba lần, lưu riêng toàn bộ số liệu và báo cáo sự dao động. Nếu chỉ có một lần đo, kết luận phải giới hạn ở lần đo đó.
+P133 [normal] Trước mỗi lần chạy, dừng tải cũ, kiểm tra backend UP và làm sạch phần hiển thị kết quả JMeter. Không xóa tệp JTL đang cần làm minh chứng. Khi thay đổi chính sách, cần chờ trạng thái chặn cũ hết hiệu lực và xác nhận các kết nối cũ không làm sai lệch phép đo. Chỉ xóa các state của luồng thử nghiệm khi cần, tránh làm gián đoạn phiên quản trị.
+P134 [normal] Đồng hồ sai lệch giữa các VM có thể khiến các sự kiện cùng một yêu cầu trông như ở những thời điểm khác nhau. Nhóm ghi nhận múi giờ hoặc chuẩn hóa về một múi giờ trước khi đối chiếu. Các kết quả thu trong thời gian Kali bị treo, host thiếu RAM hoặc pfSense khởi động lại phải được đánh dấu riêng và không trộn vào lần đo ổn định.
+P135 [Heading 1] CHƯƠNG 4. CÀI ĐẶT VÀ CẤU HÌNH HỆ THỐNG
+P136 [Heading 2] 4.1. Chuẩn bị năm máy ảo
+P137 [normal] Hai máy Kali được sử dụng làm nguồn tạo lưu lượng. Khi tạo Kali 2 từ bản clone của Kali 1, chọn tạo lại địa chỉ MAC cho card mạng và đổi IPv4 sang 10.10.10.11 trước khi đưa vào cùng mạng. Hai Windows web server cũng phải có MAC và IP riêng. Việc clone giúp giữ phần mềm tương đương, nhưng không thay thế việc kiểm tra cấu hình trên từng bản sao.
+P138 [normal] pfSense được tạo thành một VM riêng với hai card mạng. Sau khi khởi động từ bộ cài, cài hệ điều hành lên đĩa ảo, gỡ bộ cài khỏi ổ quang ảo và khởi động lại. Tại console, đối chiếu MAC của card với VirtualBox để gán đúng WAN và LAN; không suy đoán giao diện chỉ từ thứ tự tên em0, em1.
+P139 [normal] Trong giai đoạn cài đặt gói, có thể tạm nối WAN pfSense vào NAT để lấy mạng; khi đó WAN nhận cấu hình phù hợp với mạng NAT. Sau khi tải đủ Suricata, HAProxy và phần mềm trên các VM, tắt VM, chuyển kết nối về hai Internal Network của mô hình và đặt IP tĩnh theo Bảng 3.2. Chỉ bắt đầu đo khi WAN đã trở về 10.10.10.1/24, không còn phụ thuộc gateway NAT cũ.
+P140 [normal] [CHÈN HÌNH 4.1 TẠI ĐÂY] Chụp VirtualBox Manager và phần System của các VM. Có thể ghép các vùng cần thiết; khoanh tên Kali 1, Kali 2, pfSense, Web 1 và Web 2. Điền cấu hình tương ứng ở Bảng 3.1.
+P141 [normal] Hình 4.1. Danh sách năm máy ảo và tài nguyên thực cấp
+P142 [normal] Giải thích: Hình ghi nhận các thành phần thực sự có trong môi trường và tài nguyên được cấp cho chúng. Nhận xét: Cần có đủ năm VM theo kiến trúc; trạng thái Running chỉ xác nhận VM đang chạy, chưa xác nhận dịch vụ bên trong sẵn sàng. Đánh giá: Các phép đo chỉ so sánh được khi tài nguyên không thay đổi giữa các kịch bản hoặc mọi thay đổi được ghi lại.
+P143 [Heading 2] 4.2. Cấu hình mạng và địa chỉ IP
+P144 [Heading 3] 4.2.1. Kết nối VirtualBox
+P145 [normal] Tắt hoàn toàn VM trước khi thay đổi card mạng. Trong Settings → Network, đặt card của hai Kali vào Internal Network tên ATTACKER-LAN. Đặt card của hai Windows vào SERVER-LAN. Với pfSense, card WAN nối ATTACKER-LAN và card LAN nối SERVER-LAN. Bật Enable Network Adapter và Cable Connected ở các card sử dụng. Hai tên mạng phải trùng chính xác giữa những VM cần nối cùng nhau.
+P146 [normal] Nếu Adapter 2 không sửa được, kiểm tra VM đã Powered Off hay vẫn ở trạng thái Running hoặc Saved. Có thể đổi giao diện Settings sang chế độ hiển thị đầy đủ nếu phiên bản VirtualBox đang ẩn các mục nâng cao. Không cần đặt Kali hoặc Windows vào cả hai mạng, vì điều đó có thể tạo đường truy cập ngoài kiến trúc đã chọn.
+P147 [normal] [CHÈN HÌNH 4.2 TẠI ĐÂY] Chèn ảnh Adapter WAN và Adapter LAN của pfSense; khoanh tên mạng và Cable Connected. Bổ sung ảnh một Kali và một Windows để chứng minh chúng ở hai phía khác nhau.
+P148 [normal] Hình 4.2. Hai card mạng pfSense và ánh xạ Internal Network
+P149 [normal] Giải thích: Hai card của pfSense tạo liên kết giữa hai phân đoạn, trong khi các máy đầu cuối chỉ gắn với phân đoạn của mình. Nhận xét: Cùng subnet IP nhưng khác tên Internal Network vẫn có thể không liên lạc được. Đánh giá: Ảnh này chứng minh kết nối ảo đã được thiết kế; cần kết hợp kiểm tra IP và HTTP ở các bước sau để xác nhận hoạt động.
+P150 [Heading 3] 4.2.2. Cấu hình pfSense và các máy đầu cuối
+P151 [normal] Tại pfSense console, gán WAN và LAN theo MAC rồi đặt IP tĩnh. WAN dùng 10.10.10.1/24, LAN dùng 10.10.20.1/24. Trong lab này không đặt upstream gateway cho WAN. Từ Windows ở SERVER-LAN, mở https://10.10.20.1 để quản trị. Dùng IP tĩnh ở các máy đầu cuối giúp cấu hình không phụ thuộc DHCP.
+P152 [normal] Trên Kali, sử dụng Network Manager để chọn IPv4 Manual; điền IP .10 hoặc .11, prefix 24 và gateway 10.10.10.1. Trên Windows, mở thuộc tính IPv4 của Ethernet, điền địa chỉ .20 hoặc .21 ở mạng 10.10.20.0, subnet mask 255.255.255.0 và gateway 10.10.20.1. Sau khi lưu, xác nhận bằng các lệnh sau trên đúng hệ điều hành.
+P153 [normal] # Terminal trên từng Kali
+P154 [normal] ip -br addr
+P155 [normal] ip route
+P156 [normal] 
+P157 [normal] # PowerShell trên từng Windows
+P158 [normal] ipconfig
+P159 [normal] 
+P160 [normal] Tại Interfaces → WAN của pfSense, kiểm tra mục Block private networks. Vì WAN lab nhận lưu lượng có nguồn 10.10.10.0/24, cần bỏ chặn mạng riêng trên riêng giao diện WAN của mô hình này. Đây là điều chỉnh phù hợp với mạng thực hành có địa chỉ private; không phải quy tắc chung cho mọi WAN Internet.
+P161 [normal] [CHÈN HÌNH 4.3 TẠI ĐÂY] Chèn kết quả ip -br addr của cả hai Kali và ipconfig của cả hai Windows. Khoanh xanh bốn IP khác nhau; ghi rõ tên máy ngay trên từng phần ảnh.
+P162 [normal] Hình 4.3. Địa chỉ IP của hai Kali và hai Windows
+P163 [normal] Giải thích: Hình xác nhận hai nguồn .10 và .11, hai backend .20 và .21 thuộc đúng mạng. Nhận xét: Địa chỉ 169.254.x.x trên Windows cho thấy máy chưa nhận được cấu hình IPv4 mong muốn; không dùng nó làm địa chỉ backend. Đánh giá: Hai IP nguồn độc lập là điều kiện cần của mô phỏng phân tán, nhưng chưa chứng minh hai nguồn đã gửi đồng thời.
+P164 [Heading 3] 4.2.3. Kiểm tra kết nối cơ bản
+P165 [normal] Từ từng Windows, mở Web GUI pfSense tại LAN. Sau khi triển khai HTTP server, dùng Diagnostics → Test Port trên pfSense để kiểm tra 10.10.20.20:8080 và 10.10.20.21:8080. Từ Kali, dùng HTTP qua frontend sau khi HAProxy đã được cấu hình. Không dùng riêng kết quả ping thất bại để kết luận mạng sai, vì ICMP có thể chưa được firewall cho phép.
+P166 [Heading 2] 4.3. Triển khai dịch vụ trên hai Windows server
+P167 [normal] Python được cài và kiểm tra bằng py -3 --version. Trên Web 1, tạo thư mục riêng và bốn file kiểm tra. Các file của Web 2 có cùng tên nhưng nội dung nhận diện SERVER 2. Cách này giúp nhìn phản hồi đã biết server nào phục vụ, đồng thời vẫn bảo đảm hai backend cung cấp cùng loại tài nguyên.
+P168 [normal] New-Item -ItemType Directory -Force C:\ddos-lab
+P169 [normal] Set-Content -Encoding ascii C:\ddos-lab\index.html 'WEB SERVER 1'
+P170 [normal] Set-Content -Encoding ascii C:\ddos-lab\health.txt 'OK'
+P171 [normal] Set-Content -Encoding ascii C:\ddos-lab\ips-test.txt 'IPS TEST - SERVER 1'
+P172 [normal] Set-Content -Encoding ascii C:\ddos-lab\load-test.txt 'LOAD TEST - SERVER 1'
+P173 [normal] py -3 -u -m http.server 8080 --bind 0.0.0.0 --directory C:\ddos-lab
+P174 [normal] 
+P175 [normal] Trên Web 2, thay các nhãn SERVER 1 bằng SERVER 2 trước khi chạy. Lệnh cuối khởi động HTTP server ở cổng 8080 trên các địa chỉ của máy; giữ cửa sổ này mở để dịch vụ tiếp tục chạy. -u giúp đầu ra được ghi kịp thời khi thu log. Nội dung file dùng ký tự ASCII để hạn chế khác biệt mã hóa ở bài kiểm tra.
+P176 [normal] Kiểm tra cục bộ trên mỗi Windows bằng http://127.0.0.1:8080/health.txt, sau đó kiểm tra từ pfSense. Nếu cục bộ hoạt động nhưng pfSense không kết nối được, kiểm tra IP, card mạng và quy tắc cho phép TCP/8080 từ 10.10.20.1 trên Windows. Không tắt toàn bộ Windows Firewall chỉ để thay thế việc xác định nguyên nhân kết nối. Python HTTP Server phù hợp cho lab phục vụ file đơn giản và không được thiết kế như máy chủ triển khai sản xuất [12].
+P177 [normal] [CHÈN HÌNH 4.4 TẠI ĐÂY] Chụp hai cửa sổ hiển thị Serving HTTP, kèm phản hồi nội dung SERVER 1 và SERVER 2. Khoanh cổng 8080, thư mục phục vụ và nhãn server.
+P178 [normal] Hình 4.4. Hai Python HTTP Server và trang nhận diện backend
+P179 [normal] Giải thích: Hai dịch vụ hoạt động độc lập trên hai IP, có khả năng trả file kiểm tra. Nhận xét: Phản hồi cục bộ chỉ chứng minh ứng dụng đang chạy; phản hồi từ pfSense mới xác nhận đường LAN tới backend. Đánh giá: Phải hoàn tất kiểm tra này trước khi phân tích lỗi HAProxy hoặc Suricata để tránh quy kết sai lỗi ứng dụng cho IPS.
+P180 [Heading 2] 4.4. Cấu hình đường truy cập trên pfSense
+P181 [normal] Tạo alias KALI_LAB tại Firewall → Aliases, chứa đúng hai host 10.10.10.10 và 10.10.10.11. Tại Firewall → Rules → WAN, thêm luật Pass với giao thức TCP, nguồn KALI_LAB, đích WAN address và cổng đích 8080. Lưu và Apply Changes. Không cần dùng luật WAN allow any to any để phục vụ kịch bản này.
+P182 [normal] Nếu đã có Port Forward từ WAN:8080 tới một Windows server, vào Firewall → NAT → Port Forward, mở luật tương ứng, bật Disable rồi lưu và áp dụng. Kiểm tra cả firewall rule liên quan do NAT tạo ra. Port forward cũ có thể làm yêu cầu đi tới một backend thay vì frontend HAProxy [10]. Giữ nguyên các luật LAN đang phục vụ quản trị.
+P183 [normal] Vô hiệu hóa các luật WAN cũ cho phép Kali truy cập trực tiếp 10.10.20.20 hoặc 10.10.20.21 nếu chúng không thuộc thiết kế mới. Nếu sau thay đổi vẫn còn kết nối theo đường cũ, vào Diagnostics → States, lọc đúng IP và cổng của phép thử rồi xóa riêng các state tương ứng. Không xóa toàn bộ bảng state như một bước bắt buộc của mọi lần chạy.
+P184 [normal] [CHÈN HÌNH 4.5 TẠI ĐÂY] Chèn ảnh alias chứa hai IP, rule TCP/8080 tới WAN address và Port Forward cũ đã tắt nếu có. Khoanh xanh rule frontend; đánh dấu đỏ đường chuyển tiếp cũ bị vô hiệu hóa.
+P185 [normal] Hình 4.5. Luật WAN cho frontend và trạng thái NAT liên quan
+P186 [normal] Giải thích: Firewall giới hạn các nguồn thử nghiệm vào điểm truy cập chung. Nhận xét: Việc thêm Kali 2 phải được phản ánh trong alias hoặc rule; một luật chỉ chứa .10 không cho phép suy ra .11 cũng đã được kiểm tra. Đánh giá: Cấu hình này hỗ trợ quy kết yêu cầu backend cho đường qua HAProxy; cần kết hợp log thực tế để xác nhận.
+P187 [Heading 2] 4.5. Cài đặt và cấu hình HAProxy
+P188 [Heading 3] 4.5.1. Backend pool và kiểm tra sức khỏe
+P189 [normal] Tại System → Package Manager → Available Packages, cài gói HAProxy phù hợp với phiên bản pfSense. Sau đó mở Services → HAProxy, bật dịch vụ trong Settings và cấu hình backend. Trong giao diện gói, tạo backend tên web_pool, chế độ HTTP, thuật toán round-robin. Thêm web1 tại 10.10.20.20:8080 và web2 tại 10.10.20.21:8080, cùng trọng số 1; không đặt một server làm backup trong phép thử phân phối đều.
+P190 [normal] Thiết lập HTTP health check với phương thức GET, đường dẫn /health.txt và điều kiện phản hồi 200. Một cấu hình kiểm chứng có thể dùng khoảng kiểm tra 2 giây, fall 3, rise 2; báo cáo phải điền đúng giá trị đang được áp dụng nếu khác. Tên trường và đơn vị trong Web GUI cần được đối chiếu trước khi lưu, tránh nhầm 2 giây với 2 mili giây. Cơ chế fall/rise quyết định số lần thất bại hoặc thành công liên tiếp trước khi đổi trạng thái [9].
+P191 [normal] [CHÈN HÌNH 4.6 TẠI ĐÂY] Chèn ảnh danh sách web1, web2, port, weight, thuật toán và thiết lập kiểm tra /health.txt. Khoanh xanh hai server cùng hoạt động và cùng trọng số.
+P192 [normal] Hình 4.6. Backend pool và HTTP health check
+P193 [normal] Giải thích: Backend pool xác định các đích mà HAProxy có thể chọn. Health check tách server không đáp ứng ra khỏi vòng phân phối. Nhận xét: Cả hai phải là server hoạt động, không phải một active và một backup, nếu mục tiêu là cùng nhận tải. Đánh giá: Đây là bằng chứng cấu hình; khả năng cân bằng và chuyển đổi cần được xác nhận bằng các kịch bản ở Chương 5.
+P194 [Heading 3] 4.5.2. Frontend và liên kết tới backend
+P195 [normal] Tạo frontend tên web_frontend, địa chỉ lắng nghe WAN address 10.10.10.1, cổng 8080, loại HTTP. Chọn web_pool làm backend mặc định. Lưu, Apply và xác nhận dịch vụ HAProxy chạy không báo lỗi. Không cấu hình chuyển hướng tới Windows bằng NAT để thay cho bước gán backend này.
+P196 [normal] Kiểm tra URL http://10.10.10.1:8080/ từ Kali. Khi các yêu cầu được phân phối, nội dung SERVER 1 hoặc SERVER 2 cho biết backend trả lời. Với một số ít yêu cầu, chưa cần đòi hỏi thứ tự luân phiên tuyệt đối; cần kiểm tra cả log và trạng thái server.
+P197 [normal] [CHÈN HÌNH 4.7 TẠI ĐÂY] Chụp địa chỉ 10.10.10.1, cổng 8080, chế độ HTTP và backend web_pool. Khoanh bốn trường này, kèm trạng thái dịch vụ đã chạy.
+P198 [normal] Hình 4.7. Frontend HTTP tại WAN và backend mặc định
+P199 [normal] Giải thích: Frontend xác định đích duy nhất của cả hai Kali. Nhận xét: Gửi JMeter thẳng tới IP Windows sẽ bỏ qua mục tiêu kiểm chứng HAProxy của báo cáo. Đánh giá: Cấu hình khớp với kiến trúc khi đích nguồn là WAN:8080 và backend pool chứa hai Windows server.
+P200 [Heading 3] 4.5.3. Cách đọc trang Stats
+P201 [normal] Trong Services → HAProxy → Stats, quan sát nhóm backend web_pool hoặc tên được gói sinh ra tương ứng. Tập trung vào hai dòng web1 và web2: Status phải là UP; LastChk phản ánh kiểm tra HTTP thành công, thường hiển thị L7OK/200. Xem các cột lỗi và hàng đợi để phát hiện bất thường. Các bộ đếm Total là tích lũy; muốn phân tích một lần chạy phải chụp trước và sau.
+P202 [normal] Sessions Total là bộ đếm phiên, không mặc nhiên bằng số HTTP Request khi kết nối được tái sử dụng. Nếu Stats không cung cấp bộ đếm yêu cầu HTTP phù hợp ở mức từng server, sử dụng log /load-test.txt có mã lần chạy để xác định số yêu cầu. Bộ đếm trước/sau giúp hỗ trợ đối chiếu, không thay thế log ứng dụng.
+P203 [normal] [CHÈN HÌNH 4.8 TẠI ĐÂY] Chụp toàn bộ hai dòng web1, web2 với tiêu đề cột. Khoanh xanh UP và L7OK/200; khoanh các bộ đếm trước khi chạy, ghi thời điểm chụp.
+P204 [normal] Hình 4.8. Trạng thái ban đầu của hai backend trên HAProxy Stats
+P205 [normal] Giải thích: Hình xác định hệ thống ở trạng thái sẵn sàng trước phép đo. Nhận xét: UP chỉ thể hiện health check đạt tại thời điểm quan sát. Đánh giá: Nếu một backend DOWN ngay từ đầu, phép thử sau đó không còn là phép cân bằng trên hai server và phải xử lý nguyên nhân trước.
+P206 [Heading 2] 4.6. Cài đặt và cấu hình Suricata Inline IPS
+P207 [Heading 3] 4.6.1. Bật giao diện kiểm tra
+P208 [normal] Cài Suricata tại Package Manager, mở Services → Suricata → Interfaces và thêm WAN. Bật giao diện, chọn Inline IPS Mode ở phần thiết lập IPS và thực hiện các tùy chọn bật chặn mà phiên bản gói yêu cầu. Kiểm tra log khởi động để xác nhận chế độ inline hoạt động và giao diện hỗ trợ netmap [11]. Chỉ việc có tiến trình Suricata đang chạy chưa xác định được nó chạy ở chế độ nào.
+P209 [normal] Với card ảo được driver em hỗ trợ, cần kiểm tra tương thích thực tế của phiên bản pfSense và VirtualBox. Nếu có lỗi offloading hoặc netmap, đối chiếu các tùy chọn hardware checksum offloading, TSO và LRO tại System → Advanced → Networking; ghi lại thiết lập đã áp dụng. Không coi promiscuous mode là điều kiện mặc định bắt buộc cho topology định tuyến này. Những thay đổi mạng phải được kiểm chứng lại bằng truy cập bình thường trước khi đo IPS.
+P210 [normal] [CHÈN HÌNH 4.9 TẠI ĐÂY] Chèn màn hình WAN Settings và trạng thái Suricata. Khoanh WAN, Inline IPS Mode và bằng chứng khởi động không lỗi; nếu có lỗi, giữ ảnh riêng để phân tích nguyên nhân.
+P211 [normal] Hình 4.9. Suricata được gắn vào WAN và chạy Inline IPS
+P212 [normal] Giải thích: Giao diện WAN là nơi Suricata có thể nhìn thấy hai IP nguồn trước reverse proxy. Nhận xét: Chế độ IDS hoặc chỉ ghi alert chưa đáp ứng mục tiêu ngăn chặn. Đánh giá: Cần bổ sung kết quả DROP thực tế ở kịch bản 2 để xác nhận cấu hình có hiệu lực.
+P213 [Heading 3] 4.6.2. Khai báo mạng được bảo vệ
+P214 [normal] Trong phần Lists của Suricata, tạo danh sách mạng dùng cho HOME_NET, gồm 10.10.10.1/32 và 10.10.20.0/24. /32 chỉ đúng một địa chỉ WAN của frontend; /24 chỉ mạng backend. Khi tạo danh sách thủ công, bỏ các lựa chọn tự thêm mạng, gateway, DNS, VPN hoặc VIP không thuộc phạm vi dự kiến. Gán danh sách này vào Home Net của Suricata WAN.
+P215 [normal] HOME_NET là biến mô tả mạng được bảo vệ, không phải danh sách tự động bỏ qua mọi kiểm tra. Không đưa hai Kali vào Pass List hay tạo luật pass rộng làm vô hiệu phép thử. Các luật lab dưới đây dùng địa chỉ nguồn và đích tường minh để kết quả dễ đối chiếu với kiến trúc.
+P216 [Heading 3] 4.6.3. Hai luật thử nghiệm
+P217 [normal] Tại Rules của giao diện WAN, mở nhóm Custom Rules hoặc trình soạn thảo luật tùy chỉnh tương ứng. Sao lưu các luật cũ. Những luật lab cũ trùng mục tiêu hoặc có thể chặn trước phép thử được tạm vô hiệu hóa; nếu chỉnh dạng văn bản, thêm # ở đầu toàn bộ dòng luật cần comment. Không comment hoặc xóa các cấu hình không liên quan.
+P218 [normal] Thêm hai luật dưới đây, mỗi luật là một dòng logic. Trong Word, dòng dài có thể được hiển thị xuống hàng; khi nhập vào trình soạn thảo, giữ nguyên nội dung và không chèn ký tự ngắt lệnh ngoài cú pháp.
+P219 [normal] drop http [10.10.10.10,10.10.10.11] any -> 10.10.10.1 8080 (msg:"LAB IPS block test URI"; flow:established,to_server; http.uri; content:"/ips-test.txt"; startswith; sid:1001001; rev:2;)
+P220 [normal] alert http [10.10.10.10,10.10.10.11] any -> 10.10.10.1 8080 (msg:"LAB HTTP request rate monitor"; flow:established,to_server; http.method; content:"GET"; http.uri; content:"/load-test.txt"; startswith; sid:1001002; rev:2;)
+P221 [normal] 
+P222 [normal] Luật thứ nhất chặn đường dẫn kiểm tra. Luật thứ hai chỉ ghi nhận trước khi có chính sách chuyển hành động. Phần danh sách nguồn có cả .10 và .11, khác với cấu hình một nguồn trước đó. rev:2 thể hiện phiên bản luật được cập nhật trong phương án hai nguồn; nếu hệ thống đang có quy ước khác, cần lưu lại revision thực tế. Hai SID này chỉ dùng khi không xung đột với luật khác trong cấu hình của nhóm.
+P223 [normal] [CHÈN HÌNH 4.10 TẠI ĐÂY] Chèn nội dung hai luật sau khi lưu. Khoanh hai IP nguồn, đích frontend, SID và hành động đầu dòng. Không dùng ảnh luật cũ chỉ có 10.10.10.10 để chứng minh phạm vi hai nguồn.
+P224 [normal] Hình 4.10. Custom Rules áp dụng cho cả hai nguồn Kali
+P225 [normal] Giải thích: SID 1001001 và 1001002 phục vụ hai câu hỏi thực nghiệm khác nhau. Nhận xét: DROP của luật URI không chứng minh chính sách theo ngưỡng đã kích hoạt. Đánh giá: Việc tách luật giúp tránh dùng một ảnh chặn tĩnh để kết luận phát hiện DDoS theo tốc độ.
+P226 [Heading 3] 4.6.4. Chính sách rate_filter
+P227 [normal] Ở phần Suppress của gói Suricata, tạo một danh sách dành cho lab, ví dụ LAB_RATE_POLICY, và nhập cấu hình threshold bổ sung bên dưới. Trong gói pfSense, nội dung này được chuyển vào cấu hình lọc/ngưỡng; cần gán đúng danh sách cho WAN tại mục Alert Suppression and Filtering. Tên tab hoặc trường có thể khác theo phiên bản, vì vậy phải xác nhận danh sách được instance WAN nạp và không có lỗi cú pháp.
+P228 [normal] rate_filter gen_id 1, sig_id 1001002, track by_src, count 20, seconds 10, new_action drop, timeout 15
+P229 [normal] 
+P230 [normal] Trong cú pháp này, SID liên kết tới luật HTTP thứ hai; bộ đếm theo từng địa chỉ nguồn; new_action drop xác định hành động trong thời gian chính sách có hiệu lực [6]. Dòng cấu hình không phải luật chữ ký thông thường và không được dán vào vị trí Custom Rules như một luật alert http. Cũng không thay nó bằng suppress, vì suppress dùng để điều khiển cảnh báo chứ không đồng nghĩa với chính sách chặn theo ngưỡng.
+P231 [normal] Sau khi lưu và áp dụng, khởi động lại instance WAN khi phiên bản gói yêu cầu. Kiểm tra log khởi động và nội dung cấu hình hiệu lực. Mã nguồn gói cho thấy danh sách bổ sung được lưu dưới dạng nội dung cấu hình; khả năng nhận dòng rate_filter phải được xác nhận ở đúng bản đang cài [15]. Nếu có lỗi, xử lý lỗi cấu hình trước khi chạy tải, không kết luận IPS chặn thành công từ một kết nối vốn đã hỏng.
+P232 [normal] [CHÈN HÌNH 4.11 TẠI ĐÂY] Chèn ảnh dòng rate_filter, danh sách đã được gán cho WAN và thông báo nạp thành công. Khoanh SID 1001002, by_src, count, seconds và timeout.
+P233 [normal] Hình 4.11. Chính sách ngưỡng và liên kết với instance WAN
+P234 [normal] Giải thích: Hình ghi lại chính sách sẽ được dùng trong so sánh đối chứng. Nhận xét: Hai IP được theo dõi riêng nên cần bằng chứng kích hoạt của cả hai. Đánh giá: Cấu hình có mặt chưa phải kết quả phát hiện; Chương 5 phải đối chiếu action, nguồn, thời gian và log backend.
+P235 [Heading 3] 4.6.5. Nhật ký và phạm vi chặn
+P236 [normal] Bật phần ghi cảnh báo cần thiết, đồng thời giữ EVE JSON nếu dùng để phân tích chi tiết. Trang Alerts hỗ trợ quan sát nhanh; EVE hỗ trợ lọc theo SID, nguồn và thời gian [14]. Đối với phép thử chặn, đối chiếu trạng thái blocked/drop phù hợp với phiên bản cùng hành vi tại Kali và backend. Không mặc định tab Blocked kiểu chặn IP của Legacy Mode là nguồn bằng chứng duy nhất cho Inline IPS.
+P237 [Heading 2] 4.7. Cấu hình JMeter trên hai Kali
+P238 [Heading 3] 4.7.1. Chuẩn bị công cụ và kế hoạch
+P239 [normal] Kiểm tra Java bằng java -version và JMeter bằng jmeter -v. Nếu chưa có bản phù hợp, tải gói nhị phân Apache JMeter từ trang chính thức, giải nén và chạy tệp bin/jmeter theo hướng dẫn cài đặt [13]. Dùng phiên bản Java được bản JMeter đó hỗ trợ. Khi gặp lỗi truy cập module Java của một bản JMeter cũ, ưu tiên kiểm tra cặp phiên bản và cập nhật bản phù hợp trước khi áp dụng các tùy chọn mở module.
+P240 [normal] Trên cả hai Kali, tạo Test Plan với một Thread Group và một HTTP Request. Đích là IP frontend, không phải địa chỉ của một backend. Tạo User Defined Variables gồm RUN_ID và SRC; đặt SRC là K1 hoặc K2. Ở HTTP Request, dùng Parameters để thêm run=${RUN_ID} và src=${SRC}. Cách đặt mã giúp tìm đúng lần chạy trong log của Windows.
+P241 [normal] Bảng 4.1. Bộ tham số kiểm chứng đề xuất cho hai Kali
+TABLE 7 (10x3)
+  | Tham số || Kiểm tra truy cập bình thường || Tải dùng đối chứng chính sách
+  | Threads trên mỗi Kali || 1 || 2
+  | Loop Count || 5 || 20
+  | Ramp-up || 1 giây || 1 giây
+  | Constant Timer || 1000 ms || 100 ms
+  | HTTP Request mỗi vòng || 1 GET tới /load-test.txt || 1 GET tới /load-test.txt
+  | Đích || http, 10.10.10.1, port 8080 || Giữ nguyên
+  | Connect / Response timeout || 3000 / 5000 ms || Giữ nguyên
+  | Mẫu dự kiến mỗi nguồn || 5 || 40
+  | Tổng dự kiến hai nguồn || 10 || 80
+P242 [normal] 
+P243 [normal] Các tham số ở Bảng 4.1 là cấu hình kiểm chứng để tái lập, không phải số liệu của một lần chạy đã hoàn tất. Nếu nhóm dùng cấu hình khác, thay bảng bằng giá trị thực tế và giữ nguyên giá trị giữa hai trạng thái chính sách. Không bật vòng lặp vô hạn; khi phải dừng vì tài nguyên, ghi số mẫu thực sự hoàn thành.
+P244 [Heading 3] 4.7.2. Cấu hình HTTP Request và ghi kết quả
+P245 [normal] HTTP Request dùng Protocol http, Server Name or IP 10.10.10.1, Port 8080, Method GET, Path /load-test.txt. Để đếm đơn giản, không thêm yêu cầu tải embedded resources hoặc sampler khác vào kế hoạch này. Dùng Response Assertion kiểm tra mã HTTP 200; như vậy kết quả thành công không chỉ phụ thuộc việc kết nối có trả bất kỳ phản hồi nào.
+P246 [normal] Trong lần kiểm tra nhỏ, dùng View Results Tree để xem request/response và Summary Report hoặc Aggregate Report để xem tổng mẫu, lỗi, độ trễ. Trước lần chạy mới, lưu kết quả cũ rồi chọn Run → Clear All để xóa phần hiển thị. Thao tác này không có nghĩa các tệp JTL cũ đã được xóa. Dùng tên tệp mới cho từng Kali và từng lần chạy để không trộn dữ liệu.
+P247 [normal] Khi chạy bằng dòng lệnh, có thể dùng dạng lệnh sau sau khi đã lưu kế hoạch đúng tham số. Đổi tên tệp cho Kali 2 và mã kịch bản tương ứng; không chạy đồng thời thêm một bản GUI của cùng kế hoạch ngoài dự kiến.
+P248 [normal] jmeter -n -t lab-http.jmx -l KB3_R1_K1.jtl -j KB3_R1_K1.log
+P249 [normal] 
+P250 [normal] [CHÈN HÌNH 4.12 TẠI ĐÂY] Chèn ảnh Thread Group, HTTP Request, timer, timeout và hai giá trị SRC. Khoanh đích chung frontend và số mẫu dự kiến; nhãn K1/K2 phải phân biệt được.
+P251 [normal] Hình 4.12. Cấu hình JMeter tương ứng trên hai Kali
+P252 [normal] Giải thích: Hai nguồn dùng cùng cấu hình tải để phép đối chứng có thể so sánh. Nhận xét: Ramp-up phân bố thời điểm khởi tạo luồng, không bảo đảm tốc độ HTTP cố định. Đánh giá: Tổng mẫu, thời gian và tốc độ sau chạy vẫn phải lấy từ kết quả thực tế.
+P253 [Heading 2] 4.8. Xác nhận hệ thống trước thực nghiệm
+P254 [normal] Bảng 4.2. Điều kiện sẵn sàng và bằng chứng xác nhận
+TABLE 8 (9x3)
+  | Điều kiện || Cách xác nhận || Kết quả ghi nhận
+  | Đủ hai nguồn, không trùng IP || ip -br addr trên K1 và K2 || [ĐIỀN KẾT QUẢ]
+  | Backend HTTP hoạt động || Truy cập /health.txt từ phía pfSense || [ĐIỀN KẾT QUẢ]
+  | HAProxy có hai server UP || Stats và LastChk || [ĐIỀN KẾT QUẢ]
+  | Đường đi đúng frontend || URL, cấu hình NAT và log proxy/backend || [ĐIỀN KẾT QUẢ]
+  | Suricata đang ở WAN inline || Settings và log khởi động || [ĐIỀN KẾT QUẢ]
+  | Hai SID không xung đột || Nội dung luật và kết quả nạp || [ĐIỀN KẾT QUẢ]
+  | Hai Kali được chính sách bao phủ || Alias firewall và danh sách nguồn trong luật || [ĐIỀN KẾT QUẢ]
+  | Tài nguyên và đồng hồ ổn định || CPU, RAM và thời gian của các VM || [ĐIỀN KẾT QUẢ]
+P255 [Heading 1] CHƯƠNG 5. THỰC NGHIỆM VÀ ĐÁNH GIÁ KẾT QUẢ
+P256 [Heading 2] 5.1. Mục tiêu và quy trình thực nghiệm chung
+P257 [normal] Các phép thử được tổ chức từ chức năng đơn lẻ tới phối hợp toàn hệ thống. Trước tiên cần biết truy cập bình thường thành công. Tiếp theo, phép chặn URI xác nhận Suricata có khả năng can thiệp. Chỉ sau hai bước này mới so sánh tải từ hai nguồn khi tắt/bật chính sách theo ngưỡng. Phép thử lỗi backend được tách riêng để không lẫn tác động của health check với tác động của IPS.
+P258 [normal] Bảng 5.1. Ma trận các kịch bản
+TABLE 9 (6x4)
+  | Kịch bản || Suricata và chính sách || Backend || Câu hỏi kiểm chứng
+  | KB1 – Bình thường || Inline hoạt động; tải dưới ngưỡng || Hai server UP || Hai Kali có truy cập đúng dịch vụ không?
+  | KB2 – Kiểm tra IPS || Đối chứng instance WAN tắt/bật; dùng SID 1001001 || Hai server UP || Luật URI có thực sự chặn không?
+  | KB3 – Chưa chặn theo ngưỡng || Inline và luật ALERT hoạt động; không áp dụng rate_filter || Hai server UP || Hai nguồn có đồng thời tạo tải và tải được phân phối ra sao?
+  | KB4 – Có chặn theo ngưỡng || Giữ KB3, thêm rate_filter của SID 1001002 || Hai server UP || Hành động có chuyển sang chặn và lượng tới backend thay đổi thế nào?
+  | KB5 – Lỗi backend || Giữ đường kiểm tra ổn định; tạm không áp dụng rate_filter || Web 1 dừng rồi khôi phục; Web 2 hoạt động || HAProxy có loại và đưa backend trở lại không?
+P259 [normal] 
+P260 [normal] Mỗi lần chạy có một mã riêng, chẳng hạn KB3_R1. Trước khi bắt đầu, nhóm ghi cấu hình hiệu lực, kiểm tra đồng hồ, lưu bộ đếm HAProxy và mở log trên hai backend. Sau khi chạy, nhóm lưu JTL, ảnh và log gắn đúng mã. Kết luận chỉ sử dụng dữ liệu cùng một lần chạy hoặc dữ liệu đối chứng được đánh dấu rõ.
+P261 [normal] Các ảnh chức năng đã thu ở giai đoạn một Kali vẫn hữu ích để xác nhận đường đi, chặn URI và việc hai backend đã cùng nhận yêu cầu. Tuy nhiên, chúng không thay thế bộ ảnh và số liệu của mô hình hai nguồn. Trong các phần sau, “Kết quả đã quan sát” trình bày bằng chứng chức năng hiện có; “Kết quả định lượng” và “Tiêu chí đối chiếu” được dùng để hoàn thiện phép đo hai nguồn.
+P262 [Heading 2] 5.2. Kịch bản 1 – Truy cập HTTP bình thường
+P263 [Heading 3] 5.2.1. Mục tiêu và điều kiện
+P264 [normal] Kịch bản kiểm tra khả năng truy cập dịch vụ của cả hai Kali trước khi tạo lưu lượng đồng thời ở mức cao hơn. Điều kiện ban đầu là HAProxy chạy, hai backend UP, Suricata WAN hoạt động và không còn trạng thái chặn từ lần trước. Dùng trang gốc để kiểm tra đường đi, sau đó dùng cấu hình tải thấp ở Bảng 4.1 để kiểm tra URI /load-test.txt dưới ngưỡng của từng nguồn.
+P265 [Heading 3] 5.2.2. Trình tự thực hiện
+P266 [normal] Bước 1: Trên Kali 1 và Kali 2, ghi lại IP nguồn và gửi một yêu cầu tới frontend. Thay K1 bằng K2 ở máy thứ hai.
+P267 [normal] curl --noproxy '*' -i --max-time 5 "http://10.10.10.1:8080/?case=KB1_K1"
+P268 [normal] 
+P269 [normal] Bước 2: Kiểm tra mã HTTP và nội dung SERVER 1 hoặc SERVER 2. Trong cửa sổ Python của backend được chọn, tìm đúng query case=KB1_K1 hoặc case=KB1_K2. Bước 3: Chạy kế hoạch tải thấp trên cả hai Kali, lưu JTL riêng và kiểm tra không có DROP tương ứng với lưu lượng dưới ngưỡng.
+P270 [normal] [CHÈN HÌNH 5.1 TẠI ĐÂY] Chèn hai ảnh curl, kèm IP nguồn. Khoanh xanh HTTP 200 và nội dung backend; ghi rõ K1, K2 và mã kiểm tra.
+P271 [normal] Hình 5.1. Phản hồi truy cập bình thường từ hai Kali
+P272 [normal] Giải thích: Phản hồi thành công chứng minh yêu cầu đã đi tới một backend qua điểm truy cập frontend. Nhận xét: Nhãn SERVER 1 hoặc SERVER 2 xác định máy phục vụ; một yêu cầu riêng lẻ không chứng minh thuật toán phân phối đều. Đánh giá: Chỉ khi cả .10 và .11 đều thành công mới xác nhận đường truy cập cho đủ hai nguồn.
+P273 [normal] [CHÈN HÌNH 5.2 TẠI ĐÂY] Chèn dòng GET có mã KB1 tại backend và Summary Report của hai Kali. Khoanh xanh mã 200; khoanh nhãn nguồn trong URI để đối chiếu.
+P274 [normal] Hình 5.2. Log backend tương ứng và kết quả tải thấp
+P275 [normal] Giải thích: Dòng log là bằng chứng ứng dụng đã nhận yêu cầu, bổ sung cho phản hồi tại client. Nhận xét: Địa chỉ 10.10.20.1 trong log phù hợp với kết nối do HAProxy mở; các dòng /health.txt không được tính. Đánh giá: Nếu cả hai nguồn có lỗi ở mức tải này, cần khắc phục điều kiện nền trước khi đánh giá chính sách ngưỡng.
+P276 [Heading 3] 5.2.3. Kết quả và đánh giá
+P277 [normal] Kết quả cho lần chạy: Kali 1 hoàn thành [ĐIỀN N1] mẫu, lỗi [ĐIỀN SỐ MẪU LỖI]; Kali 2 hoàn thành [ĐIỀN N2] mẫu, lỗi [ĐIỀN SỐ MẪU LỖI]. Các backend ghi [ĐIỀN SỐ YÊU CẦU ĐÚNG MÃ] yêu cầu, sau khi loại health check. Trạng thái kiểm chứng của KB1: [ĐIỀN ĐẠT, CHƯA ĐẠT HOẶC CHƯA ĐO].
+P278 [normal] Tiêu chí đạt là cả hai nguồn nhận phản hồi đúng và không có bằng chứng chặn ngoài dự kiến trong phép thử tải thấp. Một kết quả đạt cho thấy cấu hình cơ bản cho phép phục vụ truy cập thử nghiệm; chưa đủ kết luận chính sách không bao giờ chặn nhầm đối với người dùng thực.
+P279 [Heading 2] 5.3. Kịch bản 2 – Đối chứng khả năng chặn của IPS
+P280 [Heading 3] 5.3.1. Mục tiêu và biến kiểm soát
+P281 [normal] Kịch bản dùng SID 1001001 để kiểm tra trực tiếp hành động chặn, giữ nguyên URL đích, cổng, timeout và hai backend. Trạng thái đối chứng thứ nhất tắt instance Suricata WAN; trạng thái thứ hai bật lại đúng instance và luật DROP. Không thay đổi đồng thời NAT, HAProxy hoặc dịch vụ Python trong phép so sánh.
+P282 [Heading 3] 5.3.2. Trình tự khi IPS tắt
+P283 [normal] Bước 1: Dừng các lần tạo tải và xác nhận hai backend UP. Tạm dừng Suricata trên WAN. Bước 2: Từ Kali 1 gửi yêu cầu sau; lặp lại trên Kali 2 với nhãn khác. Bước 3: Ghi lại phản hồi và tìm đúng nhãn trong log backend.
+P284 [normal] curl --noproxy '*' -v --max-time 5 "http://10.10.10.1:8080/ips-test.txt?case=IPS_OFF_K1_R1"
+P285 [normal] 
+P286 [normal] [CHÈN HÌNH 5.3 TẠI ĐÂY] Chèn phản hồi curl và dòng GET tại backend chứa cùng mã IPS_OFF. Ảnh đã có nội dung IPS TEST - SERVER 1 có thể dùng làm minh chứng chức năng; cần giữ đúng nhãn thực tế của ảnh.
+P287 [normal] Hình 5.3. Yêu cầu nhận được nội dung khi IPS tắt
+P288 [normal] Giải thích: Nội dung IPS TEST - SERVER 1 xác nhận file có tồn tại và đã được server trả về. Nhận xét: Trong kết quả chức năng đã ghi nhận, yêu cầu cuối cùng trả nội dung sau các lần timeout trước đó; phải chọn đúng lần thành công và thời điểm tương ứng. Đánh giá: Bằng chứng này thiết lập đối chứng “dịch vụ truy cập được”, nhưng cần log cùng nhãn để xác định chính xác backend đã xử lý yêu cầu nào.
+P289 [Heading 3] 5.3.3. Trình tự khi IPS bật
+P290 [normal] Bước 4: Bật lại Suricata WAN, xác nhận instance chạy và luật SID 1001001 đã nạp. Bước 5: Tạo kết nối mới từ mỗi Kali bằng URL có nhãn IPS_ON. Bước 6: Đối chiếu đồng thời phản hồi client, action trong Alerts/EVE và log hai backend.
+P291 [normal] curl --noproxy '*' -v --max-time 5 "http://10.10.10.1:8080/ips-test.txt?case=IPS_ON_K1_R1"
+P292 [normal] 
+P293 [normal] [CHÈN HÌNH 5.4 TẠI ĐÂY] Chèn kết quả curl bị timeout hoặc lỗi kết nối. Khoanh đỏ số byte nhận, thời gian và mã lỗi; giữ URL, IP nguồn và nhãn của lần chạy trong ảnh.
+P294 [normal] Hình 5.4. Kali không nhận nội dung khi luật chặn URI có hiệu lực
+P295 [normal] Giải thích: Ở lần kiểm tra chức năng đã có, curl báo timeout sau khoảng 5 giây và nhận 0 byte. Nhận xét: Bắt tay TCP đã thành công trước khi yêu cầu HTTP bị ảnh hưởng là điều có thể xảy ra khi luật kiểm tra URI. Đánh giá: Timeout riêng lẻ chưa chứng minh Suricata là nguyên nhân; phải ghép với sự kiện chặn cùng nguồn và đích.
+P296 [normal] [CHÈN HÌNH 5.5 TẠI ĐÂY] Chèn dòng Alerts/EVE của cùng lần thử. Khoanh đỏ action blocked/drop và SID; khoanh IP nguồn, 10.10.10.1, port 8080 và thời điểm. Với mô hình hai nguồn, bổ sung dòng tương ứng của cả .10 và .11.
+P297 [normal] Hình 5.5. Suricata ghi nhận hành động chặn SID 1001001
+P298 [normal] Giải thích: Ảnh chức năng đã quan sát có dòng 1:1001001, mô tả LAB IPS block test URI, nguồn 10.10.10.10, đích 10.10.10.1:8080 và dấu hiệu hành động chặn. Nhận xét: Kết quả này phù hợp với timeout tại Kali trong phép kiểm tra URI. Đánh giá: Có cơ sở xác nhận Suricata đã thực thi chặn đối với nguồn .10 ở phép thử đó; kết luận cho .11 cần sự kiện riêng, không suy từ cùng luật cấu hình.
+P299 [normal] [CHÈN HÌNH 5.6 TẠI ĐÂY] Chèn log của cả hai backend trong đúng khoảng kiểm tra, kèm curl tới trang gốc nhận 200. Đánh dấu vùng thời gian; dùng nhãn “không thấy mã IPS_ON trong khoảng log này” thay vì vẽ một dòng log giả.
+P300 [normal] Hình 5.6. Đối chiếu log backend và yêu cầu bình thường sau phép chặn
+P301 [normal] Giải thích: Việc không thấy mã IPS_ON tại cả hai ứng dụng phù hợp với khả năng yêu cầu đã bị chặn trước backend. Nhận xét: Một ảnh chỉ hiển thị vài dòng cuối không chứng minh toàn bộ log không chứa mã đó; cần tìm trong log đầy đủ của khoảng thời gian. Đánh giá: Kết hợp hành động chặn, không nhận nội dung và trang bình thường vẫn phục vụ cho thấy phép kiểm tra có tính chọn lọc đối với URI, chưa chứng minh nhận diện DDoS theo cường độ.
+P302 [Heading 3] 5.3.4. Kết luận kịch bản
+P303 [normal] Minh chứng hiện có xác nhận chức năng chặn URI trên đường vào HAProxy đối với nguồn đã kiểm tra. Khi hoàn thiện mô hình hai nguồn, ghi: Kali 1 [ĐIỀN KẾT QUẢ]; Kali 2 [ĐIỀN KẾT QUẢ]; trang bình thường sau phép thử [ĐIỀN KẾT QUẢ]. Không dùng số lần xuất hiện SID 1001001 để đánh giá hiệu quả chính sách rate_filter của SID 1001002.
+P304 [Heading 2] 5.4. Kịch bản 3 – Hai nguồn đồng thời khi chưa chặn theo ngưỡng
+P305 [Heading 3] 5.4.1. Mục tiêu và điều kiện
+P306 [normal] Kịch bản xác định lưu lượng đầu vào, phản hồi và cách HAProxy phân phối khi chưa chuyển hành động theo ngưỡng. Suricata vẫn hoạt động inline và luật ALERT 1001002 vẫn được giữ; chỉ chưa áp dụng rate_filter. Cách bố trí này giữ chi phí kiểm tra của Suricata tương đối nhất quán giữa KB3 và KB4. Luật URI 1001001 không khớp đường dẫn /load-test.txt nên không dùng để giải thích kết quả của kịch bản này.
+P307 [normal] Hai backend phải UP và cùng trọng số. Mỗi Kali sử dụng bộ tham số tải đối chứng ở Bảng 4.1, mã RUN_ID là KB3_R1; các lần lặp sau dùng R2 và R3. Bộ tham số được lựa chọn để kiểm chứng ngưỡng nhỏ, không nhằm khẳng định đã làm cạn năng lực máy chủ.
+P308 [Heading 3] 5.4.2. Các bước tiến hành
+P309 [normal] Bước 1: Ghi ảnh Stats ban đầu, xác nhận không còn tải cũ và mở log backend. Bước 2: Lưu kết quả JMeter cũ, Clear All phần hiển thị và dùng tệp JTL mới. Bước 3: Khởi chạy kế hoạch trên K1 và K2 gần cùng thời điểm; ghi thời gian bắt đầu và kết thúc từ dữ liệu gốc. Bước 4: Khi hai nguồn kết thúc, chụp kết quả, Stats và log hai server. Bước 5: Lọc đúng mã KB3_R1, đếm số yêu cầu ở từng backend và kiểm tra khoảng chạy đồng thời.
+P310 [normal] [CHÈN HÌNH 5.7 TẠI ĐÂY] Chèn hai cửa sổ JMeter hoặc đầu ra CLI có tên kế hoạch, nhãn nguồn và thời gian. Có thể ghép hai ảnh nhưng giữ thông tin gốc của từng máy.
+P311 [normal] Hình 5.7. Hai Kali cùng chạy kế hoạch gửi tới frontend
+P312 [normal] Giải thích: Hình thể hiện hai tiến trình gửi yêu cầu từ hai IP khác nhau. Nhận xét: Số luồng đang hoạt động trên màn hình chỉ phản ánh thời điểm chụp; khoảng đồng thời được xác nhận bằng JTL. Đánh giá: Nếu không có thời gian chồng lấn, cần mô tả lần chạy là hai lượt riêng và thực hiện lại trước khi sử dụng như minh chứng phân tán.
+P313 [normal] [CHÈN HÌNH 5.8 TẠI ĐÂY] Chèn Summary hoặc Aggregate Report từ hai tệp kết quả riêng. Khoanh số mẫu, Error %, thời gian đáp ứng và throughput; ghi rõ đơn vị và mã KB3_R1.
+P314 [normal] Hình 5.8. Kết quả JMeter của KB3 trên từng nguồn
+P315 [normal] Giải thích: Đây là kết quả người gửi quan sát được khi không áp dụng chặn theo ngưỡng. Nhận xét: 40 mẫu mỗi máy chỉ là đúng khi thực sự có đủ 40 mẫu của từng kế hoạch; một báo cáo 40 mẫu ở một Kali không phải tổng 80 mẫu. Đánh giá: Nếu lỗi thấp và thời gian ổn định, kết luận phù hợp là dịch vụ đáp ứng được mức tải đã thử, không phải tấn công đã làm hệ thống ngừng hoạt động.
+P316 [normal] [CHÈN HÌNH 5.9 TẠI ĐÂY] Chèn log web1 và web2 chứa /load-test.txt, cùng mã KB3_R1 và nhãn K1/K2. Khoanh xanh các mã 200; phân biệt rõ /health.txt là lưu lượng kiểm tra sức khỏe.
+P317 [normal] Hình 5.9. Yêu cầu thử nghiệm được nhận ở cả hai backend
+P318 [normal] Giải thích: Ở kết quả chức năng đã ghi nhận trước đó, cả hai cửa sổ Python đều có GET /load-test.txt với mã 200. Nhận xét: Điều này chứng minh cả hai backend đã tham gia phục vụ trong giai đoạn kiểm tra, nhưng ảnh cũ chưa chứa đủ nhãn và dữ liệu hai nguồn của KB3. Đánh giá: Bộ ảnh mới cần giữ mã lần chạy để đếm chính xác và loại các yêu cầu từ lần khác.
+P319 [normal] [CHÈN HÌNH 5.10 TẠI ĐÂY] Chèn cặp ảnh cùng các cột của web1 và web2. Khoanh Status, LastChk và số tăng thêm của bộ đếm; ghi “Sessions” đúng tên nếu dùng cột Sessions Total.
+P320 [normal] Hình 5.10. Đối chiếu HAProxy Stats trước và sau KB3
+P321 [normal] Giải thích: Ảnh Stats chức năng hiện có cho thấy hai server UP, LastChk L7OK/200, Sessions Total lần lượt 96 và 95, tổng backend 191. Nhận xét: Phân bố phiên tích lũy gần nhau hỗ trợ nhận định HAProxy đã phân phối hoạt động cho cả hai server. Đây không phải dữ liệu riêng của một lần gửi 40 yêu cầu, cũng không tự động là số HTTP Request. Đánh giá: Kết luận định lượng cho KB3 phải dùng chênh lệch bộ đếm đúng loại hoặc log lọc theo mã lần chạy.
+P322 [Heading 3] 5.4.3. Kết quả định lượng và đánh giá
+P323 [normal] Bảng 5.2. Kết quả của một lần chạy hai nguồn không áp dụng rate_filter
+TABLE 10 (7x4)
+  | Đại lượng || Kali 1 || Kali 2 || Tổng hoặc cách đối chiếu
+  | Mẫu dự kiến || 40 || 40 || 80 nếu giữ Bảng 4.1
+  | Mẫu thực tế || [ĐIỀN] || [ĐIỀN] || N1 + N2
+  | Số mẫu lỗi || [ĐIỀN] || [ĐIỀN] || E1 + E2
+  | Bắt đầu / kết thúc || [ĐIỀN GIỜ] || [ĐIỀN GIỜ] || Xác định khoảng chồng lấn
+  | Thời gian TB / P95 || [ĐIỀN ms] || [ĐIỀN ms] || Gộp từ dữ liệu gốc
+  | Yêu cầu tại web1 / web2 || Không tách bằng IP TCP backend || Lọc bằng src trong URI || [ĐIỀN Nweb1] / [ĐIỀN Nweb2]
+P324 [normal] 
+P325 [normal] Mức phân phối của lần chạy được tính bằng log đã lọc: web1 [ĐIỀN TỶ LỆ]%, web2 [ĐIỀN TỶ LỆ]%. Nếu cả hai cùng nhận yêu cầu và phản hồi hợp lệ, chức năng phân phối tải đã được kiểm chứng. Muốn kết luận hai backend làm tăng năng lực so với một backend, cần thêm phép đối chứng một server và hai server dưới cùng điều kiện; bộ số liệu hiện tại không tự cung cấp so sánh đó.
+P326 [Heading 2] 5.5. Kịch bản 4 – Hai nguồn đồng thời khi bật chính sách ngưỡng
+P327 [Heading 3] 5.5.1. Mục tiêu và điều kiện
+P328 [normal] Mục tiêu là kiểm tra SID 1001002 có chuyển sang hành động chặn theo chính sách hay không và xác định ảnh hưởng tới lượng yêu cầu đến backend. Giữ cấu hình như KB3, bật rate_filter tại WAN và dùng mã mới KB4_R1. Không thay đổi số luồng hoặc giảm số backend đồng thời với bật chính sách, vì sẽ không tách được nguyên nhân của thay đổi kết quả.
+P329 [Heading 3] 5.5.2. Các bước tiến hành
+P330 [normal] Bước 1: Xác nhận chính sách đã nạp, hai backend UP và các trạng thái cũ đã hết ảnh hưởng. Bước 2: Ghi Stats ban đầu, dùng JTL mới và khởi chạy cùng cấu hình trên hai Kali. Bước 3: Quan sát cảnh báo theo từng nguồn; chụp sự kiện có SID 1001002 và hành động thực tế. Bước 4: Chạy một yêu cầu đối chứng nhẹ tới / bằng kết nối mới, ghi thời điểm và phản hồi. Bước 5: Lưu dữ liệu cuối, lọc log backend theo KB4_R1 và so sánh với KB3_R1 có điều kiện đầu vào tương đương.
+P331 [normal] [CHÈN HÌNH 5.11 TẠI ĐÂY] Chèn báo cáo hai nguồn của KB4_R1. Khoanh đỏ timeout hoặc lỗi; giữ tổng mẫu và thời gian thực tế, không chỉ chụp vùng phần trăm lỗi.
+P332 [normal] Hình 5.11. Kết quả JMeter khi chính sách ngưỡng được bật
+P333 [normal] Giải thích: Lỗi ở phía nguồn có thể là phản ứng mong đợi khi yêu cầu bị IPS chặn. Nhận xét: Lỗi tăng không tự chứng minh giải pháp làm dịch vụ kém hơn hoặc tốt hơn; cần biết loại yêu cầu và nguyên nhân. Đánh giá: Nếu mẫu bị chặn phải chờ timeout, throughput của JMeter có thể giảm do nguồn chờ phản hồi, nên cần đối chiếu số yêu cầu thực sự tới backend.
+P334 [normal] [CHÈN HÌNH 5.12 TẠI ĐÂY] Chèn Alerts/EVE có SID 1001002 và action blocked/drop cho 10.10.10.10, 10.10.10.11 trong cùng lần chạy. Khoanh đỏ action và SID; khoanh riêng nguồn và thời gian.
+P335 [normal] Hình 5.12. Bằng chứng chặn theo ngưỡng của cả hai IP nguồn
+P336 [normal] Giải thích: Sự kiện của SID 1001002 là bằng chứng đúng loại để xem xét chính sách ngưỡng. Nhận xét: Dòng ALERT trước ngưỡng có thể xuất hiện cùng dòng DROP sau khi chính sách kích hoạt; chúng có ý nghĩa khác nhau. Đánh giá: Nếu chỉ .10 bị chặn, chưa thể kết luận chính sách đã hoạt động với .11; cần kiểm tra luật, tốc độ thực tế và thời gian theo dõi của nguồn còn lại.
+P337 [normal] [CHÈN HÌNH 5.13 TẠI ĐÂY] Chèn log hai server lọc KB4_R1 và phản hồi trang gốc. Khoanh các yêu cầu tải còn tới ứng dụng; khoanh xanh phản hồi bình thường nếu có.
+P338 [normal] Hình 5.13. Lưu lượng tới backend và yêu cầu đối chứng khi chặn theo ngưỡng
+P339 [normal] Giải thích: Một số yêu cầu có thể tới backend trước khi điều kiện ngưỡng đạt, vì vậy không đặt tiêu chí bắt buộc log backend phải bằng 0. Nhận xét: Yêu cầu đối chứng tới / nằm ngoài URI được theo dõi, chỉ xác nhận dịch vụ vẫn phục vụ loại truy cập đó tại thời điểm kiểm tra. Đánh giá: Kết quả chưa chứng minh người dùng hợp lệ truy cập cùng URI và cùng IP với nguồn tải sẽ không bị ảnh hưởng.
+P340 [Heading 3] 5.5.3. Tổng hợp và diễn giải
+P341 [normal] Bảng 5.3. So sánh hai trạng thái chính sách dưới cùng cấu hình tải
+TABLE 11 (9x4)
+  | Chỉ tiêu || KB3 chưa áp dụng rate_filter || KB4 có rate_filter || Cách diễn giải
+  | Tổng mẫu thực tế hai Kali || [ĐIỀN] || [ĐIỀN] || Ghi rõ nếu dừng sớm hoặc khác nhau
+  | Tổng mẫu thành công / lỗi || [ĐIỀN] || [ĐIỀN] || Đối chiếu mã lỗi và thời gian
+  | P95 mẫu thành công || [ĐIỀN ms] || [ĐIỀN ms] || Không trộn timeout vào rồi kết luận tốt hơn
+  | Thời gian hoàn tất hai nguồn || [ĐIỀN] || [ĐIỀN] || Giải thích thay đổi tốc độ nguồn gửi
+  | Yêu cầu tới web1 || [ĐIỀN] || [ĐIỀN] || Log đúng run và URI
+  | Yêu cầu tới web2 || [ĐIỀN] || [ĐIỀN] || Loại health check
+  | DROP SID 1001002 của K1 / K2 || [ĐIỀN] || [ĐIỀN] || Đếm sự kiện, không gọi là số request
+  | Yêu cầu đối chứng bình thường || [ĐIỀN] || [ĐIỀN] || Giới hạn theo URI đã kiểm tra
+P342 [normal] 
+P343 [normal] Gọi B0 và B1 là tổng yêu cầu tới hai backend trong KB3 và KB4. Nếu cùng số mẫu đầu vào thực tế, B0 > 0 và việc ghi log đầy đủ, tỷ lệ giảm lượng yêu cầu tới backend được tính bằng (B0 − B1)/B0 × 100%. Giá trị này là [ĐIỀN KẾT QUẢ]%. Nếu số mẫu đầu vào khác nhau, báo cáo thêm tỷ lệ yêu cầu tới backend trên mẫu đầu vào của từng lần và giải thích lý do; không dùng riêng chênh lệch B0 − B1 như hiệu quả chặn.
+P344 [normal] Khi dữ liệu cho thấy cả hai nguồn có DROP đúng SID, lượng yêu cầu tới backend giảm và yêu cầu đối chứng vẫn thành công, có thể kết luận chính sách đã thực hiện giảm lưu lượng khớp luật trong điều kiện thử nghiệm. Nếu chỉ có lỗi client mà không có action chặn hoặc backend vốn đã DOWN, chưa đủ căn cứ đưa ra kết luận đó. Trạng thái thực nghiệm KB4 của nhóm: [ĐIỀN ĐÃ KIỂM CHỨNG HOẶC PHẦN CÒN THIẾU].
+P345 [Heading 2] 5.6. Kịch bản 5 – Một backend ngừng hoạt động và khôi phục
+P346 [Heading 3] 5.6.1. Mục tiêu và điều kiện
+P347 [normal] Kịch bản đánh giá health check và khả năng tiếp tục phân phối tới backend còn hoạt động. Dùng các yêu cầu nhẹ, tạm không áp dụng rate_filter để loại yếu tố chặn theo ngưỡng. Giữ Suricata và cấu hình đường đi ổn định. Cả hai backend UP lúc bắt đầu; khi tạo sự cố chỉ dừng tiến trình Python của Web 1, không tắt pfSense hoặc đổi luật firewall.
+P348 [Heading 3] 5.6.2. Trình tự tiến hành
+P349 [normal] Bước 1: Chụp Stats của hai backend UP và gửi một số yêu cầu có mã KB5_BEFORE. Bước 2: Tại cửa sổ Python của Web 1, nhấn Ctrl+C để dừng dịch vụ và ghi thời điểm. Bước 3: Theo dõi Stats đến khi web1 chuyển DOWN, trong khi web2 vẫn UP. Bước 4: Gửi các yêu cầu mới có mã KB5_DURING tới frontend và xem nội dung phản hồi. Bước 5: Khởi động lại Python trên Web 1 bằng lệnh cũ, theo dõi server trở lại UP rồi gửi yêu cầu có mã KB5_AFTER.
+P350 [normal] [CHÈN HÌNH 5.14 TẠI ĐÂY] Chèn Stats có web1, web2 UP và một phản hồi frontend trước khi dừng. Khoanh xanh trạng thái và ghi giờ bắt đầu.
+P351 [normal] Hình 5.14. Trạng thái hai backend trước khi tạo sự cố
+P352 [normal] Giải thích: Đây là mốc nền cho phép thử sự cố. Nhận xét: Nếu web1 đã lỗi từ trước, không xác định được độ trễ phát hiện của lần dừng đang thử. Đánh giá: Mốc thời gian và trạng thái nền giúp mô tả đúng chuỗi chuyển đổi sau đó.
+P353 [normal] [CHÈN HÌNH 5.15 TẠI ĐÂY] Chèn Stats web1 DOWN, web2 UP và phản hồi SERVER 2 qua frontend. Khoanh đỏ web1; khoanh xanh web2 và HTTP 200; ghi thời điểm dừng và thời điểm phát hiện.
+P354 [normal] Hình 5.15. Web 1 DOWN trong khi Web 2 tiếp tục phục vụ
+P355 [normal] Giải thích: HAProxy loại server không đáp ứng khỏi lựa chọn phục vụ sau khi health check đạt điều kiện thất bại. Nhận xét: Một số yêu cầu trong khoảng phát hiện vẫn có thể thất bại; cần ghi nhận nếu có. Đánh giá: Các yêu cầu mới thành công trên Web 2 chứng minh khả năng duy trì một phần phục vụ khi một backend hỏng, không chứng minh hệ thống hoàn toàn không gián đoạn.
+P356 [normal] [CHÈN HÌNH 5.16 TẠI ĐÂY] Chèn Stats sau khôi phục cùng log Web 1 có mã KB5_AFTER. Khoanh xanh trạng thái UP và dòng GET mới sau thời điểm khởi động.
+P357 [normal] Hình 5.16. Web 1 trở lại UP và tham gia nhận yêu cầu
+P358 [normal] Giải thích: Health check tiếp tục theo dõi server và cho phép đưa backend phục hồi trở lại pool. Nhận xét: UP chưa đủ chứng minh đã có yêu cầu người dùng được phân phối, nên cần thêm log GET sau khôi phục. Đánh giá: Chuỗi UP → DOWN → UP và log tương ứng hoàn thiện bằng chứng cho cơ chế phục hồi backend.
+P359 [Heading 3] 5.6.3. Kết quả cần ghi nhận
+P360 [normal] Bảng 5.4. Kết quả phép thử lỗi backend
+TABLE 12 (8x2)
+  | Sự kiện hoặc chỉ số || Giá trị thực tế
+  | Thời điểm dừng Python Web 1 || [ĐIỀN GIỜ]
+  | Thời điểm HAProxy đánh dấu web1 DOWN || [ĐIỀN GIỜ]
+  | Độ trễ phát hiện quan sát || [ĐIỀN SỐ GIÂY]
+  | Yêu cầu thành công / lỗi trong giai đoạn chuyển đổi || [ĐIỀN SỐ MẪU]
+  | Phản hồi qua frontend khi chỉ Web 2 phục vụ || [ĐIỀN MÃ HTTP VÀ NỘI DUNG]
+  | Thời điểm bật lại Python / thời điểm UP || [ĐIỀN HAI MỐC GIỜ]
+  | Log Web 1 nhận mã KB5_AFTER || [ĐIỀN CÓ HAY KHÔNG VÀ THỜI ĐIỂM]
+P361 [normal] 
+P362 [normal] Chưa thay các ô chưa đo bằng thời gian lý thuyết lấy từ interval × fall hoặc interval × rise. Các tham số health check gợi ý thời gian phản ứng, nhưng kết quả quan sát còn phụ thuộc thời điểm phép kiểm tra, timeout và lập lịch của môi trường ảo.
+P363 [Heading 2] 5.7. Tổng hợp mức độ kiểm chứng
+P364 [normal] Bảng 5.5. Phạm vi kết luận từ các minh chứng
+TABLE 13 (7x3)
+  | Nội dung || Bằng chứng hiện có hoặc cần bổ sung || Kết luận phù hợp
+  | Chặn URI tại WAN || Timeout và SID 1001001 có hành động chặn của nguồn .10 || Đã có bằng chứng chức năng; bổ sung kiểm tra .11
+  | Phân phối tới hai backend || Log /load-test.txt trên cả hai; Stats UP, 96 và 95 phiên tích lũy || Đã có bằng chứng hai backend tham gia, chưa phải số liệu riêng của lần hai nguồn
+  | Hai Kali hoạt động đồng thời || Cần JTL và log có nhãn K1/K2 cùng run || Chỉ kết luận sau khi xác nhận khoảng chồng lấn
+  | Chặn theo ngưỡng của cả hai nguồn || Cần SID 1001002 và action cho .10, .11 || Không dùng SID 1001001 thay thế
+  | Mức giảm yêu cầu tới backend || Cần Bảng 5.3 từ log đầy đủ || Chưa điền tỷ lệ khi chưa có phép đo
+  | Tiếp tục phục vụ khi backend hỏng || Cần chuỗi ảnh và số liệu Bảng 5.4 || Phân biệt kế hoạch kiểm chứng với kết quả đã đo
+P365 [normal] 
+P366 [normal] Các con số 96 và 95 trong Stats được giữ đúng ý nghĩa là bộ đếm phiên tích lũy của ảnh kiểm tra chức năng. Không đưa chúng vào bảng tổng yêu cầu của một lần JMeter khác. Khi hoàn thiện dữ liệu hai nguồn, nhóm cập nhật cột bằng chứng của Bảng 5.5 và phần kết luận tương ứng dựa trên ảnh, JTL và log thực tế.
+P367 [Heading 2] 5.8. Đánh giá khả năng phối hợp Suricata và HAProxy
+P368 [normal] Mô hình phân tách hai nhiệm vụ trong bảo vệ tính sẵn sàng. Suricata kiểm soát lưu lượng khớp luật ở phía nguồn; HAProxy phân phối phần yêu cầu được tiếp nhận tới các backend còn đủ điều kiện. Thử nghiệm chặn URI và hoạt động của hai backend cho thấy hai thành phần có thể cùng tồn tại trên đường truy cập đã thiết kế. Đó là nền tảng để thực hiện so sánh theo ngưỡng.
+P369 [normal] Về phát hiện, chính sách hiện tại nhận diện một biểu hiện được định nghĩa trước: nguồn lab gửi GET tới một URI với tần suất đạt ngưỡng. Nó không tự xác định động cơ người gửi và không đại diện cho mọi hình thức DDoS. Về giảm thiểu, hành động chặn chỉ có ý nghĩa thực nghiệm khi có bằng chứng giảm yêu cầu tới backend hoặc thay đổi phục vụ được giải thích rõ.
+P370 [normal] Về cân bằng tải, hai backend cùng xử lý giúp tránh tập trung toàn bộ yêu cầu được chấp nhận vào một server. Tuy nhiên, kết luận “hiệu năng tăng gấp đôi” cần một phép đo năng lực riêng; không thể suy ra từ cấu hình hai server hoặc số phiên gần bằng nhau. Khả năng tiếp tục phục vụ khi một server hỏng cũng phải được xác nhận bằng KB5, thay vì suy từ việc health check đã được bật.
+P371 [Heading 2] 5.9. Hạn chế và yếu tố ảnh hưởng kết quả
+P372 [normal] Quy mô nguồn và mô hình tải: Hai Kali cung cấp hai nguồn độc lập trong một môi trường có kiểm soát. Các nguồn có thể cùng chạy trên một máy thật nên không tái hiện đường truyền, độ trễ hoặc quy mô của hệ thống phân tán trên Internet. File tĩnh nhỏ cũng không thể hiện đầy đủ chi phí xử lý của ứng dụng động.
+P373 [normal] Giới hạn chính sách: track by_src theo dõi riêng từng IP. Nhiều nguồn dưới ngưỡng vẫn có thể tạo tổng tải lớn. URI lab giúp đo rõ hành vi nhưng giới hạn phạm vi kiểm tra. Hai người dùng sau cùng một IP chia sẻ bộ đếm nguồn có thể chịu ảnh hưởng lẫn nhau; việc đánh giá chặn nhầm cần dữ liệu truy cập hợp lệ phù hợp hơn.
+P374 [normal] Giới hạn tài nguyên: pfSense chạy đồng thời IPS và reverse proxy nên chi phí xử lý được cộng trên cùng VM. Các lần Kali bị treo hoặc host thiếu RAM là dấu hiệu cần kiểm tra tài nguyên, không được xem tự động là kết quả DDoS vào backend. Mạng Internal Network cũng không đại diện cho băng thông đường WAN thực tế.
+P375 [normal] Giới hạn bằng chứng: Ảnh chụp thể hiện một thời điểm, còn các bộ đếm có thể tích lũy qua nhiều lần chạy. Không có toàn bộ log và mã lần chạy thì khó xác định mẫu thiếu do bị chặn, do timeout, do thử lại hay do đọc nhầm kết quả cũ. Vì thế, báo cáo giữ dữ liệu gốc và chỉ kết luận trong phạm vi được đối chiếu.
+P376 [Heading 1] KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN
+P377 [Heading 2] 1. Kết luận
+P378 [normal] Đề tài xây dựng phương án mô phỏng DDoS HTTP theo kiến trúc hai nguồn Kali/JMeter cùng hướng tới một frontend pfSense, phía sau là hai Windows web server. Suricata Inline IPS kiểm tra lưu lượng tại WAN, còn HAProxy lựa chọn backend cho các yêu cầu được tiếp nhận. Thiết kế này cho phép nghiên cứu việc phát hiện, ngăn chặn và phân phối tải trong cùng một luồng xử lý có thể quan sát.
+P379 [normal] Các kết quả chức năng đã ghi nhận gồm khả năng trả nội dung qua frontend, hành động chặn của SID 1001001 đối với URI kiểm tra và việc cả hai backend nhận yêu cầu HTTP. Sự kết hợp giữa timeout tại Kali, sự kiện chặn tại Suricata và log backend là phương pháp đối chiếu phù hợp hơn việc chỉ nhìn một màn hình lỗi. Tương tự, hai backend UP và có log xử lý hỗ trợ kết luận HAProxy đã phân phối hoạt động, nhưng không tự chứng minh mức tăng hiệu năng.
+P380 [normal] Đối với mô hình mở rộng hai nguồn, báo cáo xác định rõ quy trình đo đồng thời, chính sách theo từng IP và các dữ liệu cần so sánh. Kết quả định lượng cuối cùng của các lần chạy được ghi tại Bảng 5.2 đến Bảng 5.4. Khi chưa có bộ số liệu đầy đủ, chưa kết luận tỷ lệ giảm tải, mức cải thiện độ trễ hoặc thời gian khôi phục cụ thể. Cách trình bày này giữ kết luận phù hợp với bằng chứng và làm rõ phần cần tiếp tục kiểm chứng.
+P381 [normal] Bài học chính của thực nghiệm là mỗi thành phần giải quyết một phần của vấn đề tính sẵn sàng. IPS cần đúng vị trí, đúng luật và có bằng chứng hành động; cân bằng tải cần backend đủ điều kiện và cơ chế kiểm tra sức khỏe. Hiệu quả phối hợp chỉ được xác định khi giữ điều kiện đầu vào nhất quán và theo dõi cả nguồn, điểm trung gian lẫn ứng dụng.
+P382 [Heading 2] 2. Hướng phát triển
+P383 [normal] Hướng hoàn thiện gần nhất là thực hiện đủ các lần đo có mã thống nhất với hai Kali, lặp lại đối chứng để quan sát độ dao động và thu đầy đủ log của hai backend. Sau đó có thể bổ sung nguồn truy cập hợp lệ độc lập để đánh giá mức duy trì dịch vụ và khả năng chặn nhầm, đặc biệt khi truy cập cùng URI đang được theo dõi.
+P384 [normal] Về chính sách, cần khảo sát kết hợp ngưỡng từng nguồn với quan sát tổng tải của dịch vụ, chọn giá trị dựa trên đường cơ sở thay vì ngưỡng minh họa. Về hiệu năng, có thể so sánh một backend với hai backend trên cùng cấu hình tải để định lượng lợi ích của cân bằng. Về độ tin cậy, có thể nghiên cứu dự phòng cho pfSense vì hai chức năng hiện đặt trên cùng một điểm trung gian.
+P385 [normal] Khi mở rộng sang HTTPS hoặc môi trường mạng thật, cần đánh giá lại vị trí kiểm tra, cơ chế nhìn thấy nội dung ứng dụng và giới hạn băng thông. Đây là những hướng mở rộng riêng; kết quả HTTP rõ trong mạng ảo không được xem là bằng chứng sẵn có cho các môi trường đó.
+P386 [Heading 1] TÀI LIỆU THAM KHẢO
+P387 [normal] Các tài liệu trực tuyến dưới đây được truy cập ngày 08/11/2026. Phiên bản tài liệu Suricata 7.0.11 và HAProxy 3.2 được dùng để đối chiếu cơ chế; phiên bản phần mềm thực cài của nhóm cần ghi riêng tại Bảng 3.1.
+P388 [normal] [1] CERT-EU, “DDoS Overview and Response Guide”, 03/06/2024. https://cert.europa.eu/publications/security-guidance/CERT-EU_Security_Whitepaper_DDoS_17-003/
+P389 [normal] [2] Apache Software Foundation, “Apache JMeter User’s Manual: Component Reference”. https://jmeter.apache.org/usermanual/component_reference.html
+P390 [normal] [3] Apache Software Foundation, “Apache JMeter User’s Manual: Best Practices”. https://jmeter.apache.org/usermanual/best-practices.html
+P391 [normal] [4] Netgate, “The pfSense Documentation”, phần yêu cầu tài nguyên của gói Snort/Suricata. https://docs.netgate.com/manuals/pfsense/en/latest/the-pfsense-documentation.pdf
+P392 [normal] [5] Open Information Security Foundation, “HTTP Keywords”, Suricata 7.0.11 Documentation. https://docs.suricata.io/en/suricata-7.0.11/rules/http-keywords.html
+P393 [normal] [6] Open Information Security Foundation, “Global-Thresholds”, Suricata 7.0.11 Documentation. https://docs.suricata.io/en/suricata-7.0.11/configuration/global-thresholds.html
+P394 [normal] [7] Netgate, “HAProxy package”, pfSense Documentation. https://docs.netgate.com/pfsense/en/latest/packages/haproxy.html
+P395 [normal] [8] HAProxy Technologies, “HAProxy version 3.2 Configuration Manual”, phần balance, frontend, backend và thống kê. https://docs.haproxy.org/3.2/configuration.html
+P396 [normal] [9] HAProxy Technologies, “Health checks”, HAProxy Configuration Tutorials. https://www.haproxy.com/documentation/haproxy-configuration-tutorials/reliability/health-checks/
+P397 [normal] [10] Netgate, “Port Forwarding”, pfSense Documentation. https://docs.netgate.com/pfsense/en/latest/nat/port-forwards.html
+P398 [normal] [11] Netgate và các tác giả gói pfSense Suricata, “suricata_interfaces_edit.php”, kho mã nguồn FreeBSD-ports, nhánh devel; phần cấu hình Inline IPS và hỗ trợ netmap. https://github.com/pfsense/FreeBSD-ports/blob/devel/security/pfSense-pkg-suricata/files/usr/local/www/suricata/suricata_interfaces_edit.php
+P399 [normal] [12] Python Software Foundation, “http.server — HTTP servers”, Python Documentation. https://docs.python.org/3/library/http.server.html
+P400 [normal] [13] Apache Software Foundation, “Apache JMeter User’s Manual: Getting Started”. https://jmeter.apache.org/usermanual/get-started.html
+P401 [normal] [14] Open Information Security Foundation, “Eve JSON Output”, Suricata 7.0.11 Documentation. https://docs.suricata.io/en/suricata-7.0.11/output/eve/eve-json-output.html
+P402 [normal] [15] Netgate và các tác giả gói pfSense Suricata, “suricata_suppress_edit.php”, kho mã nguồn FreeBSD-ports, nhánh devel. https://github.com/pfsense/FreeBSD-ports/blob/devel/security/pfSense-pkg-suricata/files/usr/local/www/suricata/suricata_suppress_edit.php
+P403 [Heading 1] PHỤ LỤC A. HỒ SƠ CẤU HÌNH VÀ LẦN CHẠY
+P404 [Heading 2] A.1. Thông tin cần lưu cùng báo cáo
+P405 [normal] Hồ sơ cấu hình gồm phiên bản VirtualBox, phiên bản từng hệ điều hành, Java/JMeter trên hai Kali, Python trên hai Windows, pfSense, Suricata và HAProxy. Đối với pfSense, lưu cấu hình bằng chức năng Backup của hệ thống; nếu chia sẻ tệp ra ngoài nhóm, xử lý thông tin đăng nhập và dữ liệu không cần thiết trước khi công bố.
+P406 [normal] Tệp JMX cần được lưu riêng cho từng cấu hình tải. Nếu kế hoạch trên hai Kali giống nhau ngoại trừ SRC, ghi rõ sự khác biệt này để người đọc có thể tái lập. Ảnh cấu hình chỉ phản ánh một phần màn hình; tệp cấu hình và thông số văn bản giúp tránh thiếu những lựa chọn không hiện trong ảnh.
+P407 [normal] Bảng A.1. Phiếu ghi một lần thực nghiệm
+TABLE 14 (10x2)
+  | Trường thông tin || Nội dung
+  | Mã lần chạy || [ĐIỀN KBx_Ry]
+  | Người thực hiện và thời gian || [ĐIỀN]
+  | Cấu hình tải trên mỗi Kali || [ĐIỀN THREAD, LOOP, TIMER, RAMP-UP, TIMEOUT]
+  | Trạng thái Suricata và chính sách || [ĐIỀN INLINE, SID, RATE_FILTER]
+  | Trạng thái backend trước chạy || [ĐIỀN WEB1, WEB2, HEALTH CHECK]
+  | Tệp JTL của hai nguồn || [ĐIỀN TÊN TỆP K1 VÀ K2]
+  | Log hai backend và IPS || [ĐIỀN TÊN TỆP]
+  | Thay đổi hoặc sự cố || [ĐIỀN, KỂ CẢ DỪNG SỚM]
+  | Kết luận của lần chạy || [ĐIỀN KÈM DẪN CHIẾU ẢNH HOẶC LOG]
+P408 [normal] 
+P409 [Heading 2] A.2. Quy tắc quản lý kết quả
+P410 [normal] Mỗi lần chạy dùng thư mục riêng, trong đó lưu kế hoạch, kết quả, log và ảnh. Một cấu trúc phù hợp là KB4_R1/K1, KB4_R1/K2, KB4_R1/pfsense, KB4_R1/web1, KB4_R1/web2. Không ghi đè kết quả của lần trước khi đang sử dụng làm đối chứng. Các ảnh gốc và ảnh đánh dấu được lưu ở hai nhóm tên phân biệt.
+P411 [Heading 1] PHỤ LỤC B. LỆNH KIỂM TRA VÀ THU LOG
+P412 [Heading 2] B.1. Trên Kali
+P413 [normal] ip -br addr
+P414 [normal] ip route
+P415 [normal] java -version
+P416 [normal] jmeter -v
+P417 [normal] curl --noproxy '*' -i --max-time 5 "http://10.10.10.1:8080/"
+P418 [normal] curl --noproxy '*' -v --max-time 5 "http://10.10.10.1:8080/ips-test.txt?case=IPS_ON_K1_R1"
+P419 [normal] 
+P420 [normal] Lệnh đầu xác nhận địa chỉ, lệnh thứ hai xem đường đi, hai lệnh tiếp theo ghi phiên bản công cụ. Hai lệnh curl dùng để kiểm tra HTTP. Thay nhãn K1 bằng K2 trên máy thứ hai; nhãn URI không thay đổi chế độ IPS. Khi cần dừng một lệnh đang chờ, dùng Ctrl+C và ghi nhận việc dừng nếu đó là một phần của lần đo.
+P421 [Heading 2] B.2. Trên Windows
+P422 [normal] ipconfig
+P423 [normal] py -3 --version
+P424 [normal] Get-NetTCPConnection -LocalPort 8080 -State Listen
+P425 [normal] 
+P426 [normal] Khi cần vừa xem vừa lưu log, dừng phiên Python cũ bằng Ctrl+C, rồi chạy một phiên mới có tệp log riêng. Không mở hai tiến trình trên cùng cổng. Ví dụ ở Web 1 cho KB3_R1:
+P427 [normal] New-Item -ItemType Directory -Force C:\ddos-logs
+P428 [normal] py -3 -u -m http.server 8080 --bind 0.0.0.0 --directory C:\ddos-lab 2>&1 | Tee-Object -FilePath C:\ddos-logs\KB3_R1_web1.log
+P429 [normal] 
+P430 [normal] Log được dùng để tìm đúng run và URI. Thư mục log được tách khỏi thư mục web để log không trở thành tài nguyên HTTP được phục vụ. Tên tệp không phải là bằng chứng nội dung: vẫn cần kiểm tra thời gian và query trong từng dòng.
+P431 [normal] Ví dụ đếm các dòng GET của đúng mã lần chạy trong PowerShell, với đường dẫn log điều chỉnh theo tệp đã lưu:
+P432 [normal] $labRows = Get-Content -LiteralPath 'C:\ddos-logs\KB3_R1_web1.log' |
+P433 [normal]     Where-Object { $_ -match 'GET /load-test.txt\?' -and $_ -match 'run=KB3_R1(?:&| )' }
+P434 [normal] ($labRows | Measure-Object).Count
+P435 [normal] $labRows
+P436 [normal] 
+P437 [normal] Đây là số dòng yêu cầu được ứng dụng ghi, không mặc nhiên bằng số giao dịch duy nhất nếu có thử lại. Nếu dùng thứ tự tham số hoặc mã hóa query khác, điều chỉnh bộ lọc theo định dạng thực tế. Giữ toàn bộ log gốc để kiểm tra lại các dòng bị loại.
+P438 [Heading 1] PHỤ LỤC C. HỒ SƠ LUẬT SURICATA
+P439 [Heading 2] C.1. Phạm vi và trạng thái các luật
+P440 [normal] Bảng C.1. Phân biệt hai luật dùng trong báo cáo
+TABLE 15 (3x3)
+  | SID || Điều kiện chính || Vai trò
+  | 1001001 || Hai IP Kali; frontend:8080; URI bắt đầu /ips-test.txt || Kiểm chứng chặn trực tiếp; không dùng làm phép đo theo ngưỡng
+  | 1001002 || Hai IP Kali; GET tới URI bắt đầu /load-test.txt || Theo dõi và chuyển hành động thông qua rate_filter
+P441 [normal] 
+P442 [normal] Nội dung đầy đủ của hai luật được trình bày tại mục 4.6.3. Khi nộp hồ sơ cấu hình, lưu bản lab.rules đã xuất từ hệ thống và ghi ngày áp dụng. Không giữ đồng thời một bản cũ chỉ có .10 và một bản mới cùng SID trong cùng tập luật, vì có thể tạo xung đột hoặc làm việc đối chiếu không rõ ràng.
+P443 [Heading 2] C.2. Phân biệt trạng thái đối chứng
+P444 [normal] Trong KB3, instance inline và luật 1001002 vẫn hoạt động nhưng không áp dụng dòng rate_filter. Trong KB4, gán dòng rate_filter đã mô tả ở mục 4.6.4. Trước khi chuyển trạng thái, lưu ảnh cấu hình hiệu lực. Chờ trạng thái cũ hết ảnh hưởng, hoặc tái khởi động instance theo quy trình đã thống nhất rồi xác nhận truy cập nền trở lại bình thường.
+P445 [normal] Để tạm comment một dòng luật trong trình soạn thảo văn bản, đặt ký tự # ở đầu dòng. Để khôi phục, bỏ ký tự đó rồi lưu và nạp lại cấu hình. Thao tác comment chỉ có ý nghĩa nếu thay đổi được áp dụng vào instance đang chạy; việc chỉnh văn bản rồi chưa Save/Apply không thay đổi kết quả kiểm tra.
+P446 [Heading 1] PHỤ LỤC D. CẤU HÌNH HAPROXY TƯƠNG ĐƯƠNG
+P447 [normal] Cấu hình dưới đây mô tả logic frontend và backend của báo cáo. Đây là cấu hình tham chiếu để giải thích trường trên Web GUI, không phải bản sao khẳng định đúng toàn bộ tệp pfSense đã sinh ra. Khi tái lập trên pfSense, sử dụng giao diện gói và lưu cấu hình hiệu lực; không ghi đè trực tiếp tệp do gói quản lý.
+P448 [normal] defaults
+P449 [normal]     mode http
+P450 [normal]     timeout connect 3s
+P451 [normal]     timeout client 10s
+P452 [normal]     timeout server 10s
+P453 [normal] 
+P454 [normal] frontend web_frontend
+P455 [normal]     bind 10.10.10.1:8080
+P456 [normal]     default_backend web_pool
+P457 [normal] 
+P458 [normal] backend web_pool
+P459 [normal]     balance roundrobin
+P460 [normal]     option httpchk GET /health.txt
+P461 [normal]     http-check expect status 200
+P462 [normal]     server web1 10.10.20.20:8080 weight 1 check inter 2s fall 3 rise 2
+P463 [normal]     server web2 10.10.20.21:8080 weight 1 check inter 2s fall 3 rise 2
+P464 [normal] 
+P465 [normal] Các giá trị timeout của HAProxy và JMeter có vai trò khác nhau. Khi JMeter hết thời gian chờ trước HAProxy, phía client có thể ghi lỗi dù proxy còn đang xử lý. Vì vậy, bảng cấu hình thực tế cần ghi cả hai phía và giữ ổn định khi đối chứng. Health check là các yêu cầu riêng của HAProxy, được loại khỏi thống kê tải do JMeter tạo.
+P466 [Heading 1] PHỤ LỤC E. BIỂU MẪU TỔNG HỢP NHIỀU LẦN ĐO
+P467 [normal] Bảng E.1. Tổng hợp các lần chạy định lượng
+TABLE 16 (7x5)
+  | Lần chạy || Tổng mẫu thực tế || Mẫu lỗi || GET tại web1 / web2 || Kết quả DROP đúng SID
+  | KB3_R1 || [ĐIỀN] || [ĐIỀN] || [ĐIỀN] || [ĐIỀN]
+  | KB3_R2 || [ĐIỀN] || [ĐIỀN] || [ĐIỀN] || [ĐIỀN]
+  | KB3_R3 || [ĐIỀN] || [ĐIỀN] || [ĐIỀN] || [ĐIỀN]
+  | KB4_R1 || [ĐIỀN] || [ĐIỀN] || [ĐIỀN] || [ĐIỀN]
+  | KB4_R2 || [ĐIỀN] || [ĐIỀN] || [ĐIỀN] || [ĐIỀN]
+  | KB4_R3 || [ĐIỀN] || [ĐIỀN] || [ĐIỀN] || [ĐIỀN]
+P468 [normal] 
+P469 [normal] Từ bảng này, báo cáo thêm giá trị trung bình hoặc khoảng dao động của các chỉ số qua nhiều lần đo. Không lấy một lần có kết quả thuận lợi nhất làm đại diện cho toàn bộ cấu hình. Những lần bị treo VM hoặc phải dừng sớm được ghi chú và phân tích riêng.
+P470 [normal] Nếu cần vẽ biểu đồ, dùng hai nhóm cột KB3 và KB4 để so sánh yêu cầu tới backend; trục tung ghi rõ đơn vị “yêu cầu đã được ứng dụng ghi nhận”. Biểu đồ thời gian đáp ứng nên tách mẫu thành công và timeout. Chỉ tạo biểu đồ sau khi đã có số liệu, không vẽ đường kết quả giả để minh họa như một phép đo thật.
+P471 [Heading 1] PHỤ LỤC F. HOÀN THIỆN ẢNH VÀ TRÌNH BÀY KẾT QUẢ
+P472 [Heading 2] F.1. Chèn ảnh vào các vị trí đã đánh dấu
+P473 [normal] Tại mỗi đoạn [CHÈN HÌNH … TẠI ĐÂY], chèn ảnh bằng Insert → Pictures, đặt ảnh ở chế độ In Line with Text, rồi xóa đoạn hướng dẫn chèn ảnh. Giữ lại chú thích “Hình x.y” phía dưới và phần phân tích liên quan. Nếu dùng nhiều ảnh cho cùng một hình, ghi các phần (a), (b) và tên máy rõ ràng, tránh thu nhỏ cả màn hình tới mức không đọc được IP hoặc số liệu.
+P474 [normal] Chỉ cắt bớt vùng không liên quan; giữ tiêu đề cột, URL, nguồn, đích, thời gian hoặc mã lần chạy khi chúng cần cho đối chiếu. Tạo bản đánh dấu từ ảnh gốc. Màu xanh biểu thị thành công hoặc trạng thái sẵn sàng; màu đỏ biểu thị chặn, lỗi hoặc sự cố cần phân tích. Mũi tên và nhãn ngắn làm rõ ý nghĩa màu; không sửa chữ, con số hay dòng log trong ảnh gốc.
+P475 [Heading 2] F.2. Viết bình luận dưới ảnh
+P476 [normal] Mỗi bình luận trả lời ba câu hỏi: hình đang thể hiện điều gì; chi tiết nào giải thích kết quả; và dữ liệu cho phép đánh giá đến đâu. Ví dụ, một ảnh timeout chỉ thể hiện phía gửi không nhận được phản hồi trong thời gian chờ. Khi có thêm action DROP cùng SID và log backend phù hợp, mới có cơ sở gắn timeout với luật IPS.
+P477 [normal] Các đoạn dưới vị trí chèn ảnh trong báo cáo đã nêu ý nghĩa, cách giải thích và giới hạn đánh giá. Sau khi chèn ảnh thực tế, điều chỉnh nội dung để khớp với số liệu trong hình; không giữ lời nhận xét “thành công” nếu ảnh thể hiện điều ngược lại. Với phép thử chưa thực hiện, giữ trạng thái “chưa đo” thay vì viết như kết quả đã đạt.
+P478 [Heading 2] F.3. Hoàn thiện trước khi nộp
+P479 [normal] Điền thông tin bìa, phân công, phiên bản và tài nguyên. Bổ sung ảnh thật cho các mục đã đánh dấu, hoàn tất số liệu của các kịch bản đã chạy và cập nhật kết luận tương ứng. Kiểm tra mọi ô [ĐIỀN…]; nếu một phép đo chưa thực hiện, ghi rõ trạng thái và lý do thay vì để một con số suy đoán.
+P480 [normal] Sau khi sửa nội dung hoặc chèn ảnh, nhấn Ctrl+A rồi F9 trong Word để cập nhật các trường. Đối với mục lục và danh mục hình/bảng, chọn cập nhật toàn bộ khi Word hỏi. Kiểm tra lại ngắt trang, vị trí chú thích và phần bình luận; ảnh phải nằm gần phần mô tả đúng kịch bản. Phụ lục này có thể được giữ làm hướng dẫn quản lý minh chứng hoặc bỏ khỏi bản nộp theo yêu cầu của giảng viên.

@@ -1,0 +1,73 @@
+{
+  "run": "KB4_R2",
+  "policy": "on",
+  "start": "2026-11-09T11:31:28Z",
+  "sur_add": "posted, resp len 110300\nMSG: class=\"alert alert-danger\"> WARNING:  The 'admin' account password is set to the default value.    Change the password in the User Manager.  \n\t \n\n  Services  <a href=\"/suricata/suricata_interfaces.p\nhas 'Inline': True | has 'WAN inline IPS': True",
+  "post_errors": [
+    "stop: HTTPConnectionPool(host='127.0.0.1', port=8443): Read timed out. (read timeout=120)"
+  ],
+  "ps": 1,
+  "threshold_config": "# Rate filter: 20 hits of SID 1001002 within 10 s from one source -&gt; DROP 15 s\nrate_filter gen_id 1, sig_id 1001002, track by_src, count 20, seconds 10, new_action drop, timeout 15",
+  "probe_K1": "200",
+  "probe_K2": "200",
+  "stats_before": {
+    "web1": {
+      "status": "UP",
+      "check_status": "L7OK",
+      "stot": "0",
+      "req_tot": "0",
+      "lastchg": "1081",
+      "weight": "1",
+      "addr": "10.10.20.20:8080"
+    },
+    "web2": {
+      "status": "UP",
+      "check_status": "L7OK",
+      "stot": "0",
+      "req_tot": "0",
+      "lastchg": "8766",
+      "weight": "1",
+      "addr": "10.10.20.21:8080"
+    },
+    "BACKEND": {
+      "status": "UP",
+      "stot": "0",
+      "req_tot": "0"
+    }
+  },
+  "barrier_epoch": 1794224073,
+  "load_start": "2026-11-09T11:33:58Z",
+  "load_end": "2026-11-09T11:35:00Z",
+  "stats_after": {
+    "web1": {
+      "status": "UP",
+      "check_status": "L7OK",
+      "stot": "36",
+      "req_tot": "36",
+      "lastchg": "1149",
+      "weight": "1",
+      "addr": "10.10.20.20:8080"
+    },
+    "web2": {
+      "status": "UP",
+      "check_status": "L7OK",
+      "stot": "36",
+      "req_tot": "36",
+      "lastchg": "8834",
+      "weight": "1",
+      "addr": "10.10.20.21:8080"
+    },
+    "BACKEND": {
+      "status": "UP",
+      "stot": "72",
+      "req_tot": "72"
+    }
+  },
+  "drops_1001002": 6,
+  "drop_src_k1": 18,
+  "drop_src_k2": 22,
+  "eve_1001002": 20,
+  "backend_web1": 37,
+  "backend_web2": 37,
+  "end": "2026-11-09T11:35:41Z"
+}

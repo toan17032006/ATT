@@ -1,0 +1,2604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="apple-touch-icon-precomposed" href="/apple-touch/apple-touch-icon-iphone-60x60-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="60x60" href="/apple-touch/apple-touch-icon-ipad-76x76-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/apple-touch/apple-touch-icon-iphone-retina-120x120-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch/apple-touch-icon-ipad-retina-152x152-precomposed.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/manifest.json">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+	<meta name="theme-color" content="#ffffff">
+
+	<link rel="stylesheet" href="/vendor/font-awesome/css/all.min.css?v=1701893362">
+	<link rel="stylesheet" href="/vendor/font-awesome/css/v4-shims.css?v=1701893362">
+	<link rel="stylesheet" href="/vendor/sortable/sortable-theme-bootstrap.css?v=1701893362">
+	<link rel="stylesheet" href="/vendor/jquery-treegrid/css/jquery.treegrid.css?v=1701893362">
+	<link rel="stylesheet" href="/css/pfSense.css?v=1701893362" />
+
+	<title>pfSense.home.arpa - Services: Suricata: WAN - Interface Settings</title>
+	<script type="text/javascript">
+	//<![CDATA[
+	var events = events || [];
+	//]]>
+	</script>
+<script type="text/javascript">if (top != self) {top.location.href = self.location.href;}</script><script type="text/javascript">var csrfMagicToken = "sid:22fcea36b627541782e604bb3b0e5a3836d5d505,1794214907";var csrfMagicName = "__csrf_magic";</script><script src="/csrf/csrf-magic.js" type="text/javascript"></script></head>
+
+<body id="2">
+<nav id="topmenu" class="navbar navbar-static-top navbar-inverse">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#pf-navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/">
+				<svg id="logo" role="img" aria-labelledby="pfsense-logo" x="0px" y="0px" viewBox="0 0 282.8 84.2">
+	<title id="pfsense-logo-svg">pfSense Logo</title>
+	<path class="logo-st0" d="M27.8,57.7c2.9,0,5.4-0.9,7.5-2.6c2.1-1.7,3.6-4,4.4-6.8c0.8-2.8,0.6-5.1-0.5-6.8c-1.1-1.7-3.2-2.6-6.1-2.6 c-2.9,0-5.4,0.9-7.5,2.6c-2.1,1.7-3.5,4-4.3,6.8c-0.8,2.8-0.7,5.1,0.5,6.8C22.8,56.9,24.8,57.7,27.8,57.7"/>
+	<path class="logo-st0" d="M115.1,46.6c-1.5-0.8-3-1.4-4.7-1.8c-1.7-0.4-3.2-0.7-4.7-1.1c-1.5-0.3-2.7-0.7-3.6-1.1c-0.9-0.4-1.4-1.1-1.4-2 c0-1.1,0.5-1.9,1.4-2.4c0.9-0.5,1.9-0.7,2.8-0.7c2.8,0,5,1,6.7,3.1l7-7c-1.7-1.8-3.9-3.1-6.4-3.8c-2.5-0.7-5-1.1-7.4-1.1 c-1.9,0-3.9,0.2-5.7,0.7c-1.9,0.5-3.6,1.2-5,2.3c-1.5,1-2.6,2.3-3.5,3.9c-0.9,1.6-1.3,3.5-1.3,5.7c0,2.3,0.5,4.2,1.4,5.6 c0.9,1.4,2.1,2.5,3.6,3.3c1.5,0.8,3,1.3,4.7,1.7c1.7,0.4,3.2,0.7,4.7,1.1c1.5,0.3,2.7,0.7,3.6,1.2c0.9,0.5,1.4,1.2,1.4,2.2 c0,1-0.5,1.7-1.6,2.1c-1.1,0.4-2.3,0.6-3.6,0.6c-1.7,0-3.3-0.3-4.6-1c-1.3-0.7-2.5-1.7-3.6-3l-7,7.7c1.8,1.9,4.1,3.2,6.7,3.9 c2.7,0.7,5.3,1.1,7.9,1.1c2,0,4-0.2,6.1-0.6c2-0.4,3.9-1,5.5-2c1.6-0.9,3-2.2,4-3.8c1-1.6,1.6-3.5,1.6-5.9c0-2.3-0.5-4.2-1.4-5.6 C117.7,48.6,116.5,47.4,115.1,46.6"/>
+	<path class="logo-st0" d="M156.3,34.1c-1.5-1.7-3.3-3-5.5-3.9c-2.2-0.9-4.6-1.4-7.2-1.4c-2.9,0-5.6,0.5-8.1,1.4c-2.5,0.9-4.7,2.2-6.6,3.9 c-1.9,1.7-3.3,3.8-4.4,6.2c-1.1,2.4-1.6,5.1-1.6,8c0,3,0.5,5.6,1.6,8c1.1,2.4,2.5,4.5,4.4,6.2c1.9,1.7,4.1,3,6.6,3.9 c2.5,0.9,5.2,1.4,8.1,1.4c3,0,5.9-0.6,8.7-1.9c2.8-1.3,5.1-3.1,7-5.4l-8-5.9c-1,1.3-2.1,2.4-3.4,3.3c-1.3,0.8-2.9,1.3-4.8,1.3 c-2.2,0-4.1-0.7-5.7-2c-1.5-1.3-2.5-3.1-3-5.2H161v-3.6c0-3-0.4-5.6-1.2-8C159,37.9,157.8,35.8,156.3,34.1 M134.3,44.1 c0.1-0.9,0.3-1.8,0.7-2.6c0.4-0.8,0.9-1.6,1.6-2.2c0.7-0.6,1.5-1.2,2.5-1.6c1-0.4,2.1-0.6,3.4-0.6c2.1,0,3.8,0.7,5.1,2.1 c1.3,1.4,2,3,1.9,5H134.3z"/>
+	<path class="logo-st0" d="M198.3,33.8c-1-1.6-2.4-2.8-4.2-3.7c-1.8-0.9-4.1-1.3-7-1.3c-1.4,0-2.7,0.2-3.8,0.5c-1.2,0.4-2.2,0.8-3.1,1.4 c-0.9,0.6-1.7,1.2-2.4,1.9c-0.7,0.7-1.2,1.4-1.5,2.1H176v-5.1h-11v37.2h11.5V48.4c0-1.2,0.1-2.4,0.2-3.5c0.2-1.1,0.5-2.1,1-3 c0.5-0.9,1.2-1.6,2.1-2.1c0.9-0.5,2.1-0.8,3.6-0.8c1.5,0,2.6,0.3,3.4,0.9c0.8,0.6,1.4,1.4,1.8,2.4c0.4,1,0.6,2,0.7,3.2 c0.1,1.1,0.1,2.3,0.1,3.3v18.2h11.5V46.4c0-2.5-0.2-4.8-0.5-7C199.9,37.3,199.3,35.4,198.3,33.8"/>
+	<path class="logo-st0" d="M231.5,46.6c-1.5-0.8-3-1.4-4.7-1.8c-1.7-0.4-3.2-0.7-4.7-1.1c-1.5-0.3-2.7-0.7-3.6-1.1c-0.9-0.4-1.4-1.1-1.4-2 c0-1.1,0.5-1.9,1.4-2.4c0.9-0.5,1.9-0.7,2.8-0.7c2.8,0,5,1,6.7,3.1l7-7c-1.7-1.8-3.9-3.1-6.4-3.8c-2.5-0.7-5-1.1-7.4-1.1 c-1.9,0-3.9,0.2-5.7,0.7c-1.9,0.5-3.6,1.2-5,2.3c-1.5,1-2.6,2.3-3.5,3.9c-0.9,1.6-1.3,3.5-1.3,5.7c0,2.3,0.5,4.2,1.4,5.6 c0.9,1.4,2.1,2.5,3.6,3.3c1.5,0.8,3,1.3,4.7,1.7c1.7,0.4,3.2,0.7,4.7,1.1c1.5,0.3,2.7,0.7,3.6,1.2c0.9,0.5,1.4,1.2,1.4,2.2 c0,1-0.5,1.7-1.6,2.1c-1.1,0.4-2.3,0.6-3.6,0.6c-1.7,0-3.3-0.3-4.6-1c-1.3-0.7-2.5-1.7-3.6-3l-7,7.7c1.8,1.9,4.1,3.2,6.7,3.9 c2.7,0.7,5.3,1.1,7.9,1.1c2,0,4-0.2,6.1-0.6c2-0.4,3.9-1,5.5-2c1.6-0.9,3-2.2,4-3.8c1-1.6,1.6-3.5,1.6-5.9c0-2.3-0.5-4.2-1.4-5.6 C234.1,48.6,232.9,47.4,231.5,46.6"/>
+	<path class="logo-st0" d="M277.4,51.9v-4.2c-0.1-2.7-0.5-5.2-1.2-7.4c-0.8-2.4-2-4.5-3.5-6.2c-1.5-1.7-3.3-3-5.5-3.9 c-2.2-0.9-4.6-1.4-7.2-1.4c-2.9,0-5.6,0.5-8.1,1.4c-2.5,0.9-4.7,2.2-6.6,3.9c-1.9,1.7-3.3,3.8-4.4,6.2c-1.1,2.4-1.6,5.1-1.6,8 c0,3,0.5,5.6,1.6,8c1.1,2.4,2.5,4.5,4.4,6.2c1.9,1.7,4.1,3,6.6,3.9c2.5,0.9,5.2,1.4,8.1,1.4c3,0,5.9-0.6,8.7-1.9 c2.8-1.3,5.1-3.1,7-5.4l-8-5.9c-1,1.3-2.1,2.4-3.4,3.3c-1.3,0.8-2.9,1.3-4.8,1.3c-2.2,0-4.1-0.7-5.7-2c-1.5-1.3-2.5-3.1-3-5.2H277.4 z M250.7,44.1c0.1-0.9,0.3-1.8,0.7-2.6c0.4-0.8,0.9-1.6,1.6-2.2c0.7-0.6,1.5-1.2,2.5-1.6c1-0.4,2.1-0.6,3.4-0.6 c2.1,0,3.8,0.7,5.1,2.1c1.3,1.4,2,3,1.9,5H250.7z"/>
+	<path class="logo-st1" d="M52.6,38.9l2.6-9.2h4.6l1.8-6.6c0.6-2,1.3-4,2.2-5.8c0.8-1.8,2-3.4,3.4-4.8c1.4-1.4,3.2-2.5,5.3-3.3 c2.1-0.8,4.8-1.2,7.9-1.2c0.8,0,1.5,0,2.3,0.1c-0.7-2.9-3.3-5-6.3-5.1H11.9c-3.6,0-6.5,3-6.5,6.6V67l10.5-37.3h10.6l-1.4,4.9h0.2 c0.6-0.7,1.4-1.3,2.4-2c1-0.7,2-1.3,3.1-1.9c1.1-0.6,2.3-1,3.6-1.4c1.3-0.4,2.6-0.5,3.9-0.5c2.8,0,5.1,0.5,7.1,1.4 c2,0.9,3.5,2.3,4.7,4c1,1.5,1.6,3.3,1.9,5.4l0.8-0.6H52.6z"/>
+	<path class="logo-st2" d="M82.1,17.9c-0.5-0.1-1.1-0.2-1.8-0.2c-1.8,0-3.3,0.4-4.5,1.2c-1.1,0.8-2.1,2.4-2.8,4.9l-1.7,5.9h6.5l1.6,5.1 l-4.2,4.1h-6.5l-7.9,28H49.4l7.9-28h-4.4L52,39.5c0,0.2,0.1,0.5,0.1,0.7c0.2,2.3-0.1,4.9-0.9,7.7c-0.7,2.6-1.8,5.1-3.3,7.5 c-1.5,2.4-3.2,4.5-5.1,6.3c-2,1.8-4.2,3.3-6.6,4.4c-2.4,1.1-4.9,1.6-7.6,1.6c-2.4,0-4.5-0.4-6.4-1.1c-1.9-0.7-3.2-2-4-3.8h-0.2 l-5,17.7h63.3c3.6,0,6.6-2.9,6.6-6.6V18.2C82.6,18.1,82.3,18,82.1,17.9"/>
+	<path class="logo-st0" d="M277.6,68.5h0.8c0.4,0,0.6-0.1,0.7-0.2c0.1-0.1,0.2-0.2,0.2-0.4c0-0.1,0-0.2-0.1-0.3c-0.1-0.1-0.1-0.2-0.3-0.2 c-0.1,0-0.3-0.1-0.6-0.1h-0.7V68.5z M277,70.6v-3.8h1.3c0.5,0,0.8,0,1,0.1c0.2,0.1,0.4,0.2,0.5,0.4c0.1,0.2,0.2,0.4,0.2,0.6 c0,0.3-0.1,0.5-0.3,0.7c-0.2,0.2-0.5,0.3-0.8,0.3c0.1,0.1,0.2,0.1,0.3,0.2c0.2,0.2,0.3,0.4,0.6,0.8l0.5,0.7h-0.8l-0.3-0.6 c-0.3-0.5-0.5-0.8-0.6-0.9c-0.1-0.1-0.3-0.1-0.5-0.1h-0.4v1.6H277z M278.6,65.7c-0.5,0-1,0.1-1.5,0.4c-0.5,0.3-0.8,0.6-1.1,1.1 c-0.3,0.5-0.4,1-0.4,1.5c0,0.5,0.1,1,0.4,1.5c0.3,0.5,0.6,0.8,1.1,1.1c0.5,0.3,1,0.4,1.5,0.4c0.5,0,1-0.1,1.5-0.4 c0.5-0.3,0.8-0.6,1.1-1.1c0.3-0.5,0.4-1,0.4-1.5c0-0.5-0.1-1-0.4-1.5c-0.3-0.5-0.6-0.8-1.1-1.1C279.6,65.8,279.1,65.7,278.6,65.7z M278.6,65.1c0.6,0,1.2,0.2,1.8,0.5c0.6,0.3,1,0.7,1.3,1.3c0.3,0.6,0.5,1.2,0.5,1.8c0,0.6-0.2,1.2-0.5,1.8c-0.3,0.6-0.8,1-1.3,1.3 c-0.6,0.3-1.2,0.5-1.8,0.5c-0.6,0-1.2-0.2-1.8-0.5c-0.6-0.3-1-0.8-1.3-1.3c-0.3-0.6-0.5-1.2-0.5-1.8c0-0.6,0.2-1.2,0.5-1.8 c0.3-0.6,0.8-1,1.3-1.3C277.4,65.2,278,65.1,278.6,65.1z"/>
+</svg>
+				<span style="color:white;font-size:.5em;text-transform:uppercase;letter-spacing:1px;">Community Edition</span>
+			</a>
+		</div>
+		<div class="collapse navbar-collapse" id="pf-navbar">
+			<ul class="nav navbar-nav">
+							<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						System						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu"><li><a href="/system_advanced_admin.php" class="navlnk" >Advanced</a></li>
+<li><a href="/system_camanager.php" class="navlnk" >Certificates</a></li>
+<li><a href="/system.php" class="navlnk" >General Setup</a></li>
+<li><a href="/system_hasync.php" class="navlnk" >High Availability</a></li>
+<li><a href="/pkg_mgr_installed.php" class="navlnk" >Package Manager</a></li>
+<li><a href="/system_register.php" class="navlnk" >Register</a></li>
+<li><a href="/system_gateways.php" class="navlnk" >Routing</a></li>
+<li><a href="/wizard.php?xml=setup_wizard.xml" class="navlnk" >Setup Wizard</a></li>
+<li><a href="/pkg_mgr_install.php?id=firmware" class="navlnk" >Update</a></li>
+<li><a href="/system_usermanager.php" class="navlnk" >User Manager</a></li>
+<li><a href="/index.php?logout" class="navlnk" usepost>Logout (admin)</a></li>
+</ul>
+				</li>
+
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						Interfaces						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu"><li><a href="/interfaces_assign.php" class="navlnk" >Assignments</a></li>
+ <li class="divider"></li><li><a href="/interfaces.php?if=wan" class="navlnk" >WAN</a></li>
+<li><a href="/interfaces.php?if=lan" class="navlnk" >LAN</a></li>
+<li><a href="/interfaces.php?if=opt1" class="navlnk" >OPT1</a></li>
+</ul>
+				</li>
+
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						Firewall						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu"><li><a href="/firewall_aliases.php" class="navlnk" >Aliases</a></li>
+<li><a href="/firewall_nat.php" class="navlnk" >NAT</a></li>
+<li><a href="/firewall_rules.php" class="navlnk" >Rules</a></li>
+<li><a href="/firewall_schedule.php" class="navlnk" >Schedules</a></li>
+<li><a href="/firewall_shaper.php" class="navlnk" >Traffic Shaper</a></li>
+<li><a href="/firewall_virtual_ip.php" class="navlnk" >Virtual IPs</a></li>
+</ul>
+				</li>
+
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						Services						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu"><li><a href="/services_acb_settings.php" class="navlnk" >Auto Config Backup</a></li>
+<li><a href="/services_captiveportal.php" class="navlnk" >Captive Portal</a></li>
+<li><a href="/services_dhcp_relay.php" class="navlnk" >DHCP Relay</a></li>
+<li><a href="/services_dhcp.php" class="navlnk" >DHCP Server</a></li>
+<li><a href="/services_dhcpv6_relay.php" class="navlnk" >DHCPv6 Relay</a></li>
+<li><a href="/services_dhcpv6.php" class="navlnk" >DHCPv6 Server</a></li>
+<li><a href="/services_dnsmasq.php" class="navlnk" >DNS Forwarder</a></li>
+<li><a href="/services_unbound.php" class="navlnk" >DNS Resolver</a></li>
+<li><a href="/services_dyndns.php" class="navlnk" >Dynamic DNS</a></li>
+<li><a href="/haproxy/haproxy_listeners.php" class="navlnk" >HAProxy</a></li>
+<li><a href="/services_igmpproxy.php" class="navlnk" >IGMP Proxy</a></li>
+<li><a href="/services_ntpd.php" class="navlnk" >NTP</a></li>
+<li><a href="/services_pppoe.php" class="navlnk" >PPPoE Server</a></li>
+<li><a href="/services_radvd.php" class="navlnk" >Router Advertisement</a></li>
+<li><a href="/services_snmp.php" class="navlnk" >SNMP</a></li>
+<li><a href="/suricata/suricata_interfaces.php" class="navlnk" >Suricata</a></li>
+<li><a href="/pkg_edit.php?xml=miniupnpd.xml" class="navlnk" >UPnP &amp; NAT-PMP</a></li>
+<li><a href="/services_wol.php" class="navlnk" >Wake-on-LAN</a></li>
+</ul>
+				</li>
+
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						VPN						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu"><li><a href="/vpn_ipsec.php" class="navlnk" >IPsec</a></li>
+<li><a href="/vpn_l2tp.php" class="navlnk" >L2TP</a></li>
+<li><a href="/vpn_openvpn_server.php" class="navlnk" >OpenVPN</a></li>
+</ul>
+				</li>
+
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						Status						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu"><li><a href="/status_captiveportal.php" class="navlnk" >Captive Portal</a></li>
+<li><a href="/status_carp.php" class="navlnk" >CARP (failover)</a></li>
+<li><a href="/index.php" class="navlnk" >Dashboard</a></li>
+<li><a href="/status_dhcp_leases.php" class="navlnk" >DHCP Leases</a></li>
+<li><a href="/status_dhcpv6_leases.php" class="navlnk" >DHCPv6 Leases</a></li>
+<li><a href="/status_unbound.php" class="navlnk" >DNS Resolver</a></li>
+<li><a href="/status_filter_reload.php?user=true" class="navlnk" >Filter Reload</a></li>
+<li><a href="/status_gateways.php" class="navlnk" >Gateways</a></li>
+<li><a href="/haproxy/haproxy_stats.php?haproxystats=1" class="navlnk" >HAProxy Stats</a></li>
+<li><a href="/status_interfaces.php" class="navlnk" >Interfaces</a></li>
+<li><a href="/status_ipsec.php" class="navlnk" >IPsec</a></li>
+<li><a href="/status_monitoring.php" class="navlnk" >Monitoring</a></li>
+<li><a href="/status_ntpd.php" class="navlnk" >NTP</a></li>
+<li><a href="/status_openvpn.php" class="navlnk" >OpenVPN</a></li>
+<li><a href="/status_queues.php" class="navlnk" >Queues</a></li>
+<li><a href="/status_services.php" class="navlnk" >Services</a></li>
+<li><a href="/status_logs.php" class="navlnk" >System Logs</a></li>
+<li><a href="/status_graph.php" class="navlnk" >Traffic Graph</a></li>
+<li><a href="/status_upnp.php" class="navlnk" >UPnP &amp; NAT-PMP</a></li>
+</ul>
+				</li>
+
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						Diagnostics						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu"><li><a href="/diag_arp.php" class="navlnk" >ARP Table</a></li>
+<li><a href="/diag_authentication.php" class="navlnk" >Authentication</a></li>
+<li><a href="/diag_backup.php" class="navlnk" >Backup &amp; Restore</a></li>
+<li><a href="/diag_command.php" class="navlnk" >Command Prompt</a></li>
+<li><a href="/diag_dns.php" class="navlnk" >DNS Lookup</a></li>
+<li><a href="/diag_edit.php" class="navlnk" >Edit File</a></li>
+<li><a href="/diag_defaults.php" class="navlnk" >Factory Defaults</a></li>
+<li><a href="/diag_halt.php" class="navlnk" >Halt System</a></li>
+<li><a href="/diag_limiter_info.php" class="navlnk" >Limiter Info</a></li>
+<li><a href="/diag_ndp.php" class="navlnk" >NDP Table</a></li>
+<li><a href="/diag_packet_capture.php" class="navlnk" >Packet Capture</a></li>
+<li><a href="/diag_pf_info.php" class="navlnk" >pfInfo</a></li>
+<li><a href="/diag_pftop.php" class="navlnk" >pfTop</a></li>
+<li><a href="/diag_ping.php" class="navlnk" >Ping</a></li>
+<li><a href="/diag_reboot.php" class="navlnk" >Reboot</a></li>
+<li><a href="/diag_routes.php" class="navlnk" >Routes</a></li>
+<li><a href="/diag_smart.php" class="navlnk" >S.M.A.R.T. Status</a></li>
+<li><a href="/diag_sockets.php" class="navlnk" >Sockets</a></li>
+<li><a href="/diag_dump_states.php" class="navlnk" >States</a></li>
+<li><a href="/diag_states_summary.php" class="navlnk" >States Summary</a></li>
+<li><a href="/diag_system_activity.php" class="navlnk" >System Activity</a></li>
+<li><a href="/diag_tables.php" class="navlnk" >Tables</a></li>
+<li><a href="/diag_testport.php" class="navlnk" >Test Port</a></li>
+<li><a href="/diag_traceroute.php" class="navlnk" >Traceroute</a></li>
+</ul>
+				</li>
+
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						Help						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu"><li><a href="/help.php?page=suricata/suricata_interfaces_edit.php" target="_blank" class="navlnk" >About this Page</a></li>
+<li><a href="https://redirects.netgate.com/issues" target="_blank" class="navlnk" >Bug Database</a></li>
+<li><a href="https://redirects.netgate.com/docs" target="_blank" class="navlnk" >Documentation</a></li>
+<li><a href="https://redirects.netgate.com/fbsdhandbook" target="_blank" class="navlnk" >FreeBSD Handbook</a></li>
+<li><a href="https://redirects.netgate.com/support" target="_blank" class="navlnk" >Paid Support</a></li>
+<li><a href="https://redirects.netgate.com/book" target="_blank" class="navlnk" >pfSense Book</a></li>
+<li><a href="https://redirects.netgate.com/upgrade" target="_blank" class="navlnk" >Upgrade to pfSense Plus</a></li>
+<li><a href="https://redirects.netgate.com/forum" target="_blank" class="navlnk" >User Forum</a></li>
+<li><a href="https://redirects.netgate.com/survey_1" target="_blank" class="navlnk" >User survey</a></li>
+</ul>
+				</li>
+
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+														<li class="dropdown">
+						<a href="#" data-toggle="modal" data-target="#notices" role="button" aria-expanded="false">
+							<i class="fa fa-bell text-danger" title="Notices"></i>
+							<span class="badge bg-danger">2</span>
+						</a>
+					</li>
+									<li class="dropdown">
+						<a href="/index.php?logout" usepost>
+							<i class="fa fa-sign-out" title="Logout (admin@pfSense.home.arpa)"></i>
+						</a>
+					</li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<div class="container static" >
+
+<div class="alert alert-danger"><strong>WARNING:</strong> The 'admin' account password is set to the default value.  <a href="/system_usermanager.php?act=edit&userid=0"> Change the password in the User Manager.</a></div>
+	<header class="header">
+
+<ol class="breadcrumb"><li>Services</li><li><a href="/suricata/suricata_interfaces.php">Suricata</a></li><li><a href="/suricata/suricata_interfaces_edit.php?id=0">WAN - Interface Settings</a></li></ol>		<ul class="context-links">
+
+	
+	
+	
+	
+	
+	
+			<li>
+			<a href="/help.php?page=suricata/suricata_interfaces_edit.php" target="_blank" title="Help for items on this page">
+				<i class="fa fa-question-circle"></i>
+			</a>
+		</li>
+			</ul>
+	</header>
+
+<div id="notices" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+
+				<h3 class="modal-title" id="myModalLabel">Notices</h3>
+			</div>
+
+			<div class="modal-body">
+				<h4>pfSenseConfigurator</h4>
+				<ul>
+					<li>
+						<b>
+						</b>
+						No config.xml found, attempting last known config restore.						<i>@ 2026-11-09 08:35:32</i>
+					</li>
+				</ul>
+				<h4>PHP errors</h4>
+				<ul>
+					<li>
+						<b>
+						</b>
+						PHP ERROR: Type: 1, File: /etc/inc/util.inc, Line: 3662, Message: Uncaught TypeError: array_path_enabled(): Argument #1 ($arr) must be of type array, null given, called in /etc/inc/config.lib.inc on line 1250 and defined in /etc/inc/util.inc:3662<br/>Stack trace:<br/>#0 /etc/inc/config.lib.inc(1250): array_path_enabled(NULL, &#039;notifications/s...&#039;, &#039;disable&#039;)<br/>#1 /etc/inc/notices.inc(379): config_path_enabled(&#039;notifications/s...&#039;, &#039;disable&#039;)<br/>#2 /etc/inc/notices.inc(662): notify_via_smtp(&#039;No config.xml f...&#039;)<br/>#3 /etc/inc/notices.inc(151): notify_all_remote(&#039;No config.xml f...&#039;)<br/>#4 /etc/inc/config.lib.inc(95): file_notice(&#039;config.xml&#039;, &#039;No config.xml f...&#039;, &#039;pfSenseConfigur...&#039;, &#039;&#039;)<br/>#5 /etc/inc/config.inc(137): parse_config()<br/>#6 /etc/inc/gwlb.inc(25): require_once(&#039;/etc/inc/config...&#039;)<br/>#7 /etc/inc/functions.inc(35): require_once(&#039;/etc/inc/gwlb.i...&#039;)<br/>#8 /etc/rc.ecl(25): require_once(&#039;/etc/inc/functi...&#039;)<br/>#9 {main}<br/>  thrown						<i>@ 2026-11-09 08:35:33</i>
+					</li>
+				</ul>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-info" data-dismiss="modal"><i class="fa fa-times icon-embed-btn"></i>Close</button>
+				<button type="button" id="clearallnotices" class="btn btn-primary"><i class="fa fa-trash-o icon-embed-btn"></i>Mark All as Read</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+	events.push(function() {
+	    $('#clearallnotices').click(function() {
+			ajaxRequest = $.ajax({
+				url: "/index.php",
+				type: "post",
+				data: { closenotice: "all"},
+				success: function() {
+					window.location = window.location.href;
+				},
+				failure: function() {
+					alert("Error clearing notices!");
+				}
+			});
+		});
+	});
+//]]>
+</script>
+
+<div class="alert alert-warning clearfix" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><div class="pull-left">WARNING! Suricata now requires that Hardware Checksum Offloading, Hardware TCP Segmentation Offloading and Hardware Large Receive Offloading all be disabled for proper operation. This firewall currently has one or more of these Offloading settings NOT disabled. Visit the <a href="/system_advanced_network.php">System > Advanced > Networking</a> tab and ensure all three of these Offloading settings are disabled.</div></div><ul class="nav nav-pills"><li role="presentation" class="active"><a href="/suricata/suricata_interfaces.php" >Interfaces</a></li><li role="presentation"><a href="/suricata/suricata_global.php" >Global Settings</a></li><li role="presentation"><a href="/suricata/suricata_download_updates.php" >Updates</a></li><li role="presentation"><a href="/suricata/suricata_alerts.php" >Alerts</a></li><li role="presentation"><a href="/suricata/suricata_blocked.php" >Blocks</a></li><li role="presentation"><a href="/suricata/suricata_files.php?instance=0" >Files</a></li><li role="presentation"><a href="/suricata/suricata_passlist.php" >Pass Lists</a></li><li role="presentation"><a href="/suricata/suricata_suppress.php" >Suppress</a></li><li role="presentation"><a href="/suricata/suricata_logs_browser.php?instance=0" >Logs View</a></li><li role="presentation"><a href="/suricata/suricata_logs_mgmt.php" >Logs Mgmt</a></li><li role="presentation"><a href="/suricata/suricata_sid_mgmt.php" >SID Mgmt</a></li><li role="presentation"><a href="/pkg_edit.php?xml=suricata/suricata_sync.xml" >Sync</a></li><li role="presentation"><a href="/suricata/suricata_ip_list_mgmt.php" >IP Lists</a></li></ul><ul class="nav nav-pills"><li role="presentation" class="active"><a href="/suricata/suricata_interfaces_edit.php?id=0" >WAN Settings</a></li></ul>	<form class="form-horizontal" method="post" action="/suricata/suricata_interfaces_edit.php?id=0"><input type='hidden' name='__csrf_magic' value="sid:22fcea36b627541782e604bb3b0e5a3836d5d505,1794214907" />
+			<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="panel-title">General Settings</h2>
+		</div>
+		<div class="panel-body">
+				<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Enable</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="enable" id="enable" type="checkbox" value="on" checked="checked"> Checking this box enables Suricata inspection on the interface.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Interface</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="interface" id="interface">
+		<option value="wan" selected>WAN (em0)</option><option value="lan">LAN (em2)</option><option value="opt1">OPT1 (em1)</option><option value="Unassigned">Unassigned</option>
+	</select>
+		
+
+		<span class="help-block">Choose which interface this Suricata instance applies to. In most cases, you will want to choose LAN here if this is the first Suricata-configured interface.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Description</span>
+		</label>
+			<div class="col-sm-10">
+		
+		<input class="form-control" name="descr" id="descr" type="text" value="WAN">
+		
+
+		<span class="help-block">Enter a meaningful description here for your reference. The default is the pfSense interface friendly description.</span>
+	</div>
+		
+	</div>
+		</div>
+	</div>	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="panel-title">Logging Settings</h2>
+		</div>
+		<div class="panel-body">
+				<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Send Alerts to System Log</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="alertsystemlog" id="alertsystemlog" type="checkbox" value="on"> Suricata will send Alerts from this interface to the firewall&#039;s system log.</label>
+		
+
+		<span class="help-block">NOTE:  the FreeBSD syslog daemon will automatically truncate exported messages to 480 bytes max.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Log Facility</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="alertsystemlog_facility" id="alertsystemlog_facility">
+		<option value="auth">AUTH</option><option value="authpriv">AUTHPRIV</option><option value="daemon">DAEMON</option><option value="kern">KERN</option><option value="security">SECURITY</option><option value="syslog">SYSLOG</option><option value="user">USER</option><option value="local0">LOCAL0</option><option value="local1" selected>LOCAL1</option><option value="local2">LOCAL2</option><option value="local3">LOCAL3</option><option value="local4">LOCAL4</option><option value="local5">LOCAL5</option><option value="local6">LOCAL6</option><option value="local7">LOCAL7</option>
+	</select>
+		
+
+		<span class="help-block">Select system log Facility to use for reporting. Default is LOCAL1.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Log Priority</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="alertsystemlog_priority" id="alertsystemlog_priority">
+		<option value="emergency">EMERG</option><option value="critical">CRIT</option><option value="alert">ALERT</option><option value="error">ERR</option><option value="warning">WARNING</option><option value="notice" selected>NOTICE</option><option value="info">INFO</option><option value="debug">DEBUG</option>
+	</select>
+		
+
+		<span class="help-block">Select system log Priority (Level) to use for reporting. Default is NOTICE.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Enable Stats Collection</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="enable_stats_collection" id="enable_stats_collection" type="checkbox" value="on"> Suricata will periodically gather performance statistics for this interface. Default is Not Checked.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Stats Update Interval</span>
+		</label>
+			<div class="col-sm-10">
+		
+		<input class="form-control" name="stats_upd_interval" id="stats_upd_interval" type="text" value="10">
+		
+
+		<span class="help-block">Enter the update interval in seconds for collection of performance statistics. Default is 10 seconds.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Enable Stats Log</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="enable_stats_log" id="enable_stats_log" type="checkbox" value="on"> Suricata will periodically log statistics for this interface to a CSV text log file. Default is Not Checked.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Append Stats Log</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="append_stats_log" id="append_stats_log" type="checkbox" value="on"> Suricata will append-to instead of clearing the stats log file when restarting. Default is Not Checked.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Enable Telegraf Stats</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="enable_telegraf_stats" id="enable_telegraf_stats" type="checkbox" value="on"> Suricata will periodically log statistics for this interface to Telegraf via a Unix socket. Default is Not Checked.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Telegraf Unix Socket</span>
+		</label>
+			<div class="col-sm-10">
+		
+		<input class="form-control" name="suricata_telegraf_unix_socket_name" id="suricata_telegraf_unix_socket_name" type="text" value="">
+		
+
+		<span class="help-block">Enter the full Unix socket name configured in Telegraf. This value must match exactly what is configured in the Telegraf input.suricata plugin! Note that Suricata will not create this socket. It must be created by Telegraf.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Enable HTTP Log</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="enable_http_log" id="enable_http_log" type="checkbox" value="on" checked="checked"> Suricata will log decoded HTTP traffic for the interface. Default is Checked.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>HTTP Log File Type</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="http_log_filetype" id="http_log_filetype">
+		<option value="regular" selected>Regular</option><option value="unix_dgram">UNIX Datagram Socket</option><option value="unix_stream">UNIX Stream Socket</option>
+	</select>
+		
+
+		<span class="help-block">Select "Regular" to log to a conventional file, or choose UNIX "Datagram" or "Stream" Socket to log to an existing UNIX socket. Default is "Regular"</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>HTTP Log Socket Name</span>
+		</label>
+			<div class="col-sm-10">
+		
+		<input class="form-control" name="http_log_socket" id="http_log_socket" type="text" value="">
+		
+
+		<span class="help-block">Enter the UNIX socket name where TLS logs should be output. The user is responsible for creating the socket. It is NOT created by Suricata.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Append HTTP Log</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="append_http_log" id="append_http_log" type="checkbox" value="on" checked="checked"> Suricata will append-to instead of clearing HTTP log file when restarting. Default is Checked.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Log Extended HTTP Info</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="http_log_extended" id="http_log_extended" type="checkbox" value="on" checked="checked"> Suricata will log extended HTTP information. Default is Checked.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Enable TLS Log</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="enable_tls_log" id="enable_tls_log" type="checkbox" value="on"> Suricata will log TLS handshake traffic for the interface. Default is Not Checked.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>TLS Log File Type</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="tls_log_filetype" id="tls_log_filetype">
+		<option value="regular" selected>Regular</option><option value="unix_dgram">UNIX Datagram Socket</option><option value="unix_stream">UNIX Stream Socket</option>
+	</select>
+		
+
+		<span class="help-block">Select "Regular" to log to a conventional file, or choose UNIX "Datagram" or "Stream" Socket to log to an existing UNIX socket. Default is "Regular"</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>TLS Log Socket Name</span>
+		</label>
+			<div class="col-sm-10">
+		
+		<input class="form-control" name="tls_log_socket" id="tls_log_socket" type="text" value="">
+		
+
+		<span class="help-block">Enter the UNIX socket name where TLS logs should be output. The user is responsible for creating the socket. It is NOT created by Suricata.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Append TLS Log</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="append_tls_log" id="append_tls_log" type="checkbox" value="on" checked="checked"> Suricata will append-to instead of clearing TLS log file when restarting. Default is Checked.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Enable TLS Session Resumption</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="tls_session_resumption" id="tls_session_resumption" type="checkbox" value="on"> Suricata will output TLS transactions where the session is resumed using a Session ID. Default is Not Checked.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Enable TLS Store</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="enable_tls_store" id="enable_tls_store" type="checkbox" value="on"> Suricata will log and store TLS certificates for the interface. Default is Not Checked.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Log Extended TLS Info</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="tls_log_extended" id="tls_log_extended" type="checkbox" value="on" checked="checked"> Suricata will log extended TLS info such as fingerprint. Default is Checked.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Enable File-Store</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="enable_file_store" id="enable_file_store" type="checkbox" value="on"> Suricata will extract and store files from application layer streams. Default is Not Checked. WARNING: Enabling file-store will consume a significant amount of disk space on a busy network!</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>File Store Logging Directory</span>
+		</label>
+			<div class="col-sm-10">
+		
+		<input class="form-control" name="file_store_logdir" id="file_store_logdir" type="text" value="/var/log/suricata/suricata_em02560/filestore">
+		
+
+		<span class="help-block">Enter directory path for saving the files extracted from application layer streams. When blank, the default path is a "filestore" sub-directory under the interface logging sub-directory in /var/log/suricata/.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Enable Packet Log</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="enable_pcap_log" id="enable_pcap_log" type="checkbox" value="on"> Suricata will log decoded packets for the interface in pcap-format. Default is Not Checked. This can consume a significant amount of disk space when enabled. Use the Packet Log Conditional setting below to select packets for capture.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Packet Log Conditional</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="pcap_log_conditional" id="pcap_log_conditional">
+		<option value="alerts" selected>ALERTS</option><option value="all">ALL</option><option value="tag">TAG</option>
+	</select>
+		
+
+		<span class="help-block">Select ALERTS to capture and log only alerted packets and flows, ALL to capture and log all packets, or TAG to capture and log only flows tagged via the "tag" keyword. Default is ALERTS which will only create PCAP files for alerts.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Use Stream Depth</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="pcap_use_stream_depth" id="pcap_use_stream_depth" type="checkbox" value="on"> If Checked, packets seen after reaching stream inspection depth are ignored. Unchecked logs all packets. Default is Not Checked.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Honor PASS Rules</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="pcap_honor_pass_rules" id="pcap_honor_pass_rules" type="checkbox" value="on"> If Checked, flows in which a pass rule matched will stop being captured and logged. Default is Not Checked.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Max Packet Log File Size</span>
+		</label>
+			<div class="col-sm-10">
+		
+		<input class="form-control" name="max_pcap_log_size" id="max_pcap_log_size" type="text" value="32">
+		
+
+		<span class="help-block">Enter maximum size in MB for a packet log file. Default is 32. When the packet log file size reaches the set limit, it will be rotated and a new one created.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Max Packet Log Files</span>
+		</label>
+			<div class="col-sm-10">
+		
+		<input class="form-control" name="max_pcap_log_files" id="max_pcap_log_files" type="text" value="100">
+		
+
+		<span class="help-block">Enter maximum number of packet log files to maintain. Default is 100. When the number of packet log files reaches the set limit, the oldest file will be overwritten.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Enable Verbose Logging</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="enable_verbose_logging" id="enable_verbose_logging" type="checkbox" value="on"> Suricata will log additional information to the suricata.log file when starting up and shutting down. Default is Not Checked.</label>
+		
+
+		
+	</div>
+		
+	</div>
+		</div>
+	</div>	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="panel-title">EVE Output Settings</h2>
+		</div>
+		<div class="panel-body">
+				<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>EVE JSON Log</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="enable_eve_log" id="enable_eve_log" type="checkbox" value="on"> Suricata will output selected info in JSON format to a single file or to syslog. Default is Not Checked.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>EVE Output Type</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="eve_output_type" id="eve_output_type">
+		<option value="regular" selected>FILE</option><option value="syslog">SYSLOG</option><option value="redis">Redis</option><option value="unix_dgram">UNIX Datagram Socket</option><option value="unix_stream">UNIX Stream Socket</option>
+	</select>
+		
+
+		<span class="help-block">Select EVE log output destination. Choosing FILE is suggested and is the default value. "Redis" is used for output to a Redis server, and the UNIX Socket options output to a user-created socket.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>EVE Output Socket Name</span>
+		</label>
+			<div class="col-sm-10">
+		
+		<input class="form-control" name="eve_output_socket" id="eve_output_socket" type="text" value="">
+		
+
+		<span class="help-block">Enter the UNIX socket name where EVE logs should be output. The user is responsible for creating the socket. It is NOT created by Suricata.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>EVE Syslog Output Facility</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="eve_systemlog_facility" id="eve_systemlog_facility">
+		<option value="auth">AUTH</option><option value="authpriv">AUTHPRIV</option><option value="daemon">DAEMON</option><option value="kern">KERN</option><option value="security">SECURITY</option><option value="syslog">SYSLOG</option><option value="user">USER</option><option value="local0">LOCAL0</option><option value="local1" selected>LOCAL1</option><option value="local2">LOCAL2</option><option value="local3">LOCAL3</option><option value="local4">LOCAL4</option><option value="local5">LOCAL5</option><option value="local6">LOCAL6</option><option value="local7">LOCAL7</option>
+	</select>
+		
+
+		<span class="help-block">Select EVE syslog output facility.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>EVE Syslog Output Priority</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="eve_systemlog_priority" id="eve_systemlog_priority">
+		<option value="emerg">EMERG</option><option value="crit">CRIT</option><option value="alert">ALERT</option><option value="err">ERR</option><option value="warning">WARNING</option><option value="notice" selected>NOTICE</option><option value="info">INFO</option>
+	</select>
+		
+
+		<span class="help-block">Select EVE syslog output priority.</span>
+	</div>
+		
+	</div>	<div class="form-group eve_redis_connection">
+		<label class="col-sm-2 control-label">
+			<span>EVE REDIS Server</span>
+		</label>
+			<div class="col-sm-5">
+		
+		<input class="form-control" name="eve_redis_server" id="eve_redis_server" type="text" value="127.0.0.1" placeholder="Redis Server">
+		
+
+		<span class="help-block">Enter the Redis server IP</span>
+	</div>	<div class="col-sm-5">
+		
+		<input class="form-control" name="eve_redis_port" id="eve_redis_port" type="text" value="6379" placeholder="Port">
+		
+
+		<span class="help-block">Enter the Redis server port</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>EVE REDIS Mode</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="eve_redis_mode" id="eve_redis_mode">
+		<option value="list" selected>List (LPUSH)</option><option value="rpush">List (RPUSH)</option><option value="channel">Channel(PUBLISH)</option>
+	</select>
+		
+
+		<span class="help-block">Select the REDIS output mode</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>EVE REDIS Key</span>
+		</label>
+			<div class="col-sm-10">
+		
+		<input class="form-control" name="eve_redis_key" id="eve_redis_key" type="text" value="suricata">
+		
+
+		<span class="help-block">Enter the REDIS Key</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>EVE HTTP XFF Support</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="eve_log_alerts_xff" id="eve_log_alerts_xff" type="checkbox" value="on"> Log X-Forwarded-For IP addresses.  Default is Not Checked.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>EVE Ethernet MAC</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="eve_log_ethernet" id="eve_log_ethernet" type="checkbox" value="yes"> Log Ethernet header in events when available.  Default is Not Checked.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>EVE X-Forwarded-For Operational Mode</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="eve_log_alerts_xff_mode" id="eve_log_alerts_xff_mode">
+		<option value="extra-data" selected>extra-data</option><option value="overwrite">overwrite</option>
+	</select>
+		
+
+		<span class="help-block">Select HTTP X-Forwarded-For Operation Mode. Extra-Data adds an extra field while Overwrite overwrites the existing source or destination IP. Default is extra-data.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>EVE X-Forwarded-For Deployment</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="eve_log_alerts_xff_deployment" id="eve_log_alerts_xff_deployment">
+		<option value="reverse" selected>reverse</option><option value="forward">forward</option>
+	</select>
+		
+
+		<span class="help-block">Select HTTP X-Forwarded-For Deployment.  Reverse deployment uses the last IP address while Forward uses the first one. Default is reverse.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>EVE Log Alert X-Forwarded-For Header</span>
+		</label>
+			<div class="col-sm-10">
+		
+		<input class="form-control" name="eve_log_alerts_xff_header" id="eve_log_alerts_xff_header" type="text" value="X-Forwarded-For">
+		
+
+		<span class="help-block">Enter header where actual IP address is reported. Default is X-Forwarded-For. If more than one IP address is present, the last one will be used.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>EVE Log Alerts</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="eve_log_alerts" id="eve_log_alerts" type="checkbox" value="on" checked="checked"> Suricata will output Alerts via EVE</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>EVE Log Alert Payload Data Formats</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="eve_log_alerts_payload" id="eve_log_alerts_payload">
+		<option value="off">NO</option><option value="only-base64">BASE64</option><option value="only-printable">PRINTABLE</option><option value="on" selected>BOTH</option>
+	</select>
+		
+
+		<span class="help-block">Log the payload data with alerts.  Options are No (disable payload logging), Only Printable (lossy) format, Only Base64 encoded or Both. See Suricata documentation.</span>
+	</div>
+		
+	</div>	<div class="form-group eve_log_alerts_details">
+		<label class="col-sm-2 control-label">
+			<span>EVE Log Alert details</span>
+		</label>
+			<div class="checkbox col-sm-2">
+		
+		<label class="chkboxlbl"><input name="eve_log_alerts_packet" id="eve_log_alerts_packet" type="checkbox" value="on" checked="checked"> Log a packet dump with alerts.</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-2">
+		
+		<label class="chkboxlbl"><input name="eve_log_alerts_http" id="eve_log_alerts_http" type="checkbox" value="on" checked="checked"> Log additional HTTP data.</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-2">
+		
+		<label class="chkboxlbl"><input name="eve_log_alerts_metadata" id="eve_log_alerts_metadata" type="checkbox" value="on" checked="checked"> Include App Layer metadata.</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-2">
+		
+		<label class="chkboxlbl"><input name="eve_log_alerts_verdict" id="eve_log_alerts_verdict" type="checkbox" value="on"> Log final action taken on packet by the engine</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-2">
+		
+		<label class="chkboxlbl"><input name="eve_log_alerts_tagged" id="eve_log_alerts_tagged" type="checkbox" value="on"> Log packets for rules using the &quot;tag&quot; keyword</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>EVE Log Drops</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="eve_log_drops" id="eve_log_drops" type="checkbox" value="on" checked="checked"> Suricata will output Drops via EVE</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group eve_log_drops_options">
+		<label class="col-sm-2 control-label">
+			<span>EVE Log Drops Options</span>
+		</label>
+			<div class="checkbox col-sm-3">
+		
+		<label class="chkboxlbl"><input name="eve_log_alert_drops" id="eve_log_alert_drops" type="checkbox" value="on" checked="checked"> Log alerts that caused drops. Default is &quot;Checked&quot;.</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-3">
+		
+		<label class="chkboxlbl"><input name="eve_log_drops_verdict" id="eve_log_drops_verdict" type="checkbox" value="on"> Log final action taken on packet by the engine</label>
+		
+
+		
+	</div>	<div class="col-sm-3">
+		
+			<select class="form-control" name="eve_log_drops_flows" id="eve_log_drops_flows">
+		<option value="all">All</option><option value="start">Start</option>
+	</select>
+		
+
+		<span class="help-block">"Start" logs only a single drop per flow direction. "All" logs each dropped pkt.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>EVE Log Anomalies</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="eve_log_anomaly" id="eve_log_anomaly" type="checkbox" value="on"> Suricata will log packet anomalies such as truncated packets, packets with invalid IP/UDP/TCP length values and other events that render the packet invalid for further processing. Networks with high rates of anomalies may experience packet processing degradation.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group eve_log_anomaly_details">
+		<label class="col-sm-2 control-label">
+			<span>EVE Log Anomaly Details</span>
+		</label>
+			<div class="checkbox col-sm-2">
+		
+		<label class="chkboxlbl"><input name="eve_log_anomaly_type_decode" id="eve_log_anomaly_type_decode" type="checkbox" value="on"> Log packet decode anomaly events.</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-2">
+		
+		<label class="chkboxlbl"><input name="eve_log_anomaly_type_stream" id="eve_log_anomaly_type_stream" type="checkbox" value="on"> Log packet stream anomaly events.</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-2">
+		
+		<label class="chkboxlbl"><input name="eve_log_anomaly_type_applayer" id="eve_log_anomaly_type_applayer" type="checkbox" value="on" checked="checked"> Log packet applayer anomaly events.</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-2">
+		
+		<label class="chkboxlbl"><input name="eve_log_anomaly_packethdr" id="eve_log_anomaly_packethdr" type="checkbox" value="on"> Log packet header for anomaly events.</label>
+		
+
+		
+	</div>
+			<div class="col-sm-10 col-sm-offset-2">
+		<span class="help-block">
+			Select which details Suricata will use to enrich anomaly logging.
+		</span>
+	</div>
+	</div>	<div class="form-group eve_log_info">
+		<label class="col-sm-2 control-label">
+			<span>EVE Logged Traffic</span>
+		</label>
+			<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_bittorrent" id="eve_log_bittorrent" type="checkbox" value="on"> BitTorrent</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_dns" id="eve_log_dns" type="checkbox" value="on" checked="checked"> DNS</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_ftp" id="eve_log_ftp" type="checkbox" value="on" checked="checked"> FTP</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_http" id="eve_log_http" type="checkbox" value="on" checked="checked"> HTTP</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_http2" id="eve_log_http2" type="checkbox" value="on" checked="checked"> HTTP2</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_ikev2" id="eve_log_ikev2" type="checkbox" value="on" checked="checked"> IKE</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_krb5" id="eve_log_krb5" type="checkbox" value="on" checked="checked"> Kerberos</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_nfs" id="eve_log_nfs" type="checkbox" value="on" checked="checked"> NFS</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_pgsql" id="eve_log_pgsql" type="checkbox" value="on"> PostgreSQL</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group eve_log_info">
+		<label class="col-sm-2 control-label">
+			
+		</label>
+			<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_quic" id="eve_log_quic" type="checkbox" value="on" checked="checked"> QUICv1</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_rdp" id="eve_log_rdp" type="checkbox" value="on"> RDP</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_rfb" id="eve_log_rfb" type="checkbox" value="on" checked="checked"> RFB</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_sip" id="eve_log_sip" type="checkbox" value="on"> SIP</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_smb" id="eve_log_smb" type="checkbox" value="on" checked="checked"> SMB</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_smtp" id="eve_log_smtp" type="checkbox" value="on" checked="checked"> SMTP</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_tftp" id="eve_log_tftp" type="checkbox" value="on" checked="checked"> TFTP</label>
+		
+
+		
+	</div>	<div class="col-sm-1">
+		
+		
+		
+
+		
+	</div>	<div class="col-sm-1">
+		
+		
+		
+
+		
+	</div>
+			<div class="col-sm-10 col-sm-offset-2">
+		<span class="help-block">
+			Choose the traffic types to log via EVE JSON output.
+		</span>
+	</div>
+	</div>	<div class="form-group eve_log_info">
+		<label class="col-sm-2 control-label">
+			<span>EVE Logged Info</span>
+		</label>
+			<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_dhcp" id="eve_log_dhcp" type="checkbox" value="on" checked="checked"> DHCP Messages</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_drop" id="eve_log_drop" type="checkbox" value="on" checked="checked"> Dropped Traffic</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_flow" id="eve_log_flow" type="checkbox" value="on"> Flows</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_mqtt" id="eve_log_mqtt" type="checkbox" value="on" checked="checked"> MQTT</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_netflow" id="eve_log_netflow" type="checkbox" value="on"> Net Flows</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_stats" id="eve_log_stats" type="checkbox" value="on"> Perf Stats</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_snmp" id="eve_log_snmp" type="checkbox" value="on" checked="checked"> SNMP</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group eve_log_info">
+		<label class="col-sm-2 control-label">
+			
+		</label>
+			<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_ssh" id="eve_log_ssh" type="checkbox" value="on" checked="checked"> SSH Handshakes</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_tls" id="eve_log_tls" type="checkbox" value="on" checked="checked"> TLS Handshakes</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-1">
+		
+		<label class="chkboxlbl"><input name="eve_log_files" id="eve_log_files" type="checkbox" value="on" checked="checked"> Tracked Files</label>
+		
+
+		
+	</div>	<div class="col-sm-1">
+		
+		
+		
+
+		
+	</div>	<div class="col-sm-1">
+		
+		
+		
+
+		
+	</div>	<div class="col-sm-1">
+		
+		
+		
+
+		
+	</div>	<div class="col-sm-1">
+		
+		
+		
+
+		
+	</div>
+			<div class="col-sm-10 col-sm-offset-2">
+		<span class="help-block">
+			Choose the information to log via EVE JSON output.
+		</span>
+	</div>
+	</div>	<div class="form-group eve_log_info">
+		<label class="col-sm-2 control-label">
+			<span>EVE Logged Extended</span>
+		</label>
+			<div class="checkbox col-sm-2">
+		
+		<label class="chkboxlbl"><input name="eve_log_http_extended" id="eve_log_http_extended" type="checkbox" value="on" checked="checked"> Extended HTTP Info</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-2">
+		
+		<label class="chkboxlbl"><input name="eve_log_tls_extended" id="eve_log_tls_extended" type="checkbox" value="on" checked="checked"> Extended TLS Info</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-2">
+		
+		<label class="chkboxlbl"><input name="eve_log_dhcp_extended" id="eve_log_dhcp_extended" type="checkbox" value="on"> Extended DHCP Info</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-2">
+		
+		<label class="chkboxlbl"><input name="eve_log_smtp_extended" id="eve_log_smtp_extended" type="checkbox" value="on" checked="checked"> Extended SMTP Info</label>
+		
+
+		
+	</div>
+			<div class="col-sm-10 col-sm-offset-2">
+		<span class="help-block">
+			Select which EVE logged events are supplemented with extended information.
+		</span>
+	</div>
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Extended HTTP Headers</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="eve_log_http_extended_headers[]" id="eve_log_http_extended_headers[]" multiple="multiple">
+		<option value="accept" selected>accept</option><option value="accept-charset" selected>accept-charset</option><option value="accept-datetime" selected>accept-datetime</option><option value="accept-encoding" selected>accept-encoding</option><option value="accept-language" selected>accept-language</option><option value="accept-range" selected>accept-range</option><option value="age" selected>age</option><option value="allow" selected>allow</option><option value="authorization" selected>authorization</option><option value="cache-control" selected>cache-control</option><option value="connection" selected>connection</option><option value="content-encoding" selected>content-encoding</option><option value="content-language" selected>content-language</option><option value="content-length" selected>content-length</option><option value="content-location" selected>content-location</option><option value="content-md5" selected>content-md5</option><option value="content-range" selected>content-range</option><option value="content-type" selected>content-type</option><option value="cookie" selected>cookie</option><option value="date" selected>date</option><option value="dnt" selected>dnt</option><option value="etags" selected>etags</option><option value="from" selected>from</option><option value="last-modified" selected>last-modified</option><option value="link" selected>link</option><option value="location" selected>location</option><option value="max-forwards" selected>max-forwards</option><option value="origin" selected>origin</option><option value="pragma" selected>pragma</option><option value="proxy-authenticate" selected>proxy-authenticate</option><option value="proxy-authorization" selected>proxy-authorization</option><option value="range" selected>range</option><option value="referrer" selected>referrer</option><option value="refresh" selected>refresh</option><option value="retry-after" selected>retry-after</option><option value="server" selected>server</option><option value="set-cookie" selected>set-cookie</option><option value="te" selected>te</option><option value="trailer" selected>trailer</option><option value="transfer-encoding" selected>transfer-encoding</option><option value="upgrade" selected>upgrade</option><option value="vary" selected>vary</option><option value="via" selected>via</option><option value="warning" selected>warning</option><option value="www-authenticate" selected>www-authenticate</option><option value="x-authenticated-user" selected>x-authenticated-user</option><option value="x-flash-version" selected>x-flash-version</option><option value="x-forwarded-proto" selected>x-forwarded-proto</option><option value="x-requested-with" selected>x-requested-with</option>
+	</select>
+		
+
+		<span class="help-block">Select HTTP headers for logging.  Use CTRL + click for multiple selections.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Extended SMTP Fields</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="eve_log_smtp_extended_fields[]" id="eve_log_smtp_extended_fields[]" multiple="multiple">
+		<option value="bcc" selected>bcc</option><option value="content-md5">content-md5</option><option value="date">date</option><option value="importance">importance</option><option value="in-reply-to">in-reply-to</option><option value="message-id">message-id</option><option value="organization">organization</option><option value="priority">priority</option><option value="received" selected>received</option><option value="references">references</option><option value="reply-to" selected>reply-to</option><option value="sensitivity">sensitivity</option><option value="subject">subject</option><option value="user-agent">user-agent</option><option value="x-mailer" selected>x-mailer</option><option value="x-originating-ip" selected>x-originating-ip</option>
+	</select>
+		
+
+		<span class="help-block">Select SMTP fields for logging.  Use CTRL + click for multiple selections.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Extended TLS Fields</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="eve_log_tls_extended_fields[]" id="eve_log_tls_extended_fields[]" multiple="multiple">
+		<option value="subject">Subject</option><option value="issuer">Issuer</option><option value="session_resumed">Session Resumed</option><option value="serial">Serial</option><option value="fingerprint">Fingerprint</option><option value="sni">SNI (Server Name Indication)</option><option value="version">Version</option><option value="not_before">Not Before</option><option value="not_after">Not After</option><option value="certifcate">Certificate</option><option value="chain">Chain</option><option value="ja3">JA3</option><option value="ja3s">JA3S</option>
+	</select>
+		
+
+		<span class="help-block">Select TLS extended fields for logging.  Use CTRL + click for multiple selections.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Enable Logging Magic for Tracked-Files</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="eve_log_files_magic" id="eve_log_files_magic" type="checkbox" value="on"> Suricata will force logging magic on all logged Tracked Files. Default is Not Checked.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Tracked-Files Checksum</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="eve_log_files_hash" id="eve_log_files_hash">
+		<option value="none" selected>None</option><option value="md5">MD5</option><option value="sha1">SHA1</option><option value="sha256">SHA256</option>
+	</select>
+		
+
+		<span class="help-block">Suricata will generate checksums for all logged Tracked Files using the chosen algorithm. Default is None.</span>
+	</div>
+		
+	</div>	<div class="form-group eve_log_stats_details">
+		<label class="col-sm-2 control-label">
+			<span>EVE Logged Stats</span>
+		</label>
+			<div class="checkbox col-sm-3">
+		
+		<label class="chkboxlbl"><input name="eve_log_stats_totals" id="eve_log_stats_totals" type="checkbox" value="on" checked="checked"> Log Totals</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-3">
+		
+		<label class="chkboxlbl"><input name="eve_log_stats_deltas" id="eve_log_stats_deltas" type="checkbox" value="on"> Log deltas</label>
+		
+
+		
+	</div>	<div class="checkbox col-sm-3">
+		
+		<label class="chkboxlbl"><input name="eve_log_stats_threads" id="eve_log_stats_threads" type="checkbox" value="on"> Log per thread</label>
+		
+
+		
+	</div>
+		
+	</div>
+		</div>
+	</div>	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="panel-title">Alert and Block Settings</h2>
+		</div>
+		<div class="panel-body">
+				<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Block Offenders</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="blockoffenders" id="blockoffenders" type="checkbox" value="on"> Checking this option will automatically block hosts that generate a Suricata alert.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>IPS Mode</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="ips_mode" id="ips_mode">
+		<option value="ips_mode_legacy" selected>Legacy Mode</option><option value="ips_mode_inline">Inline Mode</option>
+	</select>
+		
+
+		<span class="help-block">Select blocking mode operation.  Legacy Mode inspects copies of packets while Inline Mode inserts the Suricata inspection engine into the network stack between the NIC and the OS. Default is Legacy Mode.</span>
+	</div>
+			<div class="col-sm-10 col-sm-offset-2">
+		<span class="help-block">
+			Legacy Mode uses the PCAP engine to generate copies of packets for inspection as they traverse the interface.  Some "leakage" of packets will occur before Suricata can determine if the traffic matches a rule and should be blocked.  Inline mode instead intercepts and inspects packets before they are handed off to the host network stack for further processing.  Packets matching DROP rules are simply discarded (dropped) and not passed to the host network stack.  No leakage of packets occurs with Inline Mode.  WARNING:  Inline Mode only works with NIC drivers which properly support Netmap! Supported drivers include: bnxt, cc, cxgbe, cxl, em, ena, ice, igb, igc, ix, ixgbe, ixl, lem, re, vmx, vtnet. If problems are experienced with Inline Mode, switch to Legacy Mode instead.
+		</span>
+	</div>
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Netmap Threads</span>
+		</label>
+			<div class="col-sm-10">
+		
+		<input class="form-control" name="ips_netmap_threads" id="ips_netmap_threads" type="text" value="auto">
+		
+
+		<span class="help-block">Enter the number of netmap threads to use. Default is "auto" and is recommended. When set to "auto", Suricata will query the system for the number of supported netmap queues,  and it will use a matching number of netmap theads. The NIC hosting this interface registered 1 queue(s) with the kernel.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Kill States</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="blockoffenderskill" id="blockoffenderskill" type="checkbox" value="on" checked="checked"> Checking this option will kill firewall states for the blocked IP.  Default is Checked.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Which IP to Block</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="blockoffendersip" id="blockoffendersip">
+		<option value="src">SRC</option><option value="dst">DST</option><option value="both" selected>BOTH</option>
+	</select>
+		
+
+		<span class="help-block">Select which IP extracted from the packet you wish to block. Choosing BOTH is suggested, and it is the default value.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Block On DROP Only</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="block_drops_only" id="block_drops_only" type="checkbox" value="on"> Checking this option will insert blocks only when rule signatures having the DROP action are triggered.  When not checked, any rule action (ALERT or DROP) will generate a block of the offending host.  Default is Not Checked.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group passlist">
+		<label class="col-sm-2 control-label">
+			<span>IP Pass List</span>
+		</label>
+			<div class="col-sm-5">
+		
+			<select class="form-control" name="passlistname" id="passlistname">
+		<option value="default">default</option><option value="none">none</option>
+	</select>
+		
+
+		<span class="help-block">Choose the Pass List you want this interface to use. Addresses in a Pass List are never blocked. Select "none" to prevent use of a Pass List.</span>
+	</div>	<div class="col-sm-5">
+		
+		<a class="btn btn-default btn-info btn-sm" href="#" id="btnPasslist" data-target="#passlist" data-toggle="modal"><i class="fa fa-file-text-o icon-embed-btn"> </i> View List</a>
+		
+
+		
+	</div>
+			<div class="col-sm-10 col-sm-offset-2">
+		<span class="help-block">
+			The default Pass List adds Gateways, DNS servers, locally-attached networks, the WAN IP, VPNs and VIPs.  Create a Pass List with an alias to customize whitelisted IP addresses.  This option will only be used when block offenders is on.  Choosing "none" will disable Pass List generation.
+		</span>
+	</div>
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Enable Passlist Debugging Log</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="passlist_debug_log" id="passlist_debug_log" type="checkbox" value="on"> Checking this option will enable detailed Passlist operations logging to file /var/log/suricata/suricata_em02560/passlist_debug.log.  Default is Not Checked.</label>
+		
+
+		
+	</div>
+		
+	</div>
+		</div>
+	</div>	<div id="ips_warn_dlg" class="modal fade" role="dialog" aria-labelledby="ips_warn_dlg" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h3 class="modal-title">Important Information About IPS Inline Mode Blocking</h3>
+				</div>
+<!--				<form class="form-horizontal" action="" method="post"><input type='hidden' name='__csrf_magic' value="sid:22fcea36b627541782e604bb3b0e5a3836d5d505,1794214907" /> -->
+					<div class="modal-body">
+							<div class="form-group">
+		<label class="col-sm-2 control-label">
+			
+		</label>
+			<div class="col-sm-10">
+		
+		<span class="help-block">When using Inline IPS Mode blocking, you must manually change the rule action from ALERT to DROP for every rule which you wish to block traffic when triggered.<br/><br/>The default action for rules is ALERT.  This will produce alerts but will not block traffic when using Inline IPS Mode for blocking. <br/><br/>Use the "dropsid.conf" feature on the SID MGMT tab to select rules whose action should be changed from ALERT to DROP.  If you run the Snort rules and have an IPS policy selected on the CATEGORIES tab, then rules defined as DROP by the selected IPS policy will have their action automatically changed to DROP when the "IPS Policy Mode" selector is configured for "Policy".</span>
+		
+
+		
+	</div>
+		
+	</div>
+					</div>
+					<div class="modal-footer">
+						<input class="btn btn-primary" type="submit" value="Close" name="save" id="save" data-dismiss="modal"/>
+					</div>
+<!--				</form> -->
+			</div>
+		</div>
+	</div>	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="panel-title">Performance and Detection Engine Settings</h2>
+		</div>
+		<div class="panel-body">
+				<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Run Mode</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="runmode" id="runmode">
+		<option value="autofp" selected>AutoFP</option><option value="workers">Workers</option><option value="single">Single</option>
+	</select>
+		
+
+		<span class="help-block">Choose a Suricata run mode setting. Default is "AutoFP" and is the recommended setting for IDS-only and Legacy Blocking Mode. "Workers" uses multiple worker threads, each of which processes the packets it acquires through all the decode and detect modules. "Workers" runmode is preferred for Inline IPS Mode blocking because it offers superior performance in that configuration. "Single" uses only a single thread for all operations, and is intended for use only in testing or development instances.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>AutoFP Scheduler Type</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="autofp_scheduler" id="autofp_scheduler">
+		<option value="hash" selected>Hash</option><option value="ippair">IP Pair</option>
+	</select>
+		
+
+		<span class="help-block">Choose the kind of flow load balancer used by the flow pinned autofp mode.  "Hash" assigns the flow to a thread using the 5-7 tuple hash. "IP Pair" assigns the flow to a thread using addresses only. This setting is applicable only when the Run Mode is set to "autofp".</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Max Pending Packets</span>
+		</label>
+			<div class="col-sm-10">
+		
+		<input class="form-control" name="max_pending_packets" id="max_pending_packets" type="text" value="1024">
+		
+
+		<span class="help-block">Enter number of simultaneous packets to process. Default is 1024.<br/>This controls the number of simultaneous packets the engine can handle. Setting this higher generally keeps the threads more busy. The minimum value is 1 and the maximum value is 65,000.<br />Warning: Setting this too high can lead to degradation and a possible system crash by exhausting available memory.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Detect-Engine Profile</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="detect_eng_profile" id="detect_eng_profile">
+		<option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option>
+	</select>
+		
+
+		<span class="help-block">Choose a detection engine profile. Default is Medium.<br />MEDIUM is recommended for most systems because it offers a good balance between memory consumption and performance. LOW uses less memory, but it offers lower performance. HIGH consumes a large amount of memory, but it offers the highest performance.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Multi-Pattern Matcher Algorithm</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="mpm_algo" id="mpm_algo">
+		<option value="auto" selected>Auto</option><option value="ac">AC</option><option value="ac-bs">AC-BS</option><option value="ac-ks">AC-KS</option><option value="hs">Hyperscan</option>
+	</select>
+		
+
+		<span class="help-block">Choose a multi-pattern matcher (MPM) algorithm. Auto is the default, and is the best choice for almost all systems. Auto will use hyperscan if available.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span> Single-Pattern Matcher Algorithm</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="spm_algo" id="spm_algo">
+		<option value="auto" selected>Auto</option><option value="bm">BM</option><option value="hs">Hyperscan</option>
+	</select>
+		
+
+		<span class="help-block">Choose a single-pattern matcher (SPM) algorithm. Auto is the default, and is the best choice for almost all systems. Auto will use hyperscan if available.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Signature Group Header MPM Context</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="sgh_mpm_context" id="sgh_mpm_context">
+		<option value="auto" selected>Auto</option><option value="full">Full</option><option value="single">Single</option>
+	</select>
+		
+
+		<span class="help-block">Choose a Signature Group Header multi-pattern matcher context. Default is Auto.<br />AUTO means Suricata selects between Full and Single based on the MPM algorithm chosen. FULL means every Signature Group has its own MPM context. SINGLE means all Signature Groups share a single MPM context. Using FULL can improve performance at the expense of significant memory consumption.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Inspection Recursion Limit</span>
+		</label>
+			<div class="col-sm-10">
+		
+		<input class="form-control" name="inspect_recursion_limit" id="inspect_recursion_limit" type="text" value="3000">
+		
+
+		<span class="help-block">Enter limit for recursive calls in content inspection code. Default is 3000.<br />When set to 0 an internal default is used. When left blank there is no recursion limit.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Delayed Detect</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="delayed_detect" id="delayed_detect" type="checkbox" value="on"> Suricata will build list of signatures after packet capture threads have started. Default is Not Checked.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Promiscuous Mode</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="intf_promisc_mode" id="intf_promisc_mode" type="checkbox" value="on" checked="checked"> Suricata will place the monitored interface in promiscuous mode when checked. Default is Checked.</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Interface PCAP Snaplen</span>
+		</label>
+			<div class="col-sm-10">
+		
+		<input class="form-control" name="intf_snaplen" id="intf_snaplen" type="text" value="1518">
+		
+
+		<span class="help-block">Enter value in bytes for the interface PCAP snaplen. Default is 1518.  This parameter is only valid when IDS or Legacy Mode IPS is enabled.<br />This value may need to be increased if the physical interface is passing VLAN traffic and expected alerts are not being received.</span>
+	</div>
+		
+	</div>
+		</div>
+	</div>	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="panel-title">Networks Suricata Should Inspect and Protect</h2>
+		</div>
+		<div class="panel-body">
+				<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Home Net</span>
+		</label>
+			<div class="col-sm-5">
+		
+			<select class="form-control" name="homelistname" id="homelistname">
+		<option value="default">default</option>
+	</select>
+		
+
+		<span class="help-block">Choose the Home Net you want this interface to use.</span>
+	</div>	<div class="col-sm-5">
+		
+		<a class="btn btn-default btn-info btn-sm" href="#" id="btnHomeNet" data-toggle="modal" data-target="#homenet"><i class="fa fa-file-text-o icon-embed-btn"> </i> View List</a>
+		
+
+		
+	</div>
+			<div class="col-sm-10 col-sm-offset-2">
+		<span class="help-block">
+			Default Home Net adds only local networks, WAN IPs, Gateways, VPNs and VIPs.<br />Create an Alias to hold a list of friendly IPs that the firewall cannot see or to customize the default Home Net.
+		</span>
+	</div>
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>External Net</span>
+		</label>
+			<div class="col-sm-5">
+		
+			<select class="form-control" name="externallistname" id="externallistname">
+		<option value="default">default</option>
+	</select>
+		
+
+		<span class="help-block">Choose the External Net you want this interface to use.</span>
+	</div>	<div class="col-sm-5">
+		
+		<a class="btn btn-default btn-info btn-sm" href="#" id="btnExternalNet" data-target="#externalnet" data-toggle="modal"><i class="fa fa-file-text-o icon-embed-btn"> </i> View List</a>
+		
+
+		
+	</div>
+			<div class="col-sm-10 col-sm-offset-2">
+		<span class="help-block">
+			External Net is networks that are not Home Net.  Most users should leave this setting at default.<br />Create a Pass List and add an Alias to it, and then assign the Pass List here for custom External Net settings.
+		</span>
+	</div>
+	</div>
+		</div>
+	</div>	<div id="homenet" class="modal fade" role="dialog" aria-labelledby="homenet" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h3 class="modal-title">View HOME_NET</h3>
+				</div>
+<!--				<form class="form-horizontal" action="" method="post"><input type='hidden' name='__csrf_magic' value="sid:22fcea36b627541782e604bb3b0e5a3836d5d505,1794214907" /> -->
+					<div class="modal-body">
+							<div class="form-group">
+		<label class="col-sm-2 control-label">
+			
+		</label>
+			<div class="col-sm-10">
+		
+			<textarea rows="10" class="row-fluid col-sm-10" name="homenet_text" id="homenet_text" wrap="off">...Loading...</textarea>
+		
+
+		
+	</div>
+		
+	</div>
+					</div>
+					<div class="modal-footer">
+						<input class="btn btn-primary" type="submit" value="Close" name="save" id="save" data-dismiss="modal"/>
+					</div>
+<!--				</form> -->
+			</div>
+		</div>
+	</div>	<div id="externalnet" class="modal fade" role="dialog" aria-labelledby="externalnet" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h3 class="modal-title">View EXTERNAL_NET</h3>
+				</div>
+<!--				<form class="form-horizontal" action="" method="post"><input type='hidden' name='__csrf_magic' value="sid:22fcea36b627541782e604bb3b0e5a3836d5d505,1794214907" /> -->
+					<div class="modal-body">
+							<div class="form-group">
+		<label class="col-sm-2 control-label">
+			
+		</label>
+			<div class="col-sm-10">
+		
+			<textarea rows="10" class="row-fluid col-sm-10" name="externalnet_text" id="externalnet_text" wrap="off">...Loading...</textarea>
+		
+
+		
+	</div>
+		
+	</div>
+					</div>
+					<div class="modal-footer">
+						<input class="btn btn-primary" type="submit" value="Close" name="save" id="save" data-dismiss="modal"/>
+					</div>
+<!--				</form> -->
+			</div>
+		</div>
+	</div>	<div id="passlist" class="modal fade" role="dialog" aria-labelledby="passlist" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h3 class="modal-title">View PASS LIST</h3>
+				</div>
+<!--				<form class="form-horizontal" action="" method="post"><input type='hidden' name='__csrf_magic' value="sid:22fcea36b627541782e604bb3b0e5a3836d5d505,1794214907" /> -->
+					<div class="modal-body">
+							<div class="form-group">
+		<label class="col-sm-2 control-label">
+			
+		</label>
+			<div class="col-sm-10">
+		
+			<textarea rows="10" class="row-fluid col-sm-10" name="passlist_text" id="passlist_text" wrap="off">...Loading...</textarea>
+		
+
+		
+	</div>
+		
+	</div>
+					</div>
+					<div class="modal-footer">
+						<input class="btn btn-primary" type="submit" value="Close" name="save" id="save" data-dismiss="modal"/>
+					</div>
+<!--				</form> -->
+			</div>
+		</div>
+	</div>	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="panel-title">Alert Suppression and Filtering</h2>
+		</div>
+		<div class="panel-body">
+				<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Alert Suppression and Filtering</span>
+		</label>
+			<div class="col-sm-5">
+		
+			<select class="form-control" name="suppresslistname" id="suppresslistname">
+		<option value="default">default</option>
+	</select>
+		
+
+		<span class="help-block">Choose the suppression or filtering file you want this interface to use. Default option disables suppression and filtering.</span>
+	</div>	<div class="col-sm-5">
+		
+		<a class="btn btn-default btn-info btn-sm" href="#" id="btnSuppressList" data-target="#suppresslist" data-toggle="modal"><i class="fa fa-file-text-o icon-embed-btn"> </i> View List</a>
+		
+
+		
+	</div>
+		
+	</div>
+		</div>
+	</div>	<div id="suppresslist" class="modal fade" role="dialog" aria-labelledby="suppresslist" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h3 class="modal-title">View Suppress List</h3>
+				</div>
+<!--				<form class="form-horizontal" action="" method="post"><input type='hidden' name='__csrf_magic' value="sid:22fcea36b627541782e604bb3b0e5a3836d5d505,1794214907" /> -->
+					<div class="modal-body">
+							<div class="form-group">
+		<label class="col-sm-2 control-label">
+			
+		</label>
+			<div class="col-sm-10">
+		
+			<textarea rows="10" class="row-fluid col-sm-10" name="suppresslist_text" id="suppresslist_text" wrap="off">...Loading...</textarea>
+		
+
+		
+	</div>
+		
+	</div>
+					</div>
+					<div class="modal-footer">
+						<input class="btn btn-primary" type="submit" value="Close" name="save" id="save" data-dismiss="modal"/>
+					</div>
+<!--				</form> -->
+			</div>
+		</div>
+	</div>	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="panel-title">Arguments here will be automatically inserted into the Suricata configuration</h2>
+		</div>
+		<div class="panel-body">
+				<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Advanced Configuration Pass-Through</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<textarea rows="5" class="form-control" name="configpassthru" id="configpassthru"></textarea>
+		
+
+		<span class="help-block">Enter any additional configuration parameters to add to the Suricata configuration here, separated by a newline</span>
+	</div>
+		
+	</div>
+		</div>
+	</div><input class="form-control" name="id" id="id" type="hidden" value="0"><input class="form-control" name="action" id="action" type="hidden" value=""><div class="col-sm-10 col-sm-offset-2"><button class="btn btn-primary" type="submit" value="Save" name="save" id="save"><i class="fa fa-save icon-embed-btn"> </i>Save</button></div>
+	</form>
+<div class="infoblock">
+	<div class="alert alert-info clearfix" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><div class="pull-left"><strong>Note:</strong> Please save your settings before you attempt to start Suricata.</div></div></div>
+
+<script type="text/javascript">
+//<![CDATA[
+
+var ifacearray = {"wan":"WAN","lan":"LAN","opt1":"OPT1"};
+var ifacemap = new Map(Object.entries(ifacearray));
+ifacemap.set("Unassigned", "Unassigned");
+
+events.push(function(){
+
+	function enable_blockoffenders() {
+		var hide = ! $('#blockoffenders').prop('checked');
+		hideCheckbox('blockoffenderskill', hide);
+		hideCheckbox('block_drops_only', hide);
+		hideCheckbox('passlist_debug_log', hide);
+		hideSelect('blockoffendersip', hide);
+		hideSelect('ips_mode', hide);
+		hideClass('passlist', hide);
+		if ($('#ips_mode').val() == 'ips_mode_inline') {
+			hideInput('ips_netmap_threads', hide);
+			hideCheckbox('blockoffenderskill', true);
+			hideCheckbox('block_drops_only', true);
+			hideCheckbox('passlist_debug_log', true);
+			hideSelect('blockoffendersip', true);
+			hideClass('passlist', true);
+			hideInput('intf_snaplen', true);
+			if (hide) {
+				$('#eve_log_drop').parent().hide();
+			}
+			else {
+				$('#eve_log_drop').parent().show();
+			}
+		}
+		else {
+			$('#eve_log_drop').parent().hide();
+			hideInput('intf_snaplen', false);
+			hideInput('ips_netmap_threads', true);
+		}
+	}
+
+	function enable_autofp_scheduler() {
+		if ($('#runmode').val() == 'autofp') {
+			hideSelect('autofp_scheduler', false);
+		}
+		else {
+			hideSelect('autofp_scheduler', true);
+		}
+	}
+
+	function toggle_system_log() {
+		var hide = ! $('#alertsystemlog').prop('checked');
+		hideSelect('alertsystemlog_facility', hide);
+		hideSelect('alertsystemlog_priority', hide);
+	}
+
+	function toggle_enable_stats() {
+		var hide = ! $('#enable_stats_collection').prop('checked');
+		hideInput('stats_upd_interval', hide);
+		toggle_stats_log();
+		toggle_telegraf_stats();
+		toggle_eve_log_stats();
+		hideCheckbox('enable_telegraf_stats', hide);
+		hideCheckbox('enable_stats_log', hide);
+		disableInput('eve_log_stats', hide);
+	}
+
+	function toggle_stats_log() {
+		if ($('#enable_stats_collection').prop('checked')) {
+			var hide = ! $('#enable_stats_log').prop('checked');
+			hideCheckbox('append_stats_log', hide);
+		}
+		else {
+			hideCheckbox('append_stats_log', true);
+		}
+	}
+
+	function toggle_telegraf_stats() {
+		if ($('#enable_stats_collection').prop('checked')) {
+			var hide = ! $('#enable_telegraf_stats').prop('checked');
+			hideInput('suricata_telegraf_unix_socket_name', hide);
+		}
+		else {
+			hideInput('suricata_telegraf_unix_socket_name', true);
+		}
+	}
+
+	function toggle_http_log() {
+		var hide = ! $('#enable_http_log').prop('checked');
+		hideInput('http_log_socket', hide);
+		hideCheckbox('append_http_log', hide);
+		hideCheckbox('http_log_extended', hide);
+		if ($('#http_log_filetype').val() == 'regular') {
+			hideSelect('http_log_socket', true);
+		}
+		else {
+			hideSelect('http_log_socket', false);
+		}
+		hideSelect('http_log_filetype', hide);
+	}
+
+	function toggle_tls_log() {
+		var hide = ! $('#enable_tls_log').prop('checked');
+		hideInput('tls_log_socket', hide);
+		hideCheckbox('enable_tls_store', hide);
+		hideCheckbox('tls_log_extended', hide);
+		hideCheckbox('append_tls_log', hide);
+		hideCheckbox('tls_session_resumption', hide);
+		if ($('#tls_log_filetype').val() == 'regular') {
+			hideSelect('tls_log_socket', true);
+		}
+		else {
+			hideSelect('tls_log_socket', false);
+		}
+		hideSelect('tls_log_filetype', hide);
+	}
+
+	function toggle_enable_file_store() {
+		var hide = ! $('#enable_file_store').prop('checked');
+		hideInput('file_store_logdir', hide);
+	}
+
+	function toggle_pcap_log() {
+		var hide = ! $('#enable_pcap_log').prop('checked');
+		hideCheckbox('pcap_use_stream_depth',hide);
+		hideCheckbox('pcap_honor_pass_rules',hide);
+		hideInput('max_pcap_log_size', hide);
+		hideInput('max_pcap_log_files', hide);
+		hideSelect('pcap_log_conditional', hide);
+	}
+
+	function toggle_eve_log() {
+		var hide = ! $('#enable_eve_log').prop('checked');
+		if ($('#eve_output_type').val().indexOf("unix") != -1) {
+			hideSelect('eve_output_socket', false);
+		}
+		else {
+			hideSelect('eve_output_socket', true);
+		}
+		hideSelect('eve_output_type', hide);
+		hideCheckbox('eve_log_alerts',hide);
+		hideCheckbox('eve_log_anomaly',hide);
+		hideCheckbox('eve_log_alerts_xff',hide);
+		hideCheckbox('eve_log_ethernet',hide);
+		hideCheckbox('eve_log_drops',hide);
+		hideClass('eve_log_info', hide);
+		hideClass('eve_log_drops_options', hide);
+		toggle_eve_log_files();
+	}
+
+	function toggle_eve_syslog() {
+		var hide = ! ($('#enable_eve_log').prop('checked') && $('#eve_output_type').val() == "syslog");
+		hideSelect('eve_systemlog_facility',hide);
+		hideSelect('eve_systemlog_priority',hide);
+	}
+
+	function toggle_eve_redis() {
+		var hide = ! ($('#enable_eve_log').prop('checked') && $('#eve_output_type').val() == "redis");
+		hideClass('eve_redis_connection',hide);
+		hideSelect('eve_redis_mode',hide);
+		hideInput('eve_redis_key',hide);
+	}
+
+	function toggle_eve_log_alerts() {
+		var hide = ! ($('#eve_log_alerts').prop('checked') && $('#enable_eve_log').prop('checked'));
+		hideSelect('eve_log_alerts_payload',hide);
+		hideClass('eve_log_alerts_details',hide);
+	}
+
+	function toggle_eve_log_drops() {
+		var hide = ! ($('#eve_log_drops').prop('checked') && $('#enable_eve_log').prop('checked'));
+		hideClass('eve_log_drops_options',hide);
+	}
+
+	function toggle_eve_log_anomaly() {
+		var hide = ! ($('#eve_log_anomaly').prop('checked') && $('#enable_eve_log').prop('checked'));
+		hideClass('eve_log_anomaly_details',hide);
+	}
+
+	function toggle_eve_log_alerts_xff() {
+		var hide = ! ($('#eve_log_alerts_xff').prop('checked') && $('#eve_log_alerts').prop('checked') && $('#enable_eve_log').prop('checked'));
+		hideSelect('eve_log_alerts_xff_mode',hide);
+		hideSelect('eve_log_alerts_xff_deployment',hide);
+		hideInput('eve_log_alerts_xff_header', hide);
+	}
+
+	function toggle_eve_log_stats() {
+		var hide = ! ($('#eve_log_stats').prop('checked') && $('#enable_eve_log').prop('checked') && $('#enable_stats_collection').prop('checked'));
+		hideClass('eve_log_stats_details',hide);
+	}
+
+	function toggle_eve_log_http() {
+		var disable = ! $('#eve_log_http').prop('checked');
+		disableInput('eve_log_http_extended',disable);
+		toggle_eve_log_http_extended();
+	}
+
+	function toggle_eve_log_tls() {
+		var disable = ! $('#eve_log_tls').prop('checked');
+		disableInput('eve_log_tls_extended',disable);
+		toggle_eve_log_tls_extended();
+	}
+
+	function toggle_eve_log_dhcp() {
+		var disable = ! $('#eve_log_dhcp').prop('checked');
+		disableInput('eve_log_dhcp_extended',disable);
+	}
+
+	function toggle_eve_log_smtp() {
+		var disable = ! $('#eve_log_smtp').prop('checked');
+		disableInput('eve_log_smtp_extended',disable);
+		toggle_eve_log_smtp_extended();
+	}
+
+	function toggle_eve_log_files() {
+		var hide = ! ($('#eve_log_files').prop('checked') && $('#enable_eve_log').prop('checked'));
+		hideCheckbox('eve_log_files_magic',hide);
+		hideSelect('eve_log_files_hash',hide);
+	}
+
+	function toggle_eve_log_http_extended() {
+		var hide = ! ($('#eve_log_http_extended').prop('checked') && $('#enable_eve_log').prop('checked') && $('#eve_log_http').prop('checked'));
+		hideSelect('eve_log_http_extended_headers\\[\\]',hide);
+	}
+
+	function toggle_eve_log_smtp_extended() {
+		var hide = ! ($('#eve_log_smtp_extended').prop('checked') && $('#enable_eve_log').prop('checked') && $('#eve_log_smtp').prop('checked'));
+		hideSelect('eve_log_smtp_extended_fields\\[\\]',hide);
+	}
+
+	function toggle_eve_log_tls_extended() {
+		var hide = ! ($('#eve_log_tls_extended').prop('checked') && $('#enable_eve_log').prop('checked') && $('#eve_log_tls').prop('checked'));
+		hideSelect('eve_log_tls_extended_fields\\[\\]',hide);
+	}
+
+	function enable_change() {
+		var disable = ! $('#enable').prop('checked');
+
+		disableInput('alertsystemlog', disable);
+		disableInput('alertsystemlog_facility', disable);
+		disableInput('alertsystemlog_priority', disable);
+		disableInput('enable_verbose_logging', disable);
+		disableInput('blockoffenders', disable);
+		disableInput('ips_mode', disable);
+		disableInput('blockoffenderskill', disable);
+		disableInput('block_drops_only', disable);
+		disableInput('passlist_debug_log', disable);
+		disableInput('blockoffendersip', disable);
+		disableInput('ips_netmap_threads', disable);
+		disableInput('performance', disable);
+		disableInput('runmode', disable);
+		disableInput('autofp_scheduler', disable);
+		disableInput('max_pending_packets', disable);
+		disableInput('detect_eng_profile', disable);
+		disableInput('inspect_recursion_limit', disable);
+		disableInput('mpm_algo', disable);
+		disableInput('spm_algo', disable);
+		disableInput('sgh_mpm_context', disable);
+		disableInput('delayed_detect', disable);
+		disableInput('intf_promisc_mode', disable);
+		disableInput('intf_snaplen', disable);
+		disableInput('fpm_split_any_any', disable);
+		disableInput('fpm_search_optimize', disable);
+		disableInput('fpm_no_stream_inserts', disable);
+		disableInput('cksumcheck', disable);
+		disableInput('externallistname', disable);
+		disableInput('homelistname', disable);
+		disableInput('suppresslistname', disable);
+		disableInput('btnHomeNet', disable);
+		disableInput('btnExternalNet', disable);
+		disableInput('btnSuppressList', disable);
+		disableInput('passlistname', disable);
+		disableInput('btnPasslist', disable);
+		disableInput('configpassthru', disable);
+		disableInput('enable_stats_collection', disable);
+		disableInput('enable_stats_log', disable);
+		disableInput('stats_upd_interval', disable);
+		disableInput('append_stats_log', disable);
+		disableInput('enable_telegraf_stats', disable);
+		disableInput('suricata_telegraf_unix_socket_name', disable);
+		disableInput('enable_http_log', disable);
+		disableInput('append_http_log', disable);
+		disableInput('http_log_extended', disable);
+		disableInput('http_log_filetype', disable);
+		disableInput('http_log_socket', disable);
+		disableInput('enable_tls_log', disable);
+		disableInput('enable_tls_store', disable);
+		disableInput('append_tls_log', disable);
+		disableInput('tls_log_extended', disable);
+		disableInput('tls_log_filetype', disable);
+		disableInput('tls_log_socket', disable);
+		disableInput('tls_session_resumption', disable);
+		disableInput('enable_file_store', disable);
+		disableInput('file_store_logdir', disable);
+		disableInput('enable_pcap_log', disable);
+		disableInput('max_pcap_log_size', disable);
+		disableInput('max_pcap_log_files', disable);
+		disableInput('pcap_log_conditional', disable);
+		disableInput('pcap_honor_pass_rules', disable);
+		disableInput('pcap_use_stream_depth', disable);
+		disableInput('enable_eve_log', disable);
+		disableInput('eve_output_type', disable);
+		disableInput('eve_output_socket', disable);
+		disableInput('eve_systemlog_facility', disable);
+		disableInput('eve_systemlog_priority', disable);
+		disableInput('eve_redis_mode', disable);
+		disableInput('eve_redis_key', disable);
+		disableInput('eve_redis_server', disable);
+		disableInput('eve_redis_port', disable);
+		disableInput('eve_log_info', disable);
+		disableInput('eve_log_alerts', disable);
+		disableInput('eve_log_alerts_payload', disable);
+		disableInput('eve_log_alerts_metadata', disable);
+		disableInput('eve_log_alerts_verdict', disable);
+		disableInput('eve_log_alerts_tagged', disable);
+		disableInput('eve_log_drops', disable);
+		disableInput('eve_log_alert_drops', disable);
+		disableInput('eve_log_drops_verdict', disable);
+		disableInput('eve_log_drops_flows', disable);
+		disableInput('eve_log_anomaly', disable);
+		disableInput('eve_log_anomaly_type_decode', disable);
+		disableInput('eve_log_anomaly_type_stream', disable);
+		disableInput('eve_log_anomaly_type_applayer', disable);
+		disableInput('eve_log_anomaly_packethdr', disable);
+		disableInput('eve_log_http', disable);
+		disableInput('eve_log_dns', disable);
+		disableInput('eve_log_nfs', disable);
+		disableInput('eve_log_smb', disable);
+		disableInput('eve_log_krb5', disable);
+		disableInput('eve_log_ikev2', disable);
+		disableInput('eve_log_tftp', disable);
+		disableInput('eve_log_rdp', disable);
+		disableInput('eve_log_sip', disable);
+		disableInput('eve_log_ftp', disable);
+		disableInput('eve_log_http2', disable);
+		disableInput('eve_log_rfb', disable);
+		disableInput('eve_log_tls', disable);
+		disableInput('eve_log_files', disable);
+		disableInput('eve_log_dhcp', disable);
+		disableInput('eve_log_ssh', disable);
+		disableInput('eve_log_smtp', disable);
+		disableInput('eve_log_snmp', disable);
+		disableInput('eve_log_mqtt', disable);
+		disableInput('eve_log_bittorrent', disable);
+		disableInput('eve_log_pgsql', disable);
+		disableInput('eve_log_quic', disable);
+		disableInput('eve_log_flow', disable);
+		disableInput('eve_log_netflow', disable);
+		disableInput('eve_log_drop', disable);
+		disableInput('eve_log_alerts_packet',disable)
+		disableInput('eve_log_alerts_payload',disable);
+		disableInput('eve_log_alerts_http',disable);
+		disableInput('eve_log_ethernet',disable);
+		disableInput('eve_log_alerts_xff',disable);
+		disableInput('eve_log_alerts_xff_mode',disable);
+		disableInput('eve_log_alerts_xff_deployment',disable);
+		disableInput('eve_log_alerts_xff_header',disable);
+		disableInput('eve_log_files_magic',disable);
+		disableInput('eve_log_files_hash',disable);
+
+		var disable_http = ! $('#eve_log_http').prop('checked');
+		disableInput('eve_log_http_extended',disable||disable_http);
+
+		var disable_tls = ! $('#eve_log_tls').prop('checked');
+		disableInput('eve_log_tls_extended',disable||disable_tls);
+
+		var disable_dhcp = ! $('#eve_log_dhcp').prop('checked');
+		disableInput('eve_log_dhcp_extended',disable||disable_dhcp);
+
+		var disable_smtp = ! $('#eve_log_smtp').prop('checked');
+		disableInput('eve_log_smtp_extended',disable||disable_smtp);
+
+		var disable_stats = ! $('#enable_stats_collection').prop('checked');
+		disableInput('eve_log_stats',disable||disable_stats);
+
+		disableInput('eve_log_stats_totals',disable);
+		disableInput('eve_log_stats_deltas',disable);
+		disableInput('eve_log_stats_threads',disable);
+
+		disableInput('eve_log_http_extended_headers\\[\\]',disable);
+		disableInput('eve_log_smtp_extended_fields\\[\\]',disable);
+		disableInput('eve_log_tls_extended_fields\\[\\]',disable);
+
+	}
+
+	// Call the list viewing page and write what it returns to the modal text area
+	function getListContents(listName, listType, ctrlID) {
+		var ajaxRequest;
+
+		ajaxRequest = $.ajax({
+			url: "/suricata/suricata_list_view.php",
+			type: "post",
+			data: { ajax: 	"ajax",
+			        wlist: 	listName,
+					type: 	listType,
+					id: 	"0"
+			}
+		});
+
+		// Display the results of the above ajax call
+		ajaxRequest.done(function (response, textStatus, jqXHR) {
+			// Write the list contents to the text control
+			$('#' + ctrlID).text(response);
+			$('#' + ctrlID).attr('readonly', true);
+		});
+	}
+
+	// ---------- Event triggers fired after the VIEW LIST modals are shown -----------------------
+	$('#homenet').on('shown.bs.modal', function() {
+		getListContents($('#homelistname option:selected' ).text(), 'homenet', 'homenet_text');
+	});
+
+	$('#externalnet').on('shown.bs.modal', function() {
+		getListContents($('#externallistname option:selected' ).text(), 'externalnet', 'externalnet_text');
+	});
+
+	$('#passlist').on('shown.bs.modal', function() {
+		getListContents($('#passlistname option:selected' ).text(), 'passlist', 'passlist_text');
+	});
+
+	$('#suppresslist').on('shown.bs.modal', function() {
+		getListContents($('#suppresslistname option:selected').text(), 'suppress', 'suppresslist_text');
+	});
+
+	// ---------- Click checkbox handlers ---------------------------------------------------------
+
+	/* When form control id is clicked, disable/enable it's associated form controls */
+
+	$('#enable').click(function() {
+		enable_change();
+	});
+
+	$('#alertsystemlog').click(function() {
+		toggle_system_log();
+	});
+
+	$('#enable_stats_collection').click(function() {
+		toggle_enable_stats();
+	});
+
+	$('#enable_stats_log').click(function() {
+		toggle_stats_log();
+	});
+
+	$('#enable_telegraf_stats').click(function() {
+		toggle_telegraf_stats();
+	});
+
+	$('#enable_http_log').click(function() {
+		toggle_http_log();
+	});
+
+	$('#enable_tls_log').click(function() {
+		toggle_tls_log();
+	});
+
+	$('#enable_file_store').click(function() {
+		toggle_enable_file_store();
+	});
+
+	$('#enable_pcap_log').click(function() {
+		toggle_pcap_log();
+	});
+
+	$('#enable_eve_log').click(function() {
+		toggle_eve_log();
+		toggle_eve_redis();
+		toggle_eve_syslog();
+		toggle_eve_log_alerts();
+		toggle_eve_log_anomaly();
+		toggle_eve_log_alerts_xff();
+		toggle_eve_log_stats();
+		toggle_eve_log_http_extended();
+		toggle_eve_log_smtp_extended();
+		toggle_eve_log_tls_extended();
+	});
+
+	$('#eve_output_type').change(function() {
+		toggle_eve_redis();
+		toggle_eve_syslog();
+	});
+
+	$('#eve_log_alerts').click(function() {
+		toggle_eve_log_alerts();
+	});
+
+	$('#eve_log_drops').click(function() {
+		toggle_eve_log_drops();
+	});
+
+	$('#eve_log_anomaly').click(function() {
+		toggle_eve_log_anomaly();
+	});
+
+	$('#eve_log_alerts_xff').click(function() {
+		toggle_eve_log_alerts_xff();
+	});
+
+	$('#eve_log_stats').click(function() {
+		toggle_eve_log_stats();
+	});
+
+	$('#eve_log_http').click(function() {
+		toggle_eve_log_http();
+	});
+
+	$('#eve_log_tls').click(function() {
+		toggle_eve_log_tls();
+	});
+
+	$('#eve_log_dhcp').click(function() {
+		toggle_eve_log_dhcp();
+	});
+
+	$('#eve_log_smtp').click(function() {
+		toggle_eve_log_smtp();
+	});
+
+	$('#eve_log_files').click(function() {
+		toggle_eve_log_files();
+	});
+
+	$('#blockoffenders').click(function() {
+		enable_blockoffenders();
+	});
+
+	$('#eve_log_http_extended').click(function(){
+		toggle_eve_log_http_extended();
+	});
+
+	$('#eve_log_smtp_extended').click(function(){
+		toggle_eve_log_smtp_extended();
+	});
+
+	$('#eve_log_tls_extended').click(function(){
+		toggle_eve_log_tls_extended();
+	});
+
+	$('#ips_mode').on('change', function() {
+		if ($('#ips_mode').val() == 'ips_mode_inline') {
+			hideCheckbox('blockoffenderskill', true);
+			hideCheckbox('block_drops_only', true);
+			hideCheckbox('passlist_debug_log', true);
+			hideSelect('blockoffendersip', true);
+			hideClass('passlist', true);
+			hideInput('intf_snaplen', true);
+			hideInput('ips_netmap_threads', false);
+			$('#eve_log_drop').parent().show();
+			$('#ips_warn_dlg').modal('show');
+		}
+		else {
+			hideCheckbox('blockoffenderskill', false);
+			hideCheckbox('block_drops_only', false);
+			hideCheckbox('passlist_debug_log', false);
+			hideSelect('blockoffendersip', false);
+			hideInput('intf_snaplen', false);
+			hideClass('passlist', false);
+			$('#eve_log_drop').parent().hide();
+			$('#ips_warn_dlg').modal('hide');
+			hideInput('ips_netmap_threads', true);
+		}
+	});
+
+	$('#http_log_filetype').on('change', function() {
+		if ($('#http_log_filetype').val() == 'regular') {
+			hideSelect('http_log_socket', true);
+		}
+		else {
+			hideSelect('http_log_socket', false);
+		}
+	});
+
+	$('#tls_log_filetype').on('change', function() {
+		if ($('#tls_log_filetype').val() == 'regular') {
+			hideSelect('tls_log_socket', true);
+		}
+		else {
+			hideSelect('tls_log_socket', false);
+		}
+	});
+
+	$('#eve_output_type').on('change', function() {
+		if ($('#eve_output_type').val().indexOf("unix") != -1) {
+			hideSelect('eve_output_socket', false);
+		}
+		else {
+			hideSelect('eve_output_socket', true);
+		}
+	});
+
+	$('#runmode').on('change', function() {
+		if ($('#runmode').val() == 'autofp') {
+			hideSelect('autofp_scheduler', false);
+		}
+		else {
+			hideSelect('autofp_scheduler', true);
+		}
+	});
+
+	$('#interface').on('change', function() {
+		$('#descr').val(ifacemap.get($('#interface').val()));
+		$('#file_store_logdir').val('');
+	});
+
+	// ---------- On initial page load ------------------------------------------------------------
+	enable_blockoffenders();
+	enable_autofp_scheduler();
+	toggle_system_log();
+	toggle_enable_stats();
+	toggle_http_log();
+	toggle_tls_log();
+	toggle_enable_file_store();
+	toggle_pcap_log();
+	toggle_eve_log();
+	toggle_eve_redis();
+	toggle_eve_syslog();
+	toggle_eve_log_alerts();
+	toggle_eve_log_drops();
+	toggle_eve_log_anomaly();
+	toggle_eve_log_alerts_xff();
+	toggle_eve_log_http();
+	toggle_eve_log_smtp();
+	toggle_eve_log_tls();
+	toggle_eve_log_dhcp();
+	toggle_eve_log_files();
+	toggle_eve_log_tls_extended();
+	toggle_eve_log_http_extended();
+	toggle_eve_log_smtp_extended();
+	enable_change();
+
+});
+//]]>
+</script>
+
+	</div>
+	<footer class="footer">
+		<div class="container">
+			<p class="text-muted">
+				<a id="tpl" style="display: none;" href="#" title="Top of page"><i class="fa fa-caret-square-o-up pull-left"></i></a>
+				<a target="_blank" href="https://pfsense.org">pfSense</a> is developed and maintained by <a target="_blank" href="https://netgate.com">Netgate. </a> &copy; ESF 2004 - 2026<a target="_blank" href="https://pfsense.org/license"> View license.</a>				<a id="tpr" style="display: none;" href="#" title="Top of page"><i class="fa fa-caret-square-o-up pull-right"></i></a>
+			</p>
+		</div>
+	</footer>
+
+	<!-- This use of filemtime() is intended to fool the browser into reloading the file (not using the cached version) if the file is changed -->
+
+	<script src="/vendor/jquery/jquery-3.5.1.min.js?v=1701893362"></script>
+ 	<script src="/vendor/jquery-ui/jquery-ui-1.12.1.min.js?v=1701893362"></script>
+	<script src="/vendor/bootstrap/js/bootstrap.min.js?v=1701893362"></script>
+	<script src="/js/pfSense.js?v=1701893362"></script>
+	<script src="/js/pfSenseHelpers.js?v=1701893362"></script>
+	<script src="/js/polyfills.js?v=1701893362"></script>
+	<script src="/vendor/sortable/sortable.js?v=1701893362"></script>
+
+	<script type="text/javascript" src="/vendor/jquery-treegrid/js/jquery.treegrid.min.js?v=1701893362"></script>
+	<script type="text/javascript" src="/vendor/js-cookie/js.cookie.js?v=1701893362"></script>
+
+	<script type="text/javascript">
+	//<![CDATA[
+		// Un-hide the "Top of page" icons if the page is larger than the window
+		if ($(document).height() > $(window).height()) {
+		    $('[id^=tp]').show();
+		}
+	//]]>
+	</script>
+<script type="text/javascript">CsrfMagic.end();</script></body>
+</html>

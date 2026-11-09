@@ -1,0 +1,155 @@
+#!/bin/bash
+# =====================================================
+# Script: Tạo 3 VMs VirtualBox cho bài tập ATT
+# Chạy từ WSL với quyền root
+# =====================================================
+set -e
+
+VBOX="VBoxManage"
+BASE_VMDK="/mnt/c/Users/Admin/VirtualBox VMs/ATT-Lab/ubuntu-22.04-base.vmdk"
+VM_DIR="/mnt/c/Users/Admin/VirtualBox VMs/ATT-Lab"
+LAB_DIR="/mnt/c/Users/Admin/Desktop/ATT/vbox-lab"
+NET_NAME="att-lab-net"
+
+# ---- Hàm tạo cloud-init ISO ----
+make_cloudinit_iso() {
+    local vm_name=$1
+    local role=$2   # c2, bot, victim
+    local iso_path="$VM_DIR/${vm_name}-cidata.iso"
+
+    echo "[*] Tạo cloud-init ISO cho $vm_name..."
+    apt-get install -y -q cloud-image-utils genisoimage 2>/dev/null || \
+        apt-get install -y -q cloud-utils genisoimage 2>/dev/null || true
+
+    local tmpdir=$(mktemp -d)
+    cp "$LAB_DIR/cloud-init/$role/user-data" "$tmpdir/user-data"
+
+    # meta-data
+    cat > "$tmpdir/meta-data" << EOF
+instance-id: $vm_name
+local-hostname: $vm_name
+EOF
+
+    # Tạo ISO
+    genisoimage -output "$iso_path" \
+        -volid cidata -joliet -rock \
+        "$tmpdir/user-data" "$tmpdir/meta-data" 2>/dev/null
+
+    rm -rf "$tmpdir"
+    echo "[+] Cloud-init ISO: $iso_path"
+    echo "$iso_path"
+}
+
+# ---- Hàm tạo VM ----
+create_vm() {
+    local vm_name=$1
+    local ram_mb=$2
+    local cpus=$3
+    local disk_path="$VM_DIR/${vm_name}.vmdk"
+    local iso_path="$VM_DIR/${vm_name}-cidata.iso"
+
+    echo ""
+    echo "================================================"
+    echo " Tạo VM: $vm_name | RAM: ${ram_mb}MB | CPU: $cpus"
+    echo "================================================"
+
+    # Xóa VM cũ nếu có
+    $VBOX unregistervm "$vm_name" --delete 2>/dev/null || true
+
+    # Clone VMDK từ base image
+    echo "[1] Clone VMDK..."
+    $VBOX clonemedium disk "$BASE_VMDK" "$disk_path" \
+        --format VMDK --variant Standard
+    # Resize disk lên 10GB
+    $VBOX modifymedium disk "$disk_path" --resize 10240
+
+    # Tạo VM
+    echo "[2] Tạo VM..."
+    $VBOX createvm --name "$vm_name" --ostype Ubuntu_64 \
+        --register --basefolder "$VM_DIR"
+
+    # Cấu hình hardware
+    echo "[3] Cấu hình hardware..."
+    $VBOX modifyvm "$vm_name" \
+        --memory $ram_mb \
+        --cpus $cpus \
+        --boot1 disk \
+        --boot2 none \
+        --audio-driver none \
+        --usb off \
+        --vram 16 \
+        --graphicscontroller vmsvga \
+        --uart1 off
+
+    # Thêm Storage Controller
+    echo "[4] Thêm storage..."
+    $VBOX storagectl "$vm_name" \
+        --name "SATA Controller" --add sata --controller IntelAHCI
+
+    # Gắn VMDK vào VM
+    $VBOX storageattach "$vm_name" \
+        --storagectl "SATA Controller" --port 0 --device 0 \
+        --type hdd --medium "$disk_path"
+
+    # Gắn cloud-init ISO vào drive thứ 2
+    if [ -f "$iso_path" ]; then
+        $VBOX storageattach "$vm_name" \
+            --storagectl "SATA Controller" --port 1 --device 0 \
+            --type dvddrive --medium "$iso_path"
+        echo "[4b] Cloud-init ISO gắn vào drive"
+    fi
+
+    # Cấu hình mạng
+    echo "[5] Cấu hình mạng..."
+    # NIC1: NAT Network (nội bộ lab)
+    $VBOX modifyvm "$vm_name" \
+        --nic1 natnetwork \
+        --nat-network1 "$NET_NAME"
+    # NIC2: NAT (ra internet, để apt-get update)
+    $VBOX modifyvm "$vm_name" \
+        --nic2 nat
+
+    echo "[+] VM $vm_name tạo xong!"
+}
+
+# ===================== MAIN =====================
+
+echo "============================================"
+echo " ATT Lab - Tạo 3 VMs VirtualBox"
+echo "============================================"
+
+# Kiểm tra VMDK base
+if [ ! -f "$BASE_VMDK" ]; then
+    echo "ERROR: Không tìm thấy base VMDK: $BASE_VMDK"
+    echo "Hãy chạy download_vmdk.sh trước!"
+    exit 1
+fi
+echo "[OK] Base VMDK: $(du -sh "$BASE_VMDK" | cut -f1)"
+
+# Cài genisoimage nếu cần
+apt-get install -y -q genisoimage 2>/dev/null || true
+
+# --- Tạo cloud-init ISOs ---
+echo ""
+echo "=== Bước 1: Tạo Cloud-Init ISOs ==="
+make_cloudinit_iso "ATT-C2-Server" "c2"
+make_cloudinit_iso "ATT-Bot" "bot"
+make_cloudinit_iso "ATT-Victim" "victim"
+
+# --- Tạo 3 VMs ---
+echo ""
+echo "=== Bước 2: Tạo VMs ==="
+create_vm "ATT-C2-Server" 1024 1
+create_vm "ATT-Bot"       1024 1
+create_vm "ATT-Victim"    1536 2
+
+echo ""
+echo "============================================"
+echo " Tất cả VMs đã tạo xong!"
+echo "============================================"
+VBoxManage list vms | grep ATT
+echo ""
+echo "Khởi động VMs bằng:"
+echo "  VBoxManage startvm ATT-C2-Server --type headless"
+echo "  VBoxManage startvm ATT-Bot       --type headless"
+echo "  VBoxManage startvm ATT-Victim    --type headless"

@@ -1,0 +1,2 @@
+# Rate filter: 20 hits of SID 1001002 within 10 s from one source -&gt; DROP 15 s
+rate_filter gen_id 1, sig_id 1001002, track by_src, count 20, seconds 10, new_action drop, timeout 15

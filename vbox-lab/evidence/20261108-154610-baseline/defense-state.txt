@@ -1,0 +1,4 @@
+inactive
+inactive
+Status: inactive
+lrwxrwxrwx 1 root root 34 Nov  8 15:41 /etc/nginx/sites-enabled/att-lab -> /etc/nginx/sites-available/att-lab

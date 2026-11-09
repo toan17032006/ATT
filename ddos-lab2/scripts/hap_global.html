@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="apple-touch-icon-precomposed" href="/apple-touch/apple-touch-icon-iphone-60x60-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="60x60" href="/apple-touch/apple-touch-icon-ipad-76x76-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/apple-touch/apple-touch-icon-iphone-retina-120x120-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch/apple-touch-icon-ipad-retina-152x152-precomposed.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/manifest.json">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+	<meta name="theme-color" content="#ffffff">
+
+	<link rel="stylesheet" href="/vendor/font-awesome/css/all.min.css?v=1701893362">
+	<link rel="stylesheet" href="/vendor/font-awesome/css/v4-shims.css?v=1701893362">
+	<link rel="stylesheet" href="/vendor/sortable/sortable-theme-bootstrap.css?v=1701893362">
+	<link rel="stylesheet" href="/vendor/jquery-treegrid/css/jquery.treegrid.css?v=1701893362">
+	<link rel="stylesheet" href="/css/pfSense.css?v=1701893362" />
+
+	<title>pfSense.home.arpa - Services: HAProxy: Settings</title>
+	<script type="text/javascript">
+	//<![CDATA[
+	var events = events || [];
+	//]]>
+	</script>
+<script type="text/javascript">if (top != self) {top.location.href = self.location.href;}</script><script type="text/javascript">var csrfMagicToken = "sid:5aa3a4cd7792bb847c0918548e9984a352c1f7f5,1794214468";var csrfMagicName = "__csrf_magic";</script><script src="/csrf/csrf-magic.js" type="text/javascript"></script></head>
+
+<body id="2">
+<nav id="topmenu" class="navbar navbar-static-top navbar-inverse">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#pf-navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/">
+				<svg id="logo" role="img" aria-labelledby="pfsense-logo" x="0px" y="0px" viewBox="0 0 282.8 84.2">
+	<title id="pfsense-logo-svg">pfSense Logo</title>
+	<path class="logo-st0" d="M27.8,57.7c2.9,0,5.4-0.9,7.5-2.6c2.1-1.7,3.6-4,4.4-6.8c0.8-2.8,0.6-5.1-0.5-6.8c-1.1-1.7-3.2-2.6-6.1-2.6 c-2.9,0-5.4,0.9-7.5,2.6c-2.1,1.7-3.5,4-4.3,6.8c-0.8,2.8-0.7,5.1,0.5,6.8C22.8,56.9,24.8,57.7,27.8,57.7"/>
+	<path class="logo-st0" d="M115.1,46.6c-1.5-0.8-3-1.4-4.7-1.8c-1.7-0.4-3.2-0.7-4.7-1.1c-1.5-0.3-2.7-0.7-3.6-1.1c-0.9-0.4-1.4-1.1-1.4-2 c0-1.1,0.5-1.9,1.4-2.4c0.9-0.5,1.9-0.7,2.8-0.7c2.8,0,5,1,6.7,3.1l7-7c-1.7-1.8-3.9-3.1-6.4-3.8c-2.5-0.7-5-1.1-7.4-1.1 c-1.9,0-3.9,0.2-5.7,0.7c-1.9,0.5-3.6,1.2-5,2.3c-1.5,1-2.6,2.3-3.5,3.9c-0.9,1.6-1.3,3.5-1.3,5.7c0,2.3,0.5,4.2,1.4,5.6 c0.9,1.4,2.1,2.5,3.6,3.3c1.5,0.8,3,1.3,4.7,1.7c1.7,0.4,3.2,0.7,4.7,1.1c1.5,0.3,2.7,0.7,3.6,1.2c0.9,0.5,1.4,1.2,1.4,2.2 c0,1-0.5,1.7-1.6,2.1c-1.1,0.4-2.3,0.6-3.6,0.6c-1.7,0-3.3-0.3-4.6-1c-1.3-0.7-2.5-1.7-3.6-3l-7,7.7c1.8,1.9,4.1,3.2,6.7,3.9 c2.7,0.7,5.3,1.1,7.9,1.1c2,0,4-0.2,6.1-0.6c2-0.4,3.9-1,5.5-2c1.6-0.9,3-2.2,4-3.8c1-1.6,1.6-3.5,1.6-5.9c0-2.3-0.5-4.2-1.4-5.6 C117.7,48.6,116.5,47.4,115.1,46.6"/>
+	<path class="logo-st0" d="M156.3,34.1c-1.5-1.7-3.3-3-5.5-3.9c-2.2-0.9-4.6-1.4-7.2-1.4c-2.9,0-5.6,0.5-8.1,1.4c-2.5,0.9-4.7,2.2-6.6,3.9 c-1.9,1.7-3.3,3.8-4.4,6.2c-1.1,2.4-1.6,5.1-1.6,8c0,3,0.5,5.6,1.6,8c1.1,2.4,2.5,4.5,4.4,6.2c1.9,1.7,4.1,3,6.6,3.9 c2.5,0.9,5.2,1.4,8.1,1.4c3,0,5.9-0.6,8.7-1.9c2.8-1.3,5.1-3.1,7-5.4l-8-5.9c-1,1.3-2.1,2.4-3.4,3.3c-1.3,0.8-2.9,1.3-4.8,1.3 c-2.2,0-4.1-0.7-5.7-2c-1.5-1.3-2.5-3.1-3-5.2H161v-3.6c0-3-0.4-5.6-1.2-8C159,37.9,157.8,35.8,156.3,34.1 M134.3,44.1 c0.1-0.9,0.3-1.8,0.7-2.6c0.4-0.8,0.9-1.6,1.6-2.2c0.7-0.6,1.5-1.2,2.5-1.6c1-0.4,2.1-0.6,3.4-0.6c2.1,0,3.8,0.7,5.1,2.1 c1.3,1.4,2,3,1.9,5H134.3z"/>
+	<path class="logo-st0" d="M198.3,33.8c-1-1.6-2.4-2.8-4.2-3.7c-1.8-0.9-4.1-1.3-7-1.3c-1.4,0-2.7,0.2-3.8,0.5c-1.2,0.4-2.2,0.8-3.1,1.4 c-0.9,0.6-1.7,1.2-2.4,1.9c-0.7,0.7-1.2,1.4-1.5,2.1H176v-5.1h-11v37.2h11.5V48.4c0-1.2,0.1-2.4,0.2-3.5c0.2-1.1,0.5-2.1,1-3 c0.5-0.9,1.2-1.6,2.1-2.1c0.9-0.5,2.1-0.8,3.6-0.8c1.5,0,2.6,0.3,3.4,0.9c0.8,0.6,1.4,1.4,1.8,2.4c0.4,1,0.6,2,0.7,3.2 c0.1,1.1,0.1,2.3,0.1,3.3v18.2h11.5V46.4c0-2.5-0.2-4.8-0.5-7C199.9,37.3,199.3,35.4,198.3,33.8"/>
+	<path class="logo-st0" d="M231.5,46.6c-1.5-0.8-3-1.4-4.7-1.8c-1.7-0.4-3.2-0.7-4.7-1.1c-1.5-0.3-2.7-0.7-3.6-1.1c-0.9-0.4-1.4-1.1-1.4-2 c0-1.1,0.5-1.9,1.4-2.4c0.9-0.5,1.9-0.7,2.8-0.7c2.8,0,5,1,6.7,3.1l7-7c-1.7-1.8-3.9-3.1-6.4-3.8c-2.5-0.7-5-1.1-7.4-1.1 c-1.9,0-3.9,0.2-5.7,0.7c-1.9,0.5-3.6,1.2-5,2.3c-1.5,1-2.6,2.3-3.5,3.9c-0.9,1.6-1.3,3.5-1.3,5.7c0,2.3,0.5,4.2,1.4,5.6 c0.9,1.4,2.1,2.5,3.6,3.3c1.5,0.8,3,1.3,4.7,1.7c1.7,0.4,3.2,0.7,4.7,1.1c1.5,0.3,2.7,0.7,3.6,1.2c0.9,0.5,1.4,1.2,1.4,2.2 c0,1-0.5,1.7-1.6,2.1c-1.1,0.4-2.3,0.6-3.6,0.6c-1.7,0-3.3-0.3-4.6-1c-1.3-0.7-2.5-1.7-3.6-3l-7,7.7c1.8,1.9,4.1,3.2,6.7,3.9 c2.7,0.7,5.3,1.1,7.9,1.1c2,0,4-0.2,6.1-0.6c2-0.4,3.9-1,5.5-2c1.6-0.9,3-2.2,4-3.8c1-1.6,1.6-3.5,1.6-5.9c0-2.3-0.5-4.2-1.4-5.6 C234.1,48.6,232.9,47.4,231.5,46.6"/>
+	<path class="logo-st0" d="M277.4,51.9v-4.2c-0.1-2.7-0.5-5.2-1.2-7.4c-0.8-2.4-2-4.5-3.5-6.2c-1.5-1.7-3.3-3-5.5-3.9 c-2.2-0.9-4.6-1.4-7.2-1.4c-2.9,0-5.6,0.5-8.1,1.4c-2.5,0.9-4.7,2.2-6.6,3.9c-1.9,1.7-3.3,3.8-4.4,6.2c-1.1,2.4-1.6,5.1-1.6,8 c0,3,0.5,5.6,1.6,8c1.1,2.4,2.5,4.5,4.4,6.2c1.9,1.7,4.1,3,6.6,3.9c2.5,0.9,5.2,1.4,8.1,1.4c3,0,5.9-0.6,8.7-1.9 c2.8-1.3,5.1-3.1,7-5.4l-8-5.9c-1,1.3-2.1,2.4-3.4,3.3c-1.3,0.8-2.9,1.3-4.8,1.3c-2.2,0-4.1-0.7-5.7-2c-1.5-1.3-2.5-3.1-3-5.2H277.4 z M250.7,44.1c0.1-0.9,0.3-1.8,0.7-2.6c0.4-0.8,0.9-1.6,1.6-2.2c0.7-0.6,1.5-1.2,2.5-1.6c1-0.4,2.1-0.6,3.4-0.6 c2.1,0,3.8,0.7,5.1,2.1c1.3,1.4,2,3,1.9,5H250.7z"/>
+	<path class="logo-st1" d="M52.6,38.9l2.6-9.2h4.6l1.8-6.6c0.6-2,1.3-4,2.2-5.8c0.8-1.8,2-3.4,3.4-4.8c1.4-1.4,3.2-2.5,5.3-3.3 c2.1-0.8,4.8-1.2,7.9-1.2c0.8,0,1.5,0,2.3,0.1c-0.7-2.9-3.3-5-6.3-5.1H11.9c-3.6,0-6.5,3-6.5,6.6V67l10.5-37.3h10.6l-1.4,4.9h0.2 c0.6-0.7,1.4-1.3,2.4-2c1-0.7,2-1.3,3.1-1.9c1.1-0.6,2.3-1,3.6-1.4c1.3-0.4,2.6-0.5,3.9-0.5c2.8,0,5.1,0.5,7.1,1.4 c2,0.9,3.5,2.3,4.7,4c1,1.5,1.6,3.3,1.9,5.4l0.8-0.6H52.6z"/>
+	<path class="logo-st2" d="M82.1,17.9c-0.5-0.1-1.1-0.2-1.8-0.2c-1.8,0-3.3,0.4-4.5,1.2c-1.1,0.8-2.1,2.4-2.8,4.9l-1.7,5.9h6.5l1.6,5.1 l-4.2,4.1h-6.5l-7.9,28H49.4l7.9-28h-4.4L52,39.5c0,0.2,0.1,0.5,0.1,0.7c0.2,2.3-0.1,4.9-0.9,7.7c-0.7,2.6-1.8,5.1-3.3,7.5 c-1.5,2.4-3.2,4.5-5.1,6.3c-2,1.8-4.2,3.3-6.6,4.4c-2.4,1.1-4.9,1.6-7.6,1.6c-2.4,0-4.5-0.4-6.4-1.1c-1.9-0.7-3.2-2-4-3.8h-0.2 l-5,17.7h63.3c3.6,0,6.6-2.9,6.6-6.6V18.2C82.6,18.1,82.3,18,82.1,17.9"/>
+	<path class="logo-st0" d="M277.6,68.5h0.8c0.4,0,0.6-0.1,0.7-0.2c0.1-0.1,0.2-0.2,0.2-0.4c0-0.1,0-0.2-0.1-0.3c-0.1-0.1-0.1-0.2-0.3-0.2 c-0.1,0-0.3-0.1-0.6-0.1h-0.7V68.5z M277,70.6v-3.8h1.3c0.5,0,0.8,0,1,0.1c0.2,0.1,0.4,0.2,0.5,0.4c0.1,0.2,0.2,0.4,0.2,0.6 c0,0.3-0.1,0.5-0.3,0.7c-0.2,0.2-0.5,0.3-0.8,0.3c0.1,0.1,0.2,0.1,0.3,0.2c0.2,0.2,0.3,0.4,0.6,0.8l0.5,0.7h-0.8l-0.3-0.6 c-0.3-0.5-0.5-0.8-0.6-0.9c-0.1-0.1-0.3-0.1-0.5-0.1h-0.4v1.6H277z M278.6,65.7c-0.5,0-1,0.1-1.5,0.4c-0.5,0.3-0.8,0.6-1.1,1.1 c-0.3,0.5-0.4,1-0.4,1.5c0,0.5,0.1,1,0.4,1.5c0.3,0.5,0.6,0.8,1.1,1.1c0.5,0.3,1,0.4,1.5,0.4c0.5,0,1-0.1,1.5-0.4 c0.5-0.3,0.8-0.6,1.1-1.1c0.3-0.5,0.4-1,0.4-1.5c0-0.5-0.1-1-0.4-1.5c-0.3-0.5-0.6-0.8-1.1-1.1C279.6,65.8,279.1,65.7,278.6,65.7z M278.6,65.1c0.6,0,1.2,0.2,1.8,0.5c0.6,0.3,1,0.7,1.3,1.3c0.3,0.6,0.5,1.2,0.5,1.8c0,0.6-0.2,1.2-0.5,1.8c-0.3,0.6-0.8,1-1.3,1.3 c-0.6,0.3-1.2,0.5-1.8,0.5c-0.6,0-1.2-0.2-1.8-0.5c-0.6-0.3-1-0.8-1.3-1.3c-0.3-0.6-0.5-1.2-0.5-1.8c0-0.6,0.2-1.2,0.5-1.8 c0.3-0.6,0.8-1,1.3-1.3C277.4,65.2,278,65.1,278.6,65.1z"/>
+</svg>
+				<span style="color:white;font-size:.5em;text-transform:uppercase;letter-spacing:1px;">Community Edition</span>
+			</a>
+		</div>
+		<div class="collapse navbar-collapse" id="pf-navbar">
+			<ul class="nav navbar-nav">
+							<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						System						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu"><li><a href="/system_advanced_admin.php" class="navlnk" >Advanced</a></li>
+<li><a href="/system_camanager.php" class="navlnk" >Certificates</a></li>
+<li><a href="/system.php" class="navlnk" >General Setup</a></li>
+<li><a href="/system_hasync.php" class="navlnk" >High Availability</a></li>
+<li><a href="/pkg_mgr_installed.php" class="navlnk" >Package Manager</a></li>
+<li><a href="/system_register.php" class="navlnk" >Register</a></li>
+<li><a href="/system_gateways.php" class="navlnk" >Routing</a></li>
+<li><a href="/wizard.php?xml=setup_wizard.xml" class="navlnk" >Setup Wizard</a></li>
+<li><a href="/pkg_mgr_install.php?id=firmware" class="navlnk" >Update</a></li>
+<li><a href="/system_usermanager.php" class="navlnk" >User Manager</a></li>
+<li><a href="/index.php?logout" class="navlnk" usepost>Logout (admin)</a></li>
+</ul>
+				</li>
+
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						Interfaces						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu"><li><a href="/interfaces_assign.php" class="navlnk" >Assignments</a></li>
+ <li class="divider"></li><li><a href="/interfaces.php?if=wan" class="navlnk" >WAN</a></li>
+<li><a href="/interfaces.php?if=lan" class="navlnk" >LAN</a></li>
+<li><a href="/interfaces.php?if=opt1" class="navlnk" >OPT1</a></li>
+</ul>
+				</li>
+
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						Firewall						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu"><li><a href="/firewall_aliases.php" class="navlnk" >Aliases</a></li>
+<li><a href="/firewall_nat.php" class="navlnk" >NAT</a></li>
+<li><a href="/firewall_rules.php" class="navlnk" >Rules</a></li>
+<li><a href="/firewall_schedule.php" class="navlnk" >Schedules</a></li>
+<li><a href="/firewall_shaper.php" class="navlnk" >Traffic Shaper</a></li>
+<li><a href="/firewall_virtual_ip.php" class="navlnk" >Virtual IPs</a></li>
+</ul>
+				</li>
+
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						Services						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu"><li><a href="/services_acb_settings.php" class="navlnk" >Auto Config Backup</a></li>
+<li><a href="/services_captiveportal.php" class="navlnk" >Captive Portal</a></li>
+<li><a href="/services_dhcp_relay.php" class="navlnk" >DHCP Relay</a></li>
+<li><a href="/services_dhcp.php" class="navlnk" >DHCP Server</a></li>
+<li><a href="/services_dhcpv6_relay.php" class="navlnk" >DHCPv6 Relay</a></li>
+<li><a href="/services_dhcpv6.php" class="navlnk" >DHCPv6 Server</a></li>
+<li><a href="/services_dnsmasq.php" class="navlnk" >DNS Forwarder</a></li>
+<li><a href="/services_unbound.php" class="navlnk" >DNS Resolver</a></li>
+<li><a href="/services_dyndns.php" class="navlnk" >Dynamic DNS</a></li>
+<li><a href="/haproxy/haproxy_listeners.php" class="navlnk" >HAProxy</a></li>
+<li><a href="/services_igmpproxy.php" class="navlnk" >IGMP Proxy</a></li>
+<li><a href="/services_ntpd.php" class="navlnk" >NTP</a></li>
+<li><a href="/services_pppoe.php" class="navlnk" >PPPoE Server</a></li>
+<li><a href="/services_radvd.php" class="navlnk" >Router Advertisement</a></li>
+<li><a href="/services_snmp.php" class="navlnk" >SNMP</a></li>
+<li><a href="/suricata/suricata_interfaces.php" class="navlnk" >Suricata</a></li>
+<li><a href="/pkg_edit.php?xml=miniupnpd.xml" class="navlnk" >UPnP &amp; NAT-PMP</a></li>
+<li><a href="/services_wol.php" class="navlnk" >Wake-on-LAN</a></li>
+</ul>
+				</li>
+
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						VPN						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu"><li><a href="/vpn_ipsec.php" class="navlnk" >IPsec</a></li>
+<li><a href="/vpn_l2tp.php" class="navlnk" >L2TP</a></li>
+<li><a href="/vpn_openvpn_server.php" class="navlnk" >OpenVPN</a></li>
+</ul>
+				</li>
+
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						Status						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu"><li><a href="/status_captiveportal.php" class="navlnk" >Captive Portal</a></li>
+<li><a href="/status_carp.php" class="navlnk" >CARP (failover)</a></li>
+<li><a href="/index.php" class="navlnk" >Dashboard</a></li>
+<li><a href="/status_dhcp_leases.php" class="navlnk" >DHCP Leases</a></li>
+<li><a href="/status_dhcpv6_leases.php" class="navlnk" >DHCPv6 Leases</a></li>
+<li><a href="/status_unbound.php" class="navlnk" >DNS Resolver</a></li>
+<li><a href="/status_filter_reload.php?user=true" class="navlnk" >Filter Reload</a></li>
+<li><a href="/status_gateways.php" class="navlnk" >Gateways</a></li>
+<li><a href="/haproxy/haproxy_stats.php?haproxystats=1" class="navlnk" >HAProxy Stats</a></li>
+<li><a href="/status_interfaces.php" class="navlnk" >Interfaces</a></li>
+<li><a href="/status_ipsec.php" class="navlnk" >IPsec</a></li>
+<li><a href="/status_monitoring.php" class="navlnk" >Monitoring</a></li>
+<li><a href="/status_ntpd.php" class="navlnk" >NTP</a></li>
+<li><a href="/status_openvpn.php" class="navlnk" >OpenVPN</a></li>
+<li><a href="/status_queues.php" class="navlnk" >Queues</a></li>
+<li><a href="/status_services.php" class="navlnk" >Services</a></li>
+<li><a href="/status_logs.php" class="navlnk" >System Logs</a></li>
+<li><a href="/status_graph.php" class="navlnk" >Traffic Graph</a></li>
+<li><a href="/status_upnp.php" class="navlnk" >UPnP &amp; NAT-PMP</a></li>
+</ul>
+				</li>
+
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						Diagnostics						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu"><li><a href="/diag_arp.php" class="navlnk" >ARP Table</a></li>
+<li><a href="/diag_authentication.php" class="navlnk" >Authentication</a></li>
+<li><a href="/diag_backup.php" class="navlnk" >Backup &amp; Restore</a></li>
+<li><a href="/diag_command.php" class="navlnk" >Command Prompt</a></li>
+<li><a href="/diag_dns.php" class="navlnk" >DNS Lookup</a></li>
+<li><a href="/diag_edit.php" class="navlnk" >Edit File</a></li>
+<li><a href="/diag_defaults.php" class="navlnk" >Factory Defaults</a></li>
+<li><a href="/diag_halt.php" class="navlnk" >Halt System</a></li>
+<li><a href="/diag_limiter_info.php" class="navlnk" >Limiter Info</a></li>
+<li><a href="/diag_ndp.php" class="navlnk" >NDP Table</a></li>
+<li><a href="/diag_packet_capture.php" class="navlnk" >Packet Capture</a></li>
+<li><a href="/diag_pf_info.php" class="navlnk" >pfInfo</a></li>
+<li><a href="/diag_pftop.php" class="navlnk" >pfTop</a></li>
+<li><a href="/diag_ping.php" class="navlnk" >Ping</a></li>
+<li><a href="/diag_reboot.php" class="navlnk" >Reboot</a></li>
+<li><a href="/diag_routes.php" class="navlnk" >Routes</a></li>
+<li><a href="/diag_smart.php" class="navlnk" >S.M.A.R.T. Status</a></li>
+<li><a href="/diag_sockets.php" class="navlnk" >Sockets</a></li>
+<li><a href="/diag_dump_states.php" class="navlnk" >States</a></li>
+<li><a href="/diag_states_summary.php" class="navlnk" >States Summary</a></li>
+<li><a href="/diag_system_activity.php" class="navlnk" >System Activity</a></li>
+<li><a href="/diag_tables.php" class="navlnk" >Tables</a></li>
+<li><a href="/diag_testport.php" class="navlnk" >Test Port</a></li>
+<li><a href="/diag_traceroute.php" class="navlnk" >Traceroute</a></li>
+</ul>
+				</li>
+
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						Help						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu"><li><a href="/help.php?page=haproxy/haproxy_global.php" target="_blank" class="navlnk" >About this Page</a></li>
+<li><a href="https://redirects.netgate.com/issues" target="_blank" class="navlnk" >Bug Database</a></li>
+<li><a href="https://redirects.netgate.com/docs" target="_blank" class="navlnk" >Documentation</a></li>
+<li><a href="https://redirects.netgate.com/fbsdhandbook" target="_blank" class="navlnk" >FreeBSD Handbook</a></li>
+<li><a href="https://redirects.netgate.com/support" target="_blank" class="navlnk" >Paid Support</a></li>
+<li><a href="https://redirects.netgate.com/book" target="_blank" class="navlnk" >pfSense Book</a></li>
+<li><a href="https://redirects.netgate.com/upgrade" target="_blank" class="navlnk" >Upgrade to pfSense Plus</a></li>
+<li><a href="https://redirects.netgate.com/forum" target="_blank" class="navlnk" >User Forum</a></li>
+<li><a href="https://redirects.netgate.com/survey_1" target="_blank" class="navlnk" >User survey</a></li>
+</ul>
+				</li>
+
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+														<li class="dropdown">
+						<a href="#" data-toggle="modal" data-target="#notices" role="button" aria-expanded="false">
+							<i class="fa fa-bell text-danger" title="Notices"></i>
+							<span class="badge bg-danger">2</span>
+						</a>
+					</li>
+									<li class="dropdown">
+						<a href="/index.php?logout" usepost>
+							<i class="fa fa-sign-out" title="Logout (admin@pfSense.home.arpa)"></i>
+						</a>
+					</li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<div class="container static" >
+
+<div class="alert alert-danger"><strong>WARNING:</strong> The 'admin' account password is set to the default value.  <a href="/system_usermanager.php?act=edit&userid=0"> Change the password in the User Manager.</a></div>
+	<header class="header">
+
+<ol class="breadcrumb"><li>Services</li><li>HAProxy</li><li><a href="/haproxy/haproxy_global.php">Settings</a></li></ol>		<ul class="context-links">
+
+	
+	
+	
+	
+	
+	
+<li><a title="Start Service" href="#" id="startservice-haproxy"><i class="fa fa-play-circle"></i></a> </li><li><a href="/haproxy/haproxy_global.php" title="Related settings"><i class="fa fa-sliders"></i></a></li><li><a href="/haproxy/haproxy_stats.php?haproxystats=1" title="Related status"><i class="fa fa-bar-chart"></i></a></li><li><a href="/status_logs_packages.php?pkg=haproxy" title="Related log entries"><i class="fa fa-list-alt"></i></a></li>			<li>
+			<a href="/help.php?page=haproxy/haproxy_global.php" target="_blank" title="Help for items on this page">
+				<i class="fa fa-question-circle"></i>
+			</a>
+		</li>
+			</ul>
+	</header>
+
+<div id="notices" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+
+				<h3 class="modal-title" id="myModalLabel">Notices</h3>
+			</div>
+
+			<div class="modal-body">
+				<h4>pfSenseConfigurator</h4>
+				<ul>
+					<li>
+						<b>
+						</b>
+						No config.xml found, attempting last known config restore.						<i>@ 2026-11-09 08:35:32</i>
+					</li>
+				</ul>
+				<h4>PHP errors</h4>
+				<ul>
+					<li>
+						<b>
+						</b>
+						PHP ERROR: Type: 1, File: /etc/inc/util.inc, Line: 3662, Message: Uncaught TypeError: array_path_enabled(): Argument #1 ($arr) must be of type array, null given, called in /etc/inc/config.lib.inc on line 1250 and defined in /etc/inc/util.inc:3662<br/>Stack trace:<br/>#0 /etc/inc/config.lib.inc(1250): array_path_enabled(NULL, &#039;notifications/s...&#039;, &#039;disable&#039;)<br/>#1 /etc/inc/notices.inc(379): config_path_enabled(&#039;notifications/s...&#039;, &#039;disable&#039;)<br/>#2 /etc/inc/notices.inc(662): notify_via_smtp(&#039;No config.xml f...&#039;)<br/>#3 /etc/inc/notices.inc(151): notify_all_remote(&#039;No config.xml f...&#039;)<br/>#4 /etc/inc/config.lib.inc(95): file_notice(&#039;config.xml&#039;, &#039;No config.xml f...&#039;, &#039;pfSenseConfigur...&#039;, &#039;&#039;)<br/>#5 /etc/inc/config.inc(137): parse_config()<br/>#6 /etc/inc/gwlb.inc(25): require_once(&#039;/etc/inc/config...&#039;)<br/>#7 /etc/inc/functions.inc(35): require_once(&#039;/etc/inc/gwlb.i...&#039;)<br/>#8 /etc/rc.ecl(25): require_once(&#039;/etc/inc/functi...&#039;)<br/>#9 {main}<br/>  thrown						<i>@ 2026-11-09 08:35:33</i>
+					</li>
+				</ul>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-info" data-dismiss="modal"><i class="fa fa-times icon-embed-btn"></i>Close</button>
+				<button type="button" id="clearallnotices" class="btn btn-primary"><i class="fa fa-trash-o icon-embed-btn"></i>Mark All as Read</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+	events.push(function() {
+	    $('#clearallnotices').click(function() {
+			ajaxRequest = $.ajax({
+				url: "/index.php",
+				type: "post",
+				data: { closenotice: "all"},
+				success: function() {
+					window.location = window.location.href;
+				},
+				failure: function() {
+					alert("Error clearing notices!");
+				}
+			});
+		});
+	});
+//]]>
+</script>
+
+<ul class="nav nav-pills"><li role="presentation" class="active"><a href="/haproxy/haproxy_global.php" >Settings</a></li><li role="presentation"><a href="/haproxy/haproxy_listeners.php" >Frontend</a></li><li role="presentation"><a href="/haproxy/haproxy_pools.php" >Backend</a></li><li role="presentation"><a href="/haproxy/haproxy_files.php" >Files</a></li><li role="presentation"><a href="/haproxy/haproxy_stats.php" >Stats</a></li><li role="presentation"><a href="/haproxy/haproxy_stats.php?haproxystats=1" >Stats FS</a></li><li role="presentation"><a href="/haproxy/haproxy_templates.php" >Templates</a></li></ul>	<form class="form-horizontal" method="post" action="/haproxy/haproxy_global.php"><input type='hidden' name='__csrf_magic' value="sid:5aa3a4cd7792bb847c0918548e9984a352c1f7f5,1794214468" />
+			<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="panel-title">General settings</h2>
+		</div>
+		<div class="panel-body">
+				<div class="form-group">
+		<label class="col-sm-2 control-label">
+			
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="enable" id="enable" type="checkbox" value="yes"> Enable HAProxy</label>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Installed version</span>
+		</label>
+			<div class="col-sm-10">
+		
+		2.8.3-86e043a
+
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Maximum connections</span>
+		</label>
+			<div class="col-sm-5">
+		
+		<input class="form-control" name="maxconn" id="maxconn" type="text" required placeholder="">
+		
+
+		<span class="help-block">Sets the maximum per-process number of concurrent connections to X.<br/>
+					<strong>NOTE:</strong> setting this value too high will result in HAProxy not being able to allocate enough memory.<br/>
+				
+					Current <a href='/system_advanced_sysctl.php'>'System Tunables'</a> settings.<br/>
+					&nbsp;&nbsp;'kern.maxfiles': <b>47153
+</b><br/>
+					&nbsp;&nbsp;'kern.maxfilesperproc': <b>42435
+</b><br/>
+
+					Full memory usage will only show after all connections have actually been used.</span>
+	</div>	<div class="col-sm-2">
+		
+		per process.
+		
+
+		
+	</div>	<div class="col-sm-2">
+		
+		<table style="border: 1px solid #000;">
+	<tr>
+		<td><small>Connections</small></td>
+		<td>&nbsp;</td>
+		<td><small>Memory usage</small></td>
+	</tr>
+	<tr>
+		<td colspan="3">
+			<hr style="border: 1px solid #000;" />
+		</td>
+	</tr>
+	<tr>
+		<td style="text-align: right;"><small>1</small></td>
+		<td>&nbsp;</td>
+		<td><small>50 kB</small></td>
+	</tr>
+	<tr>
+		<td style="text-align: right;"><small>1.000</small></td>
+		<td>&nbsp;</td>
+		<td><small>48 MB</small></td>
+	</tr>
+	<tr>
+		<td style="text-align: right;"><small>10.000</small></td>
+		<td>&nbsp;</td>
+		<td><small>488 MB</small></td>
+	</tr>
+	<tr>
+		<td style="text-align: right;"><small>100.000</small></td>
+		<td>&nbsp;</td>
+		<td><small>4,8 GB</small></td>
+	</tr>
+	<tr>
+		<td colspan="3" style="white-space: nowrap"><small><small>Calculated for plain HTTP connections,<br/>using ssl offloading will increase this.</small></small></td>
+	</tr>
+</table>
+		
+
+		
+	</div>
+			<div class="col-sm-10 col-sm-offset-2">
+		<span class="help-block">
+			When setting a high amount of allowed simultaneous connections you will need to add and or increase the following two
+<b><a href='/system_advanced_sysctl.php'>'System Tunables'</a></b> kern.maxfiles and kern.maxfilesperproc.
+For HAProxy alone set these to at least the number of allowed connections * 2 + 31. So for 100.000 connections these need
+to be 200.031 or more to avoid trouble, take into account that handles are also used by other processes when setting kern.maxfiles.
+		</span>
+	</div>
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Number of threads to start per process</span>
+		</label>
+			<div class="col-sm-10">
+		
+		<input class="form-control" name="nbthread" id="nbthread" type="text" placeholder="1">
+		
+
+		<span class="help-block">		Defaults to 1 if left blank (2 CPU core(s) detected).<br/>
+		FOR NOW, THREADS SUPPORT IN HAPROXY 1.8 IS HIGHLY EXPERIMENTAL AND IT MUST BE ENABLED WITH CAUTION AND AT YOUR OWN RISK.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Reload behaviour</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="terminate_on_reload" id="terminate_on_reload" type="checkbox" value="yes"> Force immediate stop of old process on reload. (closes existing connections)</label>
+		
+
+		<span class="help-block">	Note: when this option is selected, connections will be closed when haproxy is restarted.
+	Otherwise the existing connections will be served by the old haproxy process until they are closed.
+	Checking this option will interrupt existing connections on a restart (which happens when the configuration is applied,
+	but possibly also when pfSense detects an interface coming up or a change in its ip-address.)</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Reload stop behaviour</span>
+		</label>
+			<div class="col-sm-10">
+		
+		<input class="form-control" name="hard_stop_after" id="hard_stop_after" type="text" placeholder="15m">
+		
+
+		<span class="help-block">	Defines the maximum time allowed to perform a clean soft-stop.
+	Defaults to 15 minutes, but could also be defined in different units like 30s, 15m, 3h or 1d.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Carp monitor</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="carpdev" id="carpdev">
+		<option value="0" selected>Disabled</option>
+	</select>
+		
+
+		<span class="help-block">Monitor carp interface and only run haproxy on the firewall which is MASTER.</span>
+	</div>
+		
+	</div>
+		</div>
+	</div>	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="panel-title">Stats tab, &#039;internal&#039; stats port</h2>
+		</div>
+		<div class="panel-body">
+				<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Internal stats port</span>
+		</label>
+			<div class="col-sm-2">
+		
+		<input class="form-control" name="localstatsport" id="localstatsport" type="number" min="1" step="1" placeholder="">
+		
+
+		
+	</div>	<div class="col-sm-8">
+		
+		EXAMPLE: 2200
+		
+
+		
+	</div>
+			<div class="col-sm-10 col-sm-offset-2">
+		<span class="help-block">
+			Sets the internal port to be used for the stats tab.
+This is bound to 127.0.0.1 so will not be directly exposed on any LAN/WAN/other interface. It is used to internally pass through the stats page.
+Leave this setting empty to remove the "HAProxyLocalStats" item from the stats page and save a little on recources.
+		</span>
+	</div>
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Internal stats refresh rate</span>
+		</label>
+			<div class="col-sm-2">
+		
+		<input class="form-control" name="localstats_refreshtime" id="localstats_refreshtime" type="text" placeholder="">
+		
+
+		
+	</div>	<div class="col-sm-8">
+		
+		Seconds, Leave this setting empty to not refresh the page automatically. EXAMPLE: 10
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Sticktable page refresh rate</span>
+		</label>
+			<div class="col-sm-2">
+		
+		<input class="form-control" name="localstats_sticktable_refreshtime" id="localstats_sticktable_refreshtime" type="text" placeholder="">
+		
+
+		
+	</div>	<div class="col-sm-8">
+		
+		Seconds, Leave this setting empty to not refresh the page automatically. EXAMPLE: 10
+		
+
+		
+	</div>
+		
+	</div>
+		</div>
+	</div>	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="panel-title">Logging</h2>
+		</div>
+		<div class="panel-body">
+				<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Remote syslog host</span>
+		</label>
+			<div class="col-sm-10">
+		
+		<input class="form-control" name="remotesyslog" id="remotesyslog" type="text">
+		
+
+		<span class="help-block">To log to the local pfSense systemlog fill the host with the value <b>/var/run/log</b>, however if a lot of messages are generated logging is likely to be incomplete. (Also currently no informational logging gets shown in the systemlog.)</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Syslog facility</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="logfacility" id="logfacility">
+		<option value="kern">kern</option><option value="user">user</option><option value="mail">mail</option><option value="daemon">daemon</option><option value="auth">auth</option><option value="syslog">syslog</option><option value="lpr">lpr</option><option value="news">news</option><option value="uucp">uucp</option><option value="cron">cron</option><option value="auth2">auth2</option><option value="ftp">ftp</option><option value="ntp">ntp</option><option value="audit">audit</option><option value="alert">alert</option><option value="cron2">cron2</option><option value="local0" selected>local0</option><option value="local1">local1</option><option value="local2">local2</option><option value="local3">local3</option><option value="local4">local4</option><option value="local5">local5</option><option value="local6">local6</option><option value="local7">local7</option>
+	</select>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Syslog level</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="loglevel" id="loglevel">
+		<option value="emerg">Emergency</option><option value="alert">Alert</option><option value="crit">Critical</option><option value="err">Error</option><option value="warning">Warning</option><option value="notice">Notice</option><option value="info" selected>Informational</option><option value="debug">Debugging</option>
+	</select>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Log hostname</span>
+		</label>
+			<div class="col-sm-2">
+		
+		<input class="form-control" name="log-send-hostname" id="log-send-hostname" type="text" placeholder="">
+		
+
+		
+	</div>	<div class="col-sm-8">
+		
+		EXAMPLE: HaproxyMasterNode
+		
+
+		
+	</div>
+			<div class="col-sm-10 col-sm-offset-2">
+		<span class="help-block">
+			Sets the hostname field in the syslog header. If empty defaults to the system hostname.
+		</span>
+	</div>
+	</div>
+		</div>
+	</div>	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="panel-title">Global DNS resolvers for haproxy</h2>
+		</div>
+		<div class="panel-body">
+				<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>DNS servers</span>
+		</label>
+			<div class="col-sm-10">
+		
+		Configuring DNS servers will allow haproxy to detect when a servers IP changes to a different one in 'elastic' environments without needing to be restarted.<br/>
+		<div class='panel panel-default'>
+		<div class='panel-heading'>
+			Table
+		</div>
+		<div class='table-responsive panel-body'>
+			<table id='table_resolvers' class='table table-hover table-striped table-condensed'>
+				<thead>
+					<tr>
+						<th><!-- checkbox --></th><th>Name</th><th>DNSserver</th><th>DNSport</th><th>Actions</th>
+		</tr>
+		</thead>
+		<tbody class='user-entries'></tbody>
+		</table>
+			<a onclick='javascript:addRowTo("table_resolvers"); return false;' href='#'>
+			<i class='fa fa-level-down' title='add another entry'></i>
+			</a>
+		</div></div>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Retries</span>
+		</label>
+			<div class="col-sm-10">
+		
+		<input class="form-control" name="resolver_retries" id="resolver_retries" type="text">
+		
+
+		<span class="help-block">Defines the number of queries to send to resolve a server name before giving up. Default value: 3</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Retry timeout</span>
+		</label>
+			<div class="col-sm-10">
+		
+		<input class="form-control" name="resolver_timeoutretry" id="resolver_timeoutretry" type="text">
+		
+
+		<span class="help-block">Time between two DNS queries, when no response have been received. Default value: 1s</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Interval</span>
+		</label>
+			<div class="col-sm-10">
+		
+		<input class="form-control" name="resolver_holdvalid" id="resolver_holdvalid" type="text">
+		
+
+		<span class="help-block">Interval between two successive name resolution when the last answer was valid. Default value: 10s</span>
+	</div>
+		
+	</div>
+		</div>
+	</div>	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="panel-title">Global email notifications</h2>
+		</div>
+		<div class="panel-body">
+				<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Mailer servers</span>
+		</label>
+			<div class="col-sm-10">
+		
+		It is possible to send email alerts when the state of servers changes. If configured email alerts are sent to each mailer that is configured in a mailers section. Email is sent to mailers using SMTP.<br/>
+		<div class='panel panel-default'>
+		<div class='panel-heading'>
+			Table
+		</div>
+		<div class='table-responsive panel-body'>
+			<table id='table_mailers' class='table table-hover table-striped table-condensed'>
+				<thead>
+					<tr>
+						<th><!-- checkbox --></th><th>Name</th><th>Mailserver</th><th>Mailserverport</th><th>Actions</th>
+		</tr>
+		</thead>
+		<tbody class='user-entries'></tbody>
+		</table>
+			<a onclick='javascript:addRowTo("table_mailers"); return false;' href='#'>
+			<i class='fa fa-level-down' title='add another entry'></i>
+			</a>
+		</div></div>
+		
+
+		
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Mail level</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="email_level" id="email_level">
+		<option value="" selected>Dont log</option><option value="emerg">Emergency</option><option value="alert">Alert</option><option value="crit">Critical</option><option value="err">Error</option><option value="warning">Warning</option><option value="notice">Notice</option><option value="info">Informational</option><option value="debug">Debugging</option>
+	</select>
+		
+
+		<span class="help-block">	Define the maximum loglevel to send emails for.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Mail myhostname</span>
+		</label>
+			<div class="col-sm-10">
+		
+		<input class="form-control" name="email_myhostname" id="email_myhostname" type="text">
+		
+
+		<span class="help-block">Define hostname to use as sending the emails.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Mail from</span>
+		</label>
+			<div class="col-sm-10">
+		
+		<input class="form-control" name="email_from" id="email_from" type="text">
+		
+
+		<span class="help-block">Email address to be used as the sender of the emails.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Mail to</span>
+		</label>
+			<div class="col-sm-10">
+		
+		<input class="form-control" name="email_to" id="email_to" type="text">
+		
+
+		<span class="help-block">Email address to send emails to.</span>
+	</div>
+		
+	</div>
+		</div>
+	</div>	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="panel-title">Tuning</h2>
+		</div>
+		<div class="panel-body">
+				<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>SSL/TLS Compatibility Mode</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<select class="form-control" name="sslcompatibilitymode" id="sslcompatibilitymode">
+		<option value="auto">Auto</option><option value="modern">Modern</option><option value="intermediate">Intermediate</option><option value="old">Old</option>
+	</select>
+		
+
+		<span class="help-block">	The SSL/TLS Compatibility Mode determines which cipher suites and TLS versions are supported by default.<br />
+	Old mode disables SSLv3 and appropriate ciphers.<br />
+	Intermediate mode also disables HIGH ciphers, SHA1, TLS v1.0 and TLS v1.1.<br />
+	Modern mode also disables TLS v1.2, leaving only TLS v1.3 and AEAD ciphers.<br />
+	If unsure leave it as 'Auto'.</span>
+	</div>
+		
+	</div>	<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Max SSL Diffie-Hellman size</span>
+		</label>
+			<div class="col-sm-2">
+		
+		<input class="form-control" name="ssldefaultdhparam" id="ssldefaultdhparam" type="number" min="256" max="102400" step="1" placeholder="">
+		
+
+		
+	</div>	<div class="col-sm-8">
+		
+		EXAMPLE: 2048
+		
+
+		
+	</div>
+			<div class="col-sm-10 col-sm-offset-2">
+		<span class="help-block">
+				Sets the maximum size of the Diffie-Hellman parameters used for generating
+	the ephemeral/temporary Diffie-Hellman key in case of DHE key exchange.
+	Minimum and default value is: 1024, bigger values might increase CPU usage.<br/>
+	For more information about the <b>"tune.ssl.default-dh-param"</b> option please see <b><a href='http://cbonte.github.io/haproxy-dconv/2.4/configuration.html#tune.ssl.default-dh-param' target='_blank'>HAProxy Documentation</a></b><br/>
+	NOTE: HAProxy will emit a warning when starting when this setting is used but not configured.
+		</span>
+	</div>
+	</div>
+		</div>
+	</div>	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="panel-title">Global Advanced pass thru</h2>
+		</div>
+		<div class="panel-body">
+				<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Custom options</span>
+		</label>
+			<div class="col-sm-10">
+		
+			<textarea rows="4" class="form-control advanced" name="advanced" id="advanced" style="white-space: pre;"></textarea>
+		
+
+		<span class="help-block">NOTE: paste text into this box that you would like to pass thru in the global settings area.</span>
+	</div>
+		
+	</div>
+		</div>
+	</div>	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="panel-title">Configuration synchronization</h2>
+		</div>
+		<div class="panel-body">
+				<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>HAProxy Sync</span>
+		</label>
+			<div class="checkbox col-sm-10">
+		
+		<label class="chkboxlbl"><input name="enablesync" id="enablesync" type="checkbox" value="yes"> Sync HAProxy configuration to backup CARP members via XMLRPC.</label>
+		
+
+		<span class="help-block">	Note: The synchronisation host and password are those configured in pfSense main <a href="/system_hasync.php">"System: High Availability Sync"</a> settings.</span>
+	</div>
+		
+	</div>
+		</div>
+	</div><div class="col-sm-10 col-sm-offset-2"><button class="btn btn-primary" type="submit" value="Save" name="save" id="save"><i class="fa fa-save icon-embed-btn"> </i>Save</button></div>
+	</form><input class="btn btn-default btn-sm" type="submit" value="Show" name="btnadvopts" id="btnadvopts"/> automatically generated configuration.	<div class="panel panel-default haproxycfg">
+		<div class="panel-heading">
+			<h2 class="panel-title">/var/etc/haproxy/haproxy.cfg file contents</h2>
+		</div>
+		<div class="panel-body">
+				<div class="form-group">
+		<label class="col-sm-2 control-label">
+			<span>Content</span>
+		</label>
+			<div class="col-sm-10">
+		
+		<pre># Automaticaly generated, dont edit manually.
+# Generated on: 2026-11-09 08:53
+global
+	stats socket /tmp/haproxy.socket level admin  expose-fd listeners
+	uid			80
+	gid			80
+	nbthread			1
+	hard-stop-after		15m
+	chroot				/tmp/haproxy_chroot
+	daemon
+	server-state-file /tmp/haproxy_server_state</pre>
+		
+
+		
+	</div>
+		
+	</div>
+		</div>
+	</div><script type="text/javascript">
+
+//<![CDATA[
+events.push(function() {
+	hideClass('haproxytestcfg', true);
+
+	$('#btnshowconfigtest').prop('type', 'button');
+	$('#btnshowconfigtest').click(function(event) {
+		hideClass('haproxytestcfg', false);
+	});
+	hideClass('haproxycfg', true);
+
+	$('#btnadvopts').prop('type', 'button');
+	$('#btnadvopts').click(function(event) {
+		hideClass('haproxycfg', false);
+	});
+});
+</script>
+<script type="text/javascript">
+	var theme = "";
+
+	function html_listitem_change(tableId, fieldId, rowNr, field) {
+		javascript_event = tableId + "_listitem_change";
+		var fn = window[javascript_event];
+		if (typeof fn === 'function'){
+			fn(tableId, fieldId, rowNr, field);
+		}
+	}
+
+	function htmllist_get_select_items(prefix, tableId) {
+		var items;
+		var items_name = prefix+"_"+tableId;
+		items = eval("typeof "+items_name+" !== 'undefined' ? "+items_name+" : null");
+		return items;
+	}
+
+	function createFieldHtml(tableId, field, rowId) {
+		var result = "";
+		if(field['type'] == 'textbox') {
+			result="<input name='" + tableId + field['name'] + rowId +
+			"' id='" + tableId + field['name'] + rowId +
+			"'><\/input> ";
+		} else if(field['type'] == 'textarea') {
+			result="<textarea class='nowrap' cols='" + field['size'] + "' rows='15' name='" + tableId + field['name'] + rowId +
+			"' id='" + tableId + field['name'] + rowId +
+			"'><\/textarea> ";
+		} else if(field['type'] == 'select') {
+			var seltext = "";
+			var fieldid = field['name'];
+			var fn = window["htmllist_get_select_options"];
+			fielditems = field['items'];
+			if (typeof fn === 'function'){
+				fielditems = htmllist_get_select_options(tableId, field['name'], fielditems);
+			}
+			for (var fieldvalueid in fielditems) {
+				var fieldvalue = fielditems[fieldvalueid]
+				seltext += "<option value='"+fieldvalueid+"'>"+fieldvalue['name']+"<\/option>";
+			}
+
+			result="<select name='" + tableId + field['name'] + rowId +
+			"' id='" + tableId + field['name'] + rowId + "' "+
+			"onchange='html_listitem_change(\""+tableId+"\",\""+field['name']+"\",\""+rowId+"\",this);' " +
+			">" + seltext + "<\/select> ";
+		} else if(field['type'] == 'fixedtext') {
+			result=field['text'];
+		} else {
+			result="<input type='checkbox' name='" + tableId + field['name'] + rowId +"'"+
+			"id='" + tableId + field['name'] + rowId + "' "+
+			"onclick='html_listitem_change(\""+tableId+"\",\""+field['name']+"\",\""+rowId+"\",this);' " +
+			"value='yes'><\/input> ";
+		}
+		return result;
+	}
+
+	var addRowTo = (function() {
+	return (function (tableId) {
+		var d, tbody, tr, td, bgc, i, ii, j, type, seltext, items;
+		var btable, btbody, btr, btd;
+		var fieldcount;
+		d = document;
+
+		tbody = d.getElementById(tableId).getElementsByTagName("tbody").item(0);
+		totalrows++;
+
+		// create edit row fields
+		items = htmllist_get_select_items('fields',tableId);
+		fieldcount = 0;
+		tr = d.createElement("tr");
+		tr.setAttribute("id","tr_edit_" + totalrows);
+
+		td = d.createElement("td");
+		td.innerHTML = "<td>"+
+				'<input type="checkbox" id="frec'+totalrows+'" onClick="fr_toggle_two('+totalrows+',this)" name="' + tableId + '_row[]" value="'+totalrows+'"/>'+
+				'<a class="fa fa-anchor" id="Xmove_'+totalrows+'" onClick="moveRowUpAboveAnchor('+totalrows+', \'' + tableId + '\')"  title=\"Move checked entries to here\"></a>'+
+				"</td>";
+		tr.appendChild(td);
+
+		for (var i in items) {
+			if (items[i]['type']=='hidden') {
+				continue;//dont copy hidden fields.. like a id field that should stay unique
+			}
+			fieldhtml = createFieldHtml(tableId, items[i], totalrows);
+			td = d.createElement("td");
+			td.innerHTML = fieldhtml;
+			tr.appendChild(td);
+			fieldcount += 1;
+		}
+		td = d.createElement("td");
+		td.setAttribute("class","action-buttons");
+
+		// Recreate the action icons.
+		var actions = "";
+		actions += '<input name="'+tableId+'_rowindex[]" id="'+tableId+'_rowindex'+totalrows+'" class="hidden" value="'+totalrows+'" />' +
+			'<a onclick="deleteRow(' + totalrows + ", '" + tableId + "'); return false;\" ><i class='fa fa-trash' title='delete entry'></i></a>";
+		actions += '<a onclick=\"dupRow(' + totalrows + ", '" + tableId + "'); return false;\" ><i class='fa fa-clone' title='duplicate entry'></i></a>";
+
+		var tabledefinition = htmllist_get_select_items("tabledefinition", tableId);
+		if (tabledefinition && tabledefinition['keyfield'] == "") {
+			actions += '<a onclick=\"moveRowUp(' + totalrows + ", '" + tableId + "'); return false;\" ><i class='fa fa-arrow-up' title='move row up'></i></a>";
+			actions += '<a onclick=\"moveRowDown(' + totalrows + ", '" + tableId + "'); return false;\" ><i class='fa fa-arrow-down' title='move row down'></i></a>";
+		}
+		td.innerHTML = actions;
+		tr.appendChild(td);
+		tbody.appendChild(tr); // add the edit row to the table
+
+		// create viewdetail row
+		detailitems = htmllist_get_select_items('fields_details',tableId);
+		if (detailitems) {
+			tr = d.createElement("tr");
+			tr.setAttribute("id","tr_viewdetail_" + totalrows);
+			td = d.createElement("td");
+			tr.appendChild(td);
+			td = d.createElement("td");
+			td.setAttribute("colspan", fieldcount);
+			table = d.createElement("table");
+			table.setAttribute("cellspacing","0");
+			for (var i in detailitems) {
+				field = detailitems[i];
+				fieldhtml = createFieldHtml(tableId, field, totalrows);
+				subtr = d.createElement("tr");
+				subtr.setAttribute("id","tr_edititemdetails_" + totalrows + "_" + field['name']);
+				subtd = d.createElement("td");
+				subtd.setAttribute("class","vncell");
+				subtd.innerHTML = field['columnheader'] + ": ";
+				subtr.appendChild(subtd);
+				subtd = d.createElement("td");
+				subtd.setAttribute("class","vncell");
+				if (field['description']) {
+					fieldhtml = field['description'] + "<br/>" + fieldhtml;
+				}
+				subtd.innerHTML = fieldhtml;
+				subtr.appendChild(subtd);
+				table.appendChild(subtr);
+			}
+			td.appendChild(table);
+			tr.appendChild(td);
+			td = d.createElement("td");
+			tr.appendChild(td);
+			tbody.appendChild(tr);  // add the viewdetail row to the table
+		}
+		// show/hide conditional fields if applicable using a custom function.
+		javascript_event = tableId + "_listitem_change";
+		var fn = window[javascript_event];
+		if (typeof fn === 'function'){
+			fn(tableId, "toggle_details", totalrows, null);
+		}
+
+		javascript_row_added = tableId + "_row_added";
+		var fn = window[javascript_row_added];
+		if (typeof fn === 'function'){
+			fn(tableId, totalrows);
+		}
+	});
+	})();
+	function dupRow(rowId, tableId) {
+		var dupEl;
+		var newEl;
+		addRowTo(tableId);
+		items = htmllist_get_select_items('fields',tableId);
+		for (var i in items) {
+			dupEl = document.getElementById(tableId + items[i]['name'] + rowId);
+			newEl = document.getElementById(tableId + items[i]['name'] + totalrows);
+			if (dupEl && newEl)
+				if(items[i]['type'] == 'checkbox')
+					newEl.checked = dupEl.checked;
+				else
+					newEl.value = dupEl.value;
+		}
+		items = htmllist_get_select_items('fields_details', tableId);
+		for (var i in items) {
+			dupEl = document.getElementById(tableId + items[i]['name'] + rowId);
+			newEl = document.getElementById(tableId + items[i]['name'] + totalrows);
+			if (dupEl && newEl)
+				if(items[i]['type'] == 'checkbox')
+					newEl.value = dupEl.checked ? 'yes' : '';
+				else
+					newEl.value = dupEl.value;
+		}
+		javascript_row_added = tableId + "_row_added";
+		var fn = window[javascript_row_added];
+		if (typeof fn === 'function'){
+			fn(tableId, totalrows);
+		}
+
+		// show/hide conditional fields if applicable using a custom function.
+		javascript_event = tableId + "_listitem_change";
+		var fn = window[javascript_event];
+		if (typeof fn === 'function'){
+			fn(tableId, "toggle_details", totalrows, null);
+		}
+	}
+	function editRow(num) {
+		var trview = document.getElementById('tr_view_' + num);
+		var tredit = document.getElementById('tr_edit_' + num);
+		//trview.style.display='none';
+		//tredit.style.display='';
+		hideElement(trview, true);
+		hideElement(tredit, false);
+	}
+	function deleteRow(rowId, tableId) {
+		var view = document.getElementById("tr_view_" + rowId);
+		var viewdetail = document.getElementById("tr_viewdetail_" + rowId);
+		var edit = document.getElementById("tr_edit_" + rowId);
+		if (view)
+			view.parentNode.removeChild(view);
+		if (viewdetail)
+			viewdetail.parentNode.removeChild(viewdetail);
+		if (edit)
+			edit.parentNode.removeChild(edit);
+	}
+
+	function moveRowUp(rowId, tableId) {
+	  moveRow(rowId, tableId, true);
+	}
+	function moveRowDown(rowId, tableId) {
+	  moveRow(rowId, tableId, false);
+	}
+	function moveRow(rowId, tableId, up) {
+		var rowview = document.getElementById("tr_view_" + rowId);
+		var rowedit = document.getElementById("tr_edit_" + rowId);
+		var rowviewdetail = document.getElementById("tr_viewdetail_" + rowId);
+
+		var parent = rowedit.parentNode;
+		var swapid;
+		var swaprowedit;
+		if (up){
+			//move current rows before the previous row
+			var prevtr;
+			if (rowview) {
+				prevtr = rowview.previousElementSibling;
+			} else {
+				prevtr = rowedit.previousElementSibling;
+			}
+			if (!prevtr)
+				return; // was already top element.
+			var swapid = prevtr['id'];
+			var i = swapid.lastIndexOf('_');
+			swapid = swapid.substr(i+1);
+			var prevrowview = document.getElementById("tr_view_" + swapid);
+			swaprowedit = document.getElementById("tr_edit_" + swapid);
+			if (prevrowview){
+				firstprevrow = prevrowview;
+			} else {
+				firstprevrow = swaprowedit;
+			}
+			// move the 3 rows
+			if (rowview) {
+				parent.insertBefore(rowview, firstprevrow);
+			}
+			parent.insertBefore(rowedit, firstprevrow);
+			if (rowviewdetail) {
+				parent.insertBefore(rowviewdetail, firstprevrow);
+			}
+		} else {
+			//move next row before the current row
+			var nexttr;
+			if (rowviewdetail) {
+				nexttr = rowviewdetail.nextElementSibling;
+			} else {
+				nexttr = rowedit.nextElementSibling;
+			}
+			if (!nexttr) {
+				return; // was already bottom element.
+			}
+			var swapid = nexttr['id'];
+			var i = swapid.lastIndexOf('_');
+			swapid = swapid.substr(i+1);
+			var prevrowview = document.getElementById("tr_view_" + swapid);
+			swaprowedit = document.getElementById("tr_edit_" + swapid);
+			var prevrowviewdetail = document.getElementById("tr_viewdetail_" + swapid);
+			if (rowview){
+				firstrow = rowview;
+			} else {
+				firstrow = rowedit;
+			}
+			// move the 3 rows
+			if (prevrowview) {
+				parent.insertBefore(prevrowview, firstrow);
+			}
+			parent.insertBefore(swaprowedit, firstrow);
+			if (prevrowviewdetail) {
+				parent.insertBefore(prevrowviewdetail, firstrow);
+			}
+		}
+
+		//var id_a = document.getElementById(tableId+'_rowindex' + swapid);
+		//var id_b = document.getElementById(tableId+'_rowindex' + rowId);
+		//temp = id_a.value;
+		//id_a.value = id_b.value;
+		//id_b.value = temp;
+	}
+
+	function htmltable_toggle_details(tableId, rowNr, table_row_detail_id) {
+		tredit = document.getElementById(table_row_detail_id+'_off');
+		treditdetail = document.getElementById(table_row_detail_id+'_edit');
+		trviewdetail = document.getElementById(table_row_detail_id+'_view');
+
+		current_on = $(tredit).hasClass("hidden");
+
+		hideElement(tredit, !current_on);
+		hideElement(trviewdetail, !current_on);
+		hideElement(treditdetail, current_on);
+
+		// show/hide conditional fields if applicable using a custom function.
+		javascript_event = tableId + "_listitem_change";
+		var fn = window[javascript_event];
+		if (typeof fn === 'function'){
+			fn(tableId, "toggle_details", rowNr, null);
+		}
+	}
+
+	function fr_toggle_two(id, chk) {
+		var ischecked = chk.checked;
+		fr_toggle_checked(id, ischecked);
+	}
+	function fr_toggle_checked(id, checked) {
+		var chboxe = $('#frec' + id);
+		var chboxv = $('#frvc' + id);
+		chboxe.prop('checked', checked);
+		chboxv.prop('checked', checked);
+
+		var editrow = $('#tr_edit_' + id);
+		var viewrow = $('#tr_view_' + id);
+		if (checked) {
+			editrow.addClass('active');
+			viewrow.addClass('active');
+		} else {
+			editrow.removeClass('active');
+			viewrow.removeClass('active');
+		}
+	}
+
+	function moveRowUpAboveAnchor(rowId, tableId) {
+		var table = $('#'+tableId);
+		var viewcheckboxes = $('[id^=frvc]input:checked', table);
+		var editcheckboxes = $('[id^=frec]input:checked', table);
+		var rowview = $("#tr_view_" + rowId, table);
+		var rowedit = $("#tr_edit_" + rowId, table);
+		var moveabove = rowview;
+		if (moveabove.length == 0) {
+			moveabove = rowedit;
+		}
+		//var parent = moveabove[0].parentNode;
+
+		editcheckboxes.each(function( index ) {
+			var moveid = this.value;
+			console.log( index + ": " + this.id );
+
+			var prevrowview = $("#tr_view_" + moveid, table);
+			var swaprowedit = $("#tr_edit_" + moveid, table);
+			var prevrowviewdetail = $("#tr_viewdetail_" + moveid, table);
+
+			// move the 3 rows
+			if (prevrowview) {
+				prevrowview.insertBefore(moveabove);
+			}
+			swaprowedit.insertBefore(moveabove);
+			if (prevrowviewdetail) {
+				prevrowviewdetail.insertBefore(moveabove);
+			}
+			fr_toggle_checked(moveid, false);
+		});
+
+	}
+
+function TEST(event){
+	var editcheckboxes = $('[id^=frec]input:checked');
+	alert(editcheckboxes.length);
+
+}
+
+events.push(function() {
+	$('[id^=Xmoveview_]').click(function (event) {
+		//TEST(event);
+	});
+	$('[id^=Xmove_]').click(function (event) {
+		//TEST(event);
+	});
+	$('[id^=Xmove_]').css('cursor', 'pointer');
+
+});
+
+function hideElement(element, hide) {
+	if (element) {
+		if(hide) {
+			$(element).addClass('hidden');
+		} else {
+			$(element).removeClass('hidden');
+		}
+	}
+}
+
+//<![CDATA[
+//]]>
+</script>
+
+<script type="text/javascript">
+	totalrows =  0;
+  tabledefinition_table_mailers = Object.create(null);
+  tabledefinition_table_mailers['keyfield'] = "name";
+  fields_table_mailers = Object.create(null);
+    item1 = Object.create(null);
+    item1['name'] = "name";
+    item1['type'] = "textbox";
+    item1['size'] = "20";
+  fields_table_mailers['0'] = item1;
+    item1 = Object.create(null);
+    item1['name'] = "mailserver";
+    item1['type'] = "textbox";
+    item1['size'] = "60";
+  fields_table_mailers['1'] = item1;
+    item1 = Object.create(null);
+    item1['name'] = "mailserverport";
+    item1['type'] = "textbox";
+    item1['size'] = "10";
+  fields_table_mailers['2'] = item1;
+  tabledefinition_table_resolvers = Object.create(null);
+  tabledefinition_table_resolvers['keyfield'] = "name";
+  fields_table_resolvers = Object.create(null);
+    item1 = Object.create(null);
+    item1['name'] = "name";
+    item1['type'] = "textbox";
+    item1['size'] = "20";
+  fields_table_resolvers['0'] = item1;
+    item1 = Object.create(null);
+    item1['name'] = "server";
+    item1['type'] = "textbox";
+    item1['size'] = "60";
+  fields_table_resolvers['1'] = item1;
+    item1 = Object.create(null);
+    item1['name'] = "port";
+    item1['type'] = "textbox";
+    item1['size'] = "10";
+  fields_table_resolvers['2'] = item1;
+</script>
+	</div>
+	<footer class="footer">
+		<div class="container">
+			<p class="text-muted">
+				<a id="tpl" style="display: none;" href="#" title="Top of page"><i class="fa fa-caret-square-o-up pull-left"></i></a>
+				<a target="_blank" href="https://pfsense.org">pfSense</a> is developed and maintained by <a target="_blank" href="https://netgate.com">Netgate. </a> &copy; ESF 2004 - 2026<a target="_blank" href="https://pfsense.org/license"> View license.</a>				<a id="tpr" style="display: none;" href="#" title="Top of page"><i class="fa fa-caret-square-o-up pull-right"></i></a>
+			</p>
+		</div>
+	</footer>
+
+	<!-- This use of filemtime() is intended to fool the browser into reloading the file (not using the cached version) if the file is changed -->
+
+	<script src="/vendor/jquery/jquery-3.5.1.min.js?v=1701893362"></script>
+ 	<script src="/vendor/jquery-ui/jquery-ui-1.12.1.min.js?v=1701893362"></script>
+	<script src="/vendor/bootstrap/js/bootstrap.min.js?v=1701893362"></script>
+	<script src="/js/pfSense.js?v=1701893362"></script>
+	<script src="/js/pfSenseHelpers.js?v=1701893362"></script>
+	<script src="/js/polyfills.js?v=1701893362"></script>
+	<script src="/vendor/sortable/sortable.js?v=1701893362"></script>
+
+	<script type="text/javascript" src="/vendor/jquery-treegrid/js/jquery.treegrid.min.js?v=1701893362"></script>
+	<script type="text/javascript" src="/vendor/js-cookie/js.cookie.js?v=1701893362"></script>
+
+	<script type="text/javascript">
+	//<![CDATA[
+		// Un-hide the "Top of page" icons if the page is larger than the window
+		if ($(document).height() > $(window).height()) {
+		    $('[id^=tp]').show();
+		}
+	//]]>
+	</script>
+<script type="text/javascript">CsrfMagic.end();</script></body>
+</html>

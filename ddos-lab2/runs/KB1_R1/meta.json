@@ -1,0 +1,58 @@
+{
+  "run": "KB1_R1",
+  "start": "2026-11-09T10:52:40Z",
+  "suricata_before": "1",
+  "stats_before": {
+    "web1": {
+      "status": "UP",
+      "check_status": "L7OK",
+      "stot": "6",
+      "req_tot": "6",
+      "lastchg": "6906",
+      "weight": "1",
+      "addr": "10.10.20.20:8080"
+    },
+    "web2": {
+      "status": "UP",
+      "check_status": "L7OK",
+      "stot": "6",
+      "req_tot": "6",
+      "lastchg": "6906",
+      "weight": "1",
+      "addr": "10.10.20.21:8080"
+    },
+    "BACKEND": {
+      "status": "UP",
+      "stot": "12",
+      "req_tot": "12"
+    }
+  },
+  "load_start": "2026-11-09T10:52:42Z",
+  "load_end": "2026-11-09T10:52:55Z",
+  "stats_after": {
+    "web1": {
+      "status": "UP",
+      "check_status": "L7OK",
+      "stot": "12",
+      "req_tot": "12",
+      "lastchg": "6924",
+      "weight": "1",
+      "addr": "10.10.20.20:8080"
+    },
+    "web2": {
+      "status": "UP",
+      "check_status": "L7OK",
+      "stot": "12",
+      "req_tot": "12",
+      "lastchg": "6924",
+      "weight": "1",
+      "addr": "10.10.20.21:8080"
+    },
+    "BACKEND": {
+      "status": "UP",
+      "stot": "24",
+      "req_tot": "24"
+    }
+  },
+  "end": "2026-11-09T10:53:32Z"
+}

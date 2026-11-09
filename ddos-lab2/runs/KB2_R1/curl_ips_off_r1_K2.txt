@@ -1,0 +1,10 @@
+HTTP/1.0 200 OK
+server: SimpleHTTP/0.6 Python/3.12.3
+date: Mon, 09 Nov 2026 10:57:12 GMT
+content-type: text/plain
+content-length: 20
+last-modified: Mon, 09 Nov 2026 08:12:39 GMT
+connection: keep-alive
+
+IPS TEST - SERVER 2
+CURL_RC=0

@@ -1,0 +1,25 @@
+{
+  "run": "KB2_R1",
+  "start": "2026-11-09T10:54:55Z",
+  "ps_before_stop": "1",
+  "post_errors": [
+    "stop: HTTPConnectionPool(host='127.0.0.1', port=8443): Read timed out. (read timeout=120)"
+  ],
+  "ps_after_stop": "0",
+  "off_rc": {
+    "K1": true,
+    "K2": true
+  },
+  "ps_after_start": "1",
+  "on_timeout": {
+    "K1": true,
+    "K2": true
+  },
+  "control_status": "200",
+  "eve_hits": 6,
+  "backend_web1_off_lines": 1,
+  "backend_web1_on_lines": 0,
+  "backend_web2_off_lines": 1,
+  "backend_web2_on_lines": 0,
+  "end": "2026-11-09T10:58:06Z"
+}

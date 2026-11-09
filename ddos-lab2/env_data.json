@@ -1,0 +1,123 @@
+{
+ "vms": {
+  "ATT-Kali1": {
+   "name": "ATT-Kali1",
+   "memory": "2048",
+   "cpus": "2",
+   "firmware": "BIOS",
+   "ostype": "Debian (64-bit)",
+   "graphicscontroller": "vmsvga",
+   "vram": "128",
+   "nic1": "intnet",
+   "nic2": "nat",
+   "nictype1": "82540EM",
+   "nictype2": "82540EM",
+   "hostonlyadapter1": null,
+   "hostonlyadapter2": null,
+   "macaddress1": "0800275A87BC",
+   "macaddress2": "080027D0F97D"
+  },
+  "ATT-Kali2": {
+   "name": "ATT-Kali2",
+   "memory": "2048",
+   "cpus": "2",
+   "firmware": "BIOS",
+   "ostype": "Debian (64-bit)",
+   "graphicscontroller": "vmsvga",
+   "vram": "128",
+   "nic1": "intnet",
+   "nic2": "nat",
+   "nictype1": "82540EM",
+   "nictype2": "82540EM",
+   "hostonlyadapter1": null,
+   "hostonlyadapter2": null,
+   "macaddress1": "0800279CD558",
+   "macaddress2": "0800272F2A14"
+  },
+  "ATT-pfSense": {
+   "name": "ATT-pfSense",
+   "memory": "1536",
+   "cpus": "2",
+   "firmware": "BIOS",
+   "ostype": "FreeBSD (64-bit)",
+   "graphicscontroller": "vmsvga",
+   "vram": "16",
+   "nic1": "intnet",
+   "nic2": "intnet",
+   "nictype1": "82540EM",
+   "nictype2": "82540EM",
+   "hostonlyadapter1": null,
+   "hostonlyadapter2": null,
+   "macaddress1": "080027BE145F",
+   "macaddress2": "080027B7BF1D"
+  },
+  "ATT-WEB1": {
+   "name": "ATT-WEB1",
+   "memory": "768",
+   "cpus": "1",
+   "firmware": "BIOS",
+   "ostype": "Ubuntu (64-bit)",
+   "graphicscontroller": "vmsvga",
+   "vram": "8",
+   "nic1": "intnet",
+   "nic2": "nat",
+   "nictype1": "82540EM",
+   "nictype2": "82540EM",
+   "hostonlyadapter1": null,
+   "hostonlyadapter2": null,
+   "macaddress1": "080027FA8787",
+   "macaddress2": "080027DF0C58"
+  },
+  "ATT-WEB2": {
+   "name": "ATT-WEB2",
+   "memory": "768",
+   "cpus": "1",
+   "firmware": "BIOS",
+   "ostype": "Ubuntu (64-bit)",
+   "graphicscontroller": "vmsvga",
+   "vram": "8",
+   "nic1": "intnet",
+   "nic2": "nat",
+   "nictype1": "82540EM",
+   "nictype2": "82540EM",
+   "hostonlyadapter1": null,
+   "hostonlyadapter2": null,
+   "macaddress1": "08002705DA6D",
+   "macaddress2": "0800274936DD"
+  }
+ },
+ "host": {},
+ "kali1": {
+  "os": "Kali GNU/Linux Rolling",
+  "java": "openjdk version \"25.0.3\" 2026-04-21",
+  "jmeter": "WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release\nWARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release\nWARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release",
+  "ip": "lo               UNKNOWN        127.0.0.1/8 ::1/128 \neth0             UP             10.10.10.10/24 fe80::a00:27ff:fe5a:87bc/64 \neth1             UP             10.0.3.15/24 fd17:625c:f037:3:3bb4:3817:8433:7d52/64 fe80::64d3:bc60:5e04:a578/64 \n---\ndefault via 10.0.3.2 dev eth1 proto dhcp src 10.0.3.15 metric 101 \n10.0.3.0/24 dev eth1 proto kernel scope link src 10.0.3.15 metric 101 \n10.10.10.0/24 dev eth0 proto kernel scope link src 10.10.10.10 metric 100",
+  "date": "Mon Nov  9 11:16:55 AM UTC 2026"
+ },
+ "kali2": {
+  "os": "Kali GNU/Linux Rolling",
+  "java": "openjdk version \"25.0.3\" 2026-04-21",
+  "jmeter": "WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release\nWARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release\nWARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release",
+  "ip": "lo               UNKNOWN        127.0.0.1/8 ::1/128 \neth0             UP             10.10.10.11/24 fe80::a00:27ff:fe9c:d558/64 \neth1             UP             10.0.3.15/24 fd17:625c:f037:3:b228:36e9:107f:31ca/64 fe80::a100:fee1:e35b:55e4/64 \n---\ndefault via 10.0.3.2 dev eth1 proto dhcp src 10.0.3.15 metric 101 \n10.0.3.0/24 dev eth1 proto kernel scope link src 10.0.3.15 metric 101 \n10.10.10.0/24 dev eth0 proto kernel scope link src 10.10.10.11 metric 102",
+  "date": "Mon Nov  9 11:17:05 AM UTC 2026"
+ },
+ "pfsense": {
+  "uname": "FreeBSD pfSense.home.arpa 14.0-CURRENT FreeBSD 14.0-CURRENT amd64 1400094 #1 RELENG_2_7_2-n255948-8d2b56da39c: Wed Dec  6 20:45:47 UTC 2023     root@freebsd:/var/jenkins/workspace/pfSense-CE-snapshots-2_7_2-main/obj/amd64/StdASW5b/var/jenkins/workspace/pfSense-CE-snapshots-2_7_2-main/sources/FreeBSD-src-RELENG_2_7_2/amd64.amd64/sys/pfSense amd64",
+  "version": "2.7.2-RELEASE",
+  "packages": "haproxy-2.8.3                  Reliable, high performance TCP/HTTP load balancer\npfSense-pkg-haproxy-0.63_2     pfSense package haproxy\npfSense-pkg-suricata-7.0.8_1   pfSense package suricata\nsuricata-7.0.8                 High Performance Network IDS, IPS and Security Monitoring engine",
+  "python": "sh: python3: not found",
+  "suricata_v": "This is Suricata version 7.0.8 RELEASE",
+  "haproxy_v": "HAProxy version 2.8.3-86e043a 2023/09/07 - https://haproxy.org/",
+  "date": "Mon Nov  9 11:11:09 UTC 2026",
+  "threshold": "# Rate filter: 20 hits of SID 1001002 within 10 s from one source -&gt; DROP 15 s\nrate_filter gen_id 1, sig_id 1001002, track by_src, count 20, seconds 10, new_action drop, timeout 15",
+  "proc": "39746 /usr/local/bin/suricata --netmap -D -c /usr/local/etc/suricata/suricata_12985_em0/suricata.yaml --pidfile /var/run/suricata_em012985.pid -vv",
+  "wan_ip": "inet 10.10.10.1 netmask 0xffffff00 broadcast 10.10.10.255",
+  "lan_ip": "inet 10.10.20.1 netmask 0xffffff00 broadcast 10.10.20.255"
+ },
+ "web1": {
+  "ssh": "web1\nUbuntu 24.04.5 LTS\nPython 3.12.3\nlo               UNKNOWN        127.0.0.1/8 ::1/128\neth0             UP             10.10.20.20/24 fe80::a00:27ff:fefa:8787/64\neth1             UP             10.0.3.15/24 metric 100 fd17:625c:f037:3:a00:27ff:fedf:c58/64 fe80::a00:27ff:fedf:c58/64\nMon Nov  9 11:17:33 UTC 2026\nactive\nActiveEnterTimestamp=Mon 2026-11-09 11:11:54 UTC"
+ },
+ "web2": {
+  "ssh": "web2\nUbuntu 24.04.5 LTS\nPython 3.12.3\nlo               UNKNOWN        127.0.0.1/8 ::1/128\neth0             UP             10.10.20.21/24 fe80::a00:27ff:fe05:da6d/64\neth1             UP             10.0.3.15/24 metric 100 fd17:625c:f037:3:a00:27ff:fe49:36dd/64 fe80::a00:27ff:fe49:36dd/64\nMon Nov  9 11:17:48 UTC 2026\nactive\nActiveEnterTimestamp=Mon 2026-11-09 08:12:43 UTC"
+ }
+}

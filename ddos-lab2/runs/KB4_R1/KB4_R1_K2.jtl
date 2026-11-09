@@ -1,0 +1,53 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1794222295567,95,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,1,1,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,87,0,49
+1794222295911,19,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,19,0,0
+1794222295913,32,GET frontend,200,OK,Kali source 1-2,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,32,0,8
+1794222296165,17,GET frontend,200,OK,Kali source 1-2,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,16,0,0
+1794222296164,18,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,18,0,0
+1794222296285,21,GET frontend,200,OK,Kali source 1-2,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,21,0,0
+1794222296376,21,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,20,0,0
+1794222296409,13,GET frontend,200,OK,Kali source 1-2,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,13,0,0
+1794222296499,12,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,12,0,0
+1794222296532,16,GET frontend,200,OK,Kali source 1-2,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,16,0,0
+1794222296656,20,GET frontend,200,OK,Kali source 1-2,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,20,0,0
+1794222296697,15,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,15,0,0
+1794222296790,12,GET frontend,200,OK,Kali source 1-2,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,12,0,0
+1794222296913,17,GET frontend,200,OK,Kali source 1-2,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,17,0,0
+1794222296944,12,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,12,0,0
+1794222297038,17,GET frontend,200,OK,Kali source 1-2,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,17,0,0
+1794222297057,14,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,14,0,0
+1794222297161,18,GET frontend,200,OK,Kali source 1-2,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,17,0,0
+1794222297233,17,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,17,0,0
+1794222297282,5009,GET frontend,Non HTTP response code: java.net.SocketTimeoutException,Non HTTP response message: Read timed out,Kali source 1-2,text,false,"Test failed: code expected to equal /
+
+****** received  : [[[Non HTTP response code: java.net.SocketTimeoutException]]]
+
+****** comparison: [[[200                                                    ]]]
+
+/",2752,0,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,0,0,0
+1794222297377,5007,GET frontend,Non HTTP response code: java.net.SocketTimeoutException,Non HTTP response message: Read timed out,Kali source 1-1,text,false,"Test failed: code expected to equal /
+
+****** received  : [[[Non HTTP response code: java.net.SocketTimeoutException]]]
+
+****** comparison: [[[200                                                    ]]]
+
+/",2752,0,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,0,0,0
+1794222302404,21,GET frontend,200,OK,Kali source 1-2,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,21,0,4
+1794222302488,17,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,17,0,3
+1794222302529,18,GET frontend,200,OK,Kali source 1-2,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,18,0,0
+1794222302611,21,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,21,0,0
+1794222302651,19,GET frontend,200,OK,Kali source 1-2,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,19,0,0
+1794222302736,22,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,22,0,0
+1794222302776,20,GET frontend,200,OK,Kali source 1-2,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,20,0,0
+1794222302862,19,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,19,0,0
+1794222302900,23,GET frontend,200,OK,Kali source 1-2,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,23,0,0
+1794222302990,26,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,26,0,0
+1794222303064,22,GET frontend,200,OK,Kali source 1-2,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,22,0,0
+1794222303127,20,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,20,0,0
+1794222303192,14,GET frontend,200,OK,Kali source 1-2,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,14,0,0
+1794222303279,43,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,43,0,0
+1794222303316,23,GET frontend,200,OK,Kali source 1-2,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,23,0,0
+1794222303435,20,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,20,0,0
+1794222303445,26,GET frontend,200,OK,Kali source 1-2,text,true,,231,148,2,2,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,26,0,0
+1794222303564,22,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,1,1,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,22,0,0
+1794222303734,13,GET frontend,200,OK,Kali source 1-1,text,true,,231,148,1,1,http://10.10.10.1:8080/load-test.txt?run=KB4_R1&src=K2,13,0,0

@@ -1,0 +1,17 @@
+Kali 1 (10.10.10.10)
+Mon Nov  9 11:18:25 AM UTC 2026
+HTTP=000 bytes=0 time=5.003725
+rc=28
+
+curl: (28) Operation timed out after 5003 milliseconds with 0 bytes received
+head: cannot open '/tmp/fig_body.txt' for reading: No such file or directory
+
+
+Kali 2 (10.10.10.11)
+Mon Nov  9 11:18:26 AM UTC 2026
+HTTP=000 bytes=0 time=5.004210
+rc=28
+
+curl: (28) Operation timed out after 5004 milliseconds with 0 bytes received
+head: cannot open '/tmp/fig_body.txt' for reading: No such file or directory
+

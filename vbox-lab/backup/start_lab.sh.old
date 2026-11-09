@@ -1,0 +1,34 @@
+#!/bin/bash
+# =====================================================
+# Script: Khởi động toàn bộ lab ATT
+# =====================================================
+VBOX="VBoxManage"
+
+start_vm() {
+    local vm=$1
+    echo "[*] Khởi động $vm..."
+    $VBOX startvm "$vm" --type headless
+    echo "[+] $vm đang boot..."
+}
+
+echo "=== Khởi động ATT Lab VMs ==="
+start_vm "ATT-C2-Server"
+sleep 3
+start_vm "ATT-Bot"
+sleep 3
+start_vm "ATT-Victim"
+
+echo ""
+echo "Chờ VMs boot (khoảng 60-90 giây)..."
+sleep 90
+
+echo ""
+echo "=== Trạng thái VMs ==="
+$VBOX list runningvms
+
+echo ""
+echo "=== Lấy IP của các VMs ==="
+for vm in "ATT-C2-Server" "ATT-Bot" "ATT-Victim"; do
+    echo -n "$vm IP: "
+    $VBOX guestproperty get "$vm" "/VirtualBox/GuestInfo/Net/0/V4/IP" 2>/dev/null | grep -oP '\d+\.\d+\.\d+\.\d+' || echo "(chưa có, VM đang boot)"
+done

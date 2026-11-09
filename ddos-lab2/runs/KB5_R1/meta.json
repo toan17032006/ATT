@@ -1,0 +1,111 @@
+{
+  "run": "KB5_R1",
+  "start": "2026-11-09T11:11:05Z",
+  "stats_up": {
+    "web1": {
+      "status": "UP",
+      "check_status": "L7OK",
+      "stot": "5",
+      "req_tot": "5",
+      "lastchg": "105",
+      "weight": "1",
+      "addr": "10.10.20.20:8080"
+    },
+    "web2": {
+      "status": "UP",
+      "check_status": "L7OK",
+      "stot": "9",
+      "req_tot": "9",
+      "lastchg": "7643",
+      "weight": "1",
+      "addr": "10.10.20.21:8080"
+    },
+    "BACKEND": {
+      "status": "UP",
+      "stot": "14",
+      "req_tot": "14"
+    }
+  },
+  "base_dist": [
+    "web2",
+    "web1",
+    "web2",
+    "web1"
+  ],
+  "stop_t0": "2026-11-09T11:11:16Z",
+  "stop_out": "T0=11:11:30\nT1=11:11:30\ninactive",
+  "stop_t1": "2026-11-09T11:11:32Z",
+  "down_at": "2026-11-09T11:11:33Z",
+  "down_wait_s": 0.6,
+  "stats_down": {
+    "web1": {
+      "status": "DOWN",
+      "check_status": "L4CON",
+      "stot": "7",
+      "req_tot": "7",
+      "lastchg": "8",
+      "weight": "1",
+      "addr": "10.10.20.20:8080"
+    },
+    "web2": {
+      "status": "UP",
+      "check_status": "L7OK",
+      "stot": "11",
+      "req_tot": "11",
+      "lastchg": "7670",
+      "weight": "1",
+      "addr": "10.10.20.21:8080"
+    },
+    "BACKEND": {
+      "status": "UP",
+      "stot": "18",
+      "req_tot": "18"
+    }
+  },
+  "during_dist": [
+    "web2",
+    "web2",
+    "web2",
+    "web2"
+  ],
+  "during_sample": "HTTP/1.0 200 OK\nserver: SimpleHTTP/0.6 Python/3.12.3\ndate: Mon, 09 Nov 2026 11:11:44 GMT\ncontent-type: text/html\ncontent-length: 153\nlast-modified: Mon, 09 Nov 2026 08:12:39 GMT\nconnection: keep-alive\n\n<html><head><title>ATT DDoS Lab</title></head><body>\n<h1>ATT DDoS LAB - WEB SERVER</h1>\n<h2>SERVER 2</h2>\n<p>Host: web2 (10.10.20.21)</p>\n</body></html>\n",
+  "start_t0": "2026-11-09T11:11:41Z",
+  "start_out": "T0=11:11:54\nT1=11:11:54\nactive",
+  "start_t1": "2026-11-09T11:11:57Z",
+  "up_at": "2026-11-09T11:11:58Z",
+  "up_wait_s": 0.6,
+  "stats_after": {
+    "web1": {
+      "status": "UP",
+      "check_status": "L7OK",
+      "stot": "7",
+      "req_tot": "7",
+      "lastchg": "11",
+      "weight": "1",
+      "addr": "10.10.20.20:8080"
+    },
+    "web2": {
+      "status": "UP",
+      "check_status": "L7OK",
+      "stot": "15",
+      "req_tot": "15",
+      "lastchg": "7696",
+      "weight": "1",
+      "addr": "10.10.20.21:8080"
+    },
+    "BACKEND": {
+      "status": "UP",
+      "stot": "22",
+      "req_tot": "22"
+    }
+  },
+  "after_dist": [
+    "web2",
+    "web1",
+    "web2",
+    "web1",
+    "web2",
+    "web1"
+  ],
+  "end": "2026-11-09T11:12:40Z"
+}

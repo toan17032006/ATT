@@ -1,0 +1,53 @@
+=== services ===
+nginx          active
+suricata       active
+ufw            active
+att-autoblock  active
+
+=== ufw (first 30 lines) ===
+Status: active
+
+     To                         Action      From
+     --                         ------      ----
+[ 1] 22/tcp                     ALLOW IN    Anywhere                  
+[ 2] 80/tcp                     ALLOW IN    Anywhere                  
+[ 3] 22/tcp (v6)                ALLOW IN    Anywhere (v6)             
+[ 4] 80/tcp (v6)                ALLOW IN    Anywhere (v6)             
+
+
+=== suricata alerts (last 15) ===
+
+=== autoblock log ===
+(none)
+
+=== connections ===
+Total: 164
+TCP:   483 (estab 1, closed 477, orphaned 0, timewait 477)
+
+Transport Total     IP        IPv6
+RAW	  2         0         2        
+UDP	  2         2         0        
+TCP	  6         5         1        
+INET	  10        7         3        
+FRAG	  0         0         0        
+
+
+=== nginx access log (last 10) ===
+10.10.10.21 - - [08/Nov/2026:15:47:08 +0700] "GET / HTTP/1.1" 200 44 "-" "python-requests/2.25.1"
+10.10.10.21 - - [08/Nov/2026:15:47:08 +0700] "GET / HTTP/1.1" 200 42 "-" "python-requests/2.25.1"
+10.10.10.21 - - [08/Nov/2026:15:47:08 +0700] "GET / HTTP/1.1" 200 42 "-" "python-requests/2.25.1"
+10.10.10.21 - - [08/Nov/2026:15:47:08 +0700] "GET / HTTP/1.1" 200 44 "-" "python-requests/2.25.1"
+10.10.10.21 - - [08/Nov/2026:15:47:08 +0700] "GET / HTTP/1.1" 200 42 "-" "python-requests/2.25.1"
+10.10.10.21 - - [08/Nov/2026:15:47:08 +0700] "GET / HTTP/1.1" 200 44 "-" "python-requests/2.25.1"
+10.10.10.21 - - [08/Nov/2026:15:47:08 +0700] "GET / HTTP/1.1" 200 44 "-" "python-requests/2.25.1"
+10.10.10.10 - - [08/Nov/2026:15:47:24 +0700] "GET / HTTP/1.1" 200 42 "-" "curl/7.81.0"
+10.10.10.10 - - [08/Nov/2026:15:47:24 +0700] "GET / HTTP/1.1" 200 44 "-" "curl/7.81.0"
+10.10.10.10 - - [08/Nov/2026:15:47:24 +0700] "GET / HTTP/1.1" 200 42 "-" "curl/7.81.0"
+
+lrwxrwxrwx 1 root root 44 Nov  8 15:47 /etc/nginx/sites-enabled/att-lab -> /etc/nginx/sites-available/att-lab-protected
+
+8/11/2026 -- 15:48:07 - <Info> - Running suricata under test mode
+8/11/2026 -- 15:48:07 - <Notice> - This is Suricata version 6.0.4 RELEASE running in SYSTEM mode
+8/11/2026 -- 15:48:08 - <Warning> - [ERRCODE: SC_WARN_POOR_RULE(276)] - rule 1000002: SYN-only to port(s) 80:80 w/o direction specified, disabling for toclient direction
+8/11/2026 -- 15:48:08 - <Warning> - [ERRCODE: SC_WARN_POOR_RULE(276)] - rule 1000003: SYN-only to port(s) 80:80 w/o direction specified, disabling for toclient direction
+8/11/2026 -- 15:48:08 - <Notice> - Configuration provided was successfully loaded. Exiting.

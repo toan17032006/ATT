@@ -1,0 +1,25 @@
+Nov 08 15:45:25 ATT-Bot2 systemd[1]: att-bot.service: Scheduled restart job, restart counter is at 11.
+Nov 08 15:45:25 ATT-Bot2 systemd[1]: Stopped ATT Lab Bot Agent (simulated).
+Nov 08 15:45:25 ATT-Bot2 systemd[1]: Started ATT Lab Bot Agent (simulated).
+Nov 08 15:45:26 ATT-Bot2 python3[1718]:   File "/opt/bot/bot_agent.py", line 59
+Nov 08 15:45:26 ATT-Bot2 python3[1718]:     sock.sendall(f"BOT ONLINE {socket.gethostname()}\n".encode())
+Nov 08 15:45:26 ATT-Bot2 python3[1718]: IndentationError: unexpected indent
+Nov 08 15:45:26 ATT-Bot2 systemd[1]: att-bot.service: Main process exited, code=exited, status=1/FAILURE
+Nov 08 15:45:26 ATT-Bot2 systemd[1]: att-bot.service: Failed with result 'exit-code'.
+Nov 08 15:45:31 ATT-Bot2 systemd[1]: att-bot.service: Scheduled restart job, restart counter is at 12.
+Nov 08 15:45:31 ATT-Bot2 systemd[1]: Stopped ATT Lab Bot Agent (simulated).
+Nov 08 15:45:31 ATT-Bot2 systemd[1]: Started ATT Lab Bot Agent (simulated).
+Nov 08 15:45:31 ATT-Bot2 python3[1719]:   File "/opt/bot/bot_agent.py", line 59
+Nov 08 15:45:31 ATT-Bot2 python3[1719]:     sock.sendall(f"BOT ONLINE {socket.gethostname()}\n".encode())
+Nov 08 15:45:31 ATT-Bot2 python3[1719]: IndentationError: unexpected indent
+Nov 08 15:45:31 ATT-Bot2 systemd[1]: att-bot.service: Main process exited, code=exited, status=1/FAILURE
+Nov 08 15:45:31 ATT-Bot2 systemd[1]: att-bot.service: Failed with result 'exit-code'.
+Nov 08 15:45:35 ATT-Bot2 systemd[1]: Stopped ATT Lab Bot Agent (simulated).
+Nov 08 15:45:35 ATT-Bot2 systemd[1]: Started ATT Lab Bot Agent (simulated).
+Nov 08 15:45:35 ATT-Bot2 python3[1780]: [15:45:35] connecting to C2 10.10.10.10:9999
+Nov 08 15:45:35 ATT-Bot2 python3[1780]: [15:45:35] connected, waiting for commands
+Nov 08 15:46:39 ATT-Bot2 python3[1780]: [15:46:39] attack -> 10.10.10.30:80 type=http duration=25s
+Nov 08 15:46:40 ATT-Bot2 python3[1903]: [FLOOD] http://10.10.10.30:80 threads=30 duration=25s
+Nov 08 15:47:08 ATT-Bot2 python3[1903]: [768B blob data]
+Nov 08 15:47:08 ATT-Bot2 python3[1903]: [FLOOD] done sent=4479 errors=0
+Nov 08 15:47:08 ATT-Bot2 python3[1780]: [15:47:08] attack finished

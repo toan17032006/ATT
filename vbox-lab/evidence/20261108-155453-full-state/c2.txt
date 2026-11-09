@@ -1,0 +1,18 @@
+● att-c2.service - ATT Lab C2 Server (simulated)
+     Loaded: loaded (/etc/systemd/system/att-c2.service; enabled; vendor preset: enabled)
+     Active: active (running) since Sun 2026-11-08 15:35:59 +07; 19min ago
+   Main PID: 621 (python3)
+      Tasks: 6 (limit: 797)
+     Memory: 5.2M
+        CPU: 349ms
+     CGroup: /system.slice/att-c2.service
+             └─621 /usr/bin/python3 /opt/botnet/c2_server.py
+
+Warning: some journal files were not opened due to insufficient permissions.
+
+Hint: You are currently not seeing messages from other users and the system.
+-- No entries --
+
+      Users in groups 'adm', 'systemd-journal' can see all messages.
+      Pass -q to turn off this notice.
+["10.10.10.20", "10.10.10.21"]

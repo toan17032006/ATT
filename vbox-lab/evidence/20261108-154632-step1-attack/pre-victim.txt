@@ -1,0 +1,13 @@
+2026-11-08T15:46:39+07:00
+ 15:46:39 up 6 min,  0 users,  load average: 0.28, 0.33, 0.19
+Total: 157
+TCP:   14 (estab 1, closed 8, orphaned 0, timewait 8)
+
+Transport Total     IP        IPv6
+RAW	  2         0         2        
+UDP	  2         2         0        
+TCP	  6         5         1        
+INET	  10        7         3        
+FRAG	  0         0         0        
+
+access log lines: 16

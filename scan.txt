@@ -1,0 +1,136 @@
+--- P2 [normal]
+[ĐIỀN KHOA HOẶC BỘ MÔN]
+--- P9 [normal]
+Giảng viên hướng dẫn: [ĐIỀN HỌ VÀ TÊN]
+--- P10 [normal]
+Nhóm thực hiện: [ĐIỀN SỐ NHÓM]
+--- P11 [normal]
+Lớp học phần: [ĐIỀN MÃ LỚP]
+--- P12 [normal]
+Học kỳ và năm học: [ĐIỀN THÔNG TIN]
+--- P21 [normal]
+Mô hình gồm hai máy Kali Linux sử dụng Apache JMeter, một máy pfSense chạy đồng thời Suricata Inline IPS và HAProxy, cùng hai máy Windows 11 cung cấp dịch vụ web bằng Python HTTP Server. Hai nguồn gửi yêu cầu tới cùng địa chỉ frontend. Suricata kiểm tra lưu lượng tại WAN của pfSense; HAProxy phân phối những yêu cầu được tiếp nhận tới các backend đang hoạt động. Cách bố trí này cho phép quan sát vai trò bổ sung của kiểm tra nội dung, chính sách theo ngưỡng và cân bằng tải.
+--- P42 [normal]
+Ảnh chụp được gắn với mã lần chạy và nội dung cần chứng minh. Bên dưới mỗi ảnh có phần giải thích, nhận xét và đánh giá. Những trường dữ liệu chưa đo được ghi bằng ký hiệu [ĐIỀN…]; các đoạn “Tiêu chí đối chiếu” mô tả điều kiện cần đạt, không thay thế kết quả thực tế. Quy ước hoàn thiện ảnh và số liệu được trình bày tại Phụ lục F.
+--- P62 [normal]
+Trong mô hình, hai máy Kali giữ cùng địa chỉ đích, đường dẫn và các tham số tải; mỗi máy có nhãn nguồn riêng. Hai kế hoạch được khởi chạy gần cùng thời điểm và kiểm tra bằng dấu thời gian thực tế. Đây là hai tiến trình tạo tải độc lập. Chỉ sử dụng tên gọi JMeter Remote Testing khi thực sự triển khai bộ điều khiển và các máy chạy từ xa theo cơ chế của JMeter.
+--- P69 [normal]
+Gọi Nweb1 và Nweb2 là số yêu cầu thử nghiệm được ghi tại mỗi backend. Tỷ lệ phân phối của web1 là Nweb1/(Nweb1 + Nweb2) × 100%, nếu tổng khác 0. Độ lệch có thể mô tả bằng |Nweb1 − Nweb2|/(Nweb1 + Nweb2) × 100%. Đây là phép đo phân phối, chưa phải phép đo tăng năng lực xử lý.
+--- P70 [normal]
+Khi so sánh hai trạng thái chính sách với số yêu cầu đầu vào thực tế tương đương, mức giảm yêu cầu tới backend có thể được tính từ chênh lệch tổng log của hai lần chạy. Không gọi đại lượng này là “tỷ lệ IPS chặn chính xác”, bởi mất kết nối, thử lại và giới hạn thời gian đều có thể ảnh hưởng đến kết quả.
+--- P74 [normal]
+HAProxy tổ chức điểm lắng nghe phía khách và nhóm server phía sau, phù hợp với việc đưa một dịch vụ web ra một địa chỉ truy cập chung [7]. Trong mô hình này, Windows Firewall không được sử dụng làm cơ chế phát hiện DDoS. Nếu hệ điều hành cần quy tắc cho phép TCP/8080 từ pfSense, đó là điều kiện kết nối tới dịch vụ, không phải kết quả phòng chống của Suricata.
+--- P97 [normal]
+Ba cách mô tả trên không hoàn toàn loại trừ nhau: “cùng pfSense” nói về nơi triển khai, còn “trước HAProxy” nói về vị trí kiểm tra. Đề tài kết hợp hai đặc điểm này. Cấu hình cần bảo đảm yêu cầu tới cổng 8080 không bị một NAT Port Forward cũ chuyển thẳng đến Windows. Port forward có thể thay đổi đích trước khi dịch vụ cục bộ của firewall xử lý [10].
+--- P105 [normal]
+Môi trường gồm năm máy ảo: hai Kali, một pfSense và hai Windows 11. Các VM được nối qua hai Internal Network độc lập. Chỉ pfSense có giao diện ở cả hai mạng. Trong giai đoạn đo, lưu lượng được giới hạn trong lab; các card NAT phục vụ tải phần mềm được ngắt hoặc tắt trước khi chạy kịch bản.
+--- P113 [normal]
+Nhận xét và đánh giá: Cách tách hai mạng giúp kiểm soát đường đi và giảm khả năng gửi nhầm trực tiếp đến Windows. Sơ đồ thể hiện một dịch vụ có hai backend, không phải hai cuộc thử nghiệm độc lập mỗi Kali chỉ hướng đến một server. Mô hình phù hợp để quan sát cơ chế, song vẫn phụ thuộc tài nguyên của pfSense và máy thật.
+--- P117 [normal]
+Trong mô hình này, tên WAN chỉ giao diện phía Kali, không đồng nghĩa với một địa chỉ Internet công cộng. Hai máy cùng mạng phải dùng IP riêng; sao chép VM mà giữ nguyên địa chỉ sẽ gây xung đột. Ký hiệu /24 tương ứng subnet mask 255.255.255.0. Địa chỉ loopback 127.0.0.1 luôn chỉ chính máy đang sử dụng nó, vì vậy Kali không thể dùng loopback của mình để mở server trên Windows.
+--- P120 [normal]
+Một yêu cầu từ Kali có địa chỉ nguồn .10 hoặc .11, đích 10.10.10.1:8080. Suricata tại WAN quan sát nguồn thật này và kiểm tra điều kiện HTTP. Nếu yêu cầu không bị chặn, HAProxy tiếp nhận và chọn web1 hoặc web2. Kết nối từ HAProxy tới Python server đi qua phía LAN, do đó log Windows thường ghi 10.10.20.1 làm địa chỉ khách.
+--- P121 [normal]
+Các yêu cầu /health.txt phát sinh từ HAProxy tới backend phục vụ giám sát trạng thái. Chúng không chứng minh Kali đã gửi được yêu cầu và không được tính vào tổng mẫu JMeter. Để đối chiếu một lần chạy, URI cần có nhãn như run=KB3_R1&src=K1; khi đó log ứng dụng vẫn phân biệt được nguồn thử nghiệm dù địa chỉ TCP tại backend là pfSense.
+--- P133 [normal]
+Trước mỗi lần chạy, dừng tải cũ, kiểm tra backend UP và làm sạch phần hiển thị kết quả JMeter. Không xóa tệp JTL đang cần làm minh chứng. Khi thay đổi chính sách, cần chờ trạng thái chặn cũ hết hiệu lực và xác nhận các kết nối cũ không làm sai lệch phép đo. Chỉ xóa các state của luồng thử nghiệm khi cần, tránh làm gián đoạn phiên quản trị.
+--- P134 [normal]
+Đồng hồ sai lệch giữa các VM có thể khiến các sự kiện cùng một yêu cầu trông như ở những thời điểm khác nhau. Nhóm ghi nhận múi giờ hoặc chuẩn hóa về một múi giờ trước khi đối chiếu. Các kết quả thu trong thời gian Kali bị treo, host thiếu RAM hoặc pfSense khởi động lại phải được đánh dấu riêng và không trộn vào lần đo ổn định.
+--- P137 [normal]
+Hai máy Kali được sử dụng làm nguồn tạo lưu lượng. Khi tạo Kali 2 từ bản clone của Kali 1, chọn tạo lại địa chỉ MAC cho card mạng và đổi IPv4 sang 10.10.10.11 trước khi đưa vào cùng mạng. Hai Windows web server cũng phải có MAC và IP riêng. Việc clone giúp giữ phần mềm tương đương, nhưng không thay thế việc kiểm tra cấu hình trên từng bản sao.
+--- P145 [normal]
+Tắt hoàn toàn VM trước khi thay đổi card mạng. Trong Settings → Network, đặt card của hai Kali vào Internal Network tên ATTACKER-LAN. Đặt card của hai Windows vào SERVER-LAN. Với pfSense, card WAN nối ATTACKER-LAN và card LAN nối SERVER-LAN. Bật Enable Network Adapter và Cable Connected ở các card sử dụng. Hai tên mạng phải trùng chính xác giữa những VM cần nối cùng nhau.
+--- P146 [normal]
+Nếu Adapter 2 không sửa được, kiểm tra VM đã Powered Off hay vẫn ở trạng thái Running hoặc Saved. Có thể đổi giao diện Settings sang chế độ hiển thị đầy đủ nếu phiên bản VirtualBox đang ẩn các mục nâng cao. Không cần đặt Kali hoặc Windows vào cả hai mạng, vì điều đó có thể tạo đường truy cập ngoài kiến trúc đã chọn.
+--- P147 [normal]
+[CHÈN HÌNH 4.2 TẠI ĐÂY] Chèn ảnh Adapter WAN và Adapter LAN của pfSense; khoanh tên mạng và Cable Connected. Bổ sung ảnh một Kali và một Windows để chứng minh chúng ở hai phía khác nhau.
+--- P151 [normal]
+Tại pfSense console, gán WAN và LAN theo MAC rồi đặt IP tĩnh. WAN dùng 10.10.10.1/24, LAN dùng 10.10.20.1/24. Trong lab này không đặt upstream gateway cho WAN. Từ Windows ở SERVER-LAN, mở https://10.10.20.1 để quản trị. Dùng IP tĩnh ở các máy đầu cuối giúp cấu hình không phụ thuộc DHCP.
+--- P152 [normal]
+Trên Kali, sử dụng Network Manager để chọn IPv4 Manual; điền IP .10 hoặc .11, prefix 24 và gateway 10.10.10.1. Trên Windows, mở thuộc tính IPv4 của Ethernet, điền địa chỉ .20 hoặc .21 ở mạng 10.10.20.0, subnet mask 255.255.255.0 và gateway 10.10.20.1. Sau khi lưu, xác nhận bằng các lệnh sau trên đúng hệ điều hành.
+--- P157 [normal]
+# PowerShell trên từng Windows
+--- P158 [normal]
+ipconfig
+--- P161 [normal]
+[CHÈN HÌNH 4.3 TẠI ĐÂY] Chèn kết quả ip -br addr của cả hai Kali và ipconfig của cả hai Windows. Khoanh xanh bốn IP khác nhau; ghi rõ tên máy ngay trên từng phần ảnh.
+--- P162 [normal]
+Hình 4.3. Địa chỉ IP của hai Kali và hai Windows
+--- P163 [normal]
+Giải thích: Hình xác nhận hai nguồn .10 và .11, hai backend .20 và .21 thuộc đúng mạng. Nhận xét: Địa chỉ 169.254.x.x trên Windows cho thấy máy chưa nhận được cấu hình IPv4 mong muốn; không dùng nó làm địa chỉ backend. Đánh giá: Hai IP nguồn độc lập là điều kiện cần của mô phỏng phân tán, nhưng chưa chứng minh hai nguồn đã gửi đồng thời.
+--- P165 [normal]
+Từ từng Windows, mở Web GUI pfSense tại LAN. Sau khi triển khai HTTP server, dùng Diagnostics → Test Port trên pfSense để kiểm tra 10.10.20.20:8080 và 10.10.20.21:8080. Từ Kali, dùng HTTP qua frontend sau khi HAProxy đã được cấu hình. Không dùng riêng kết quả ping thất bại để kết luận mạng sai, vì ICMP có thể chưa được firewall cho phép.
+--- P166 [Heading 2]
+4.3. Triển khai dịch vụ trên hai Windows server
+--- P176 [normal]
+Kiểm tra cục bộ trên mỗi Windows bằng http://127.0.0.1:8080/health.txt, sau đó kiểm tra từ pfSense. Nếu cục bộ hoạt động nhưng pfSense không kết nối được, kiểm tra IP, card mạng và quy tắc cho phép TCP/8080 từ 10.10.20.1 trên Windows. Không tắt toàn bộ Windows Firewall chỉ để thay thế việc xác định nguyên nhân kết nối. Python HTTP Server phù hợp cho lab phục vụ file đơn giản và không được thiết kế như máy chủ triển khai sản xuất [12].
+--- P182 [normal]
+Nếu đã có Port Forward từ WAN:8080 tới một Windows server, vào Firewall → NAT → Port Forward, mở luật tương ứng, bật Disable rồi lưu và áp dụng. Kiểm tra cả firewall rule liên quan do NAT tạo ra. Port forward cũ có thể làm yêu cầu đi tới một backend thay vì frontend HAProxy [10]. Giữ nguyên các luật LAN đang phục vụ quản trị.
+--- P195 [normal]
+Tạo frontend tên web_frontend, địa chỉ lắng nghe WAN address 10.10.10.1, cổng 8080, loại HTTP. Chọn web_pool làm backend mặc định. Lưu, Apply và xác nhận dịch vụ HAProxy chạy không báo lỗi. Không cấu hình chuyển hướng tới Windows bằng NAT để thay cho bước gán backend này.
+--- P199 [normal]
+Giải thích: Frontend xác định đích duy nhất của cả hai Kali. Nhận xét: Gửi JMeter thẳng tới IP Windows sẽ bỏ qua mục tiêu kiểm chứng HAProxy của báo cáo. Đánh giá: Cấu hình khớp với kiến trúc khi đích nguồn là WAN:8080 và backend pool chứa hai Windows server.
+--- P202 [normal]
+Sessions Total là bộ đếm phiên, không mặc nhiên bằng số HTTP Request khi kết nối được tái sử dụng. Nếu Stats không cung cấp bộ đếm yêu cầu HTTP phù hợp ở mức từng server, sử dụng log /load-test.txt có mã lần chạy để xác định số yêu cầu. Bộ đếm trước/sau giúp hỗ trợ đối chiếu, không thay thế log ứng dụng.
+--- P240 [normal]
+Trên cả hai Kali, tạo Test Plan với một Thread Group và một HTTP Request. Đích là IP frontend, không phải địa chỉ của một backend. Tạo User Defined Variables gồm RUN_ID và SRC; đặt SRC là K1 hoặc K2. Ở HTTP Request, dùng Parameters để thêm run=${RUN_ID} và src=${SRC}. Cách đặt mã giúp tìm đúng lần chạy trong log của Windows.
+--- P248 [normal]
+jmeter -n -t lab-http.jmx -l KB3_R1_K1.jtl -j KB3_R1_K1.log
+--- P260 [normal]
+Mỗi lần chạy có một mã riêng, chẳng hạn KB3_R1. Trước khi bắt đầu, nhóm ghi cấu hình hiệu lực, kiểm tra đồng hồ, lưu bộ đếm HAProxy và mở log trên hai backend. Sau khi chạy, nhóm lưu JTL, ảnh và log gắn đúng mã. Kết luận chỉ sử dụng dữ liệu cùng một lần chạy hoặc dữ liệu đối chứng được đánh dấu rõ.
+--- P277 [normal]
+Kết quả cho lần chạy: Kali 1 hoàn thành [ĐIỀN N1] mẫu, lỗi [ĐIỀN SỐ MẪU LỖI]; Kali 2 hoàn thành [ĐIỀN N2] mẫu, lỗi [ĐIỀN SỐ MẪU LỖI]. Các backend ghi [ĐIỀN SỐ YÊU CẦU ĐÚNG MÃ] yêu cầu, sau khi loại health check. Trạng thái kiểm chứng của KB1: [ĐIỀN ĐẠT, CHƯA ĐẠT HOẶC CHƯA ĐO].
+--- P303 [normal]
+Minh chứng hiện có xác nhận chức năng chặn URI trên đường vào HAProxy đối với nguồn đã kiểm tra. Khi hoàn thiện mô hình hai nguồn, ghi: Kali 1 [ĐIỀN KẾT QUẢ]; Kali 2 [ĐIỀN KẾT QUẢ]; trang bình thường sau phép thử [ĐIỀN KẾT QUẢ]. Không dùng số lần xuất hiện SID 1001001 để đánh giá hiệu quả chính sách rate_filter của SID 1001002.
+--- P307 [normal]
+Hai backend phải UP và cùng trọng số. Mỗi Kali sử dụng bộ tham số tải đối chứng ở Bảng 4.1, mã RUN_ID là KB3_R1; các lần lặp sau dùng R2 và R3. Bộ tham số được lựa chọn để kiểm chứng ngưỡng nhỏ, không nhằm khẳng định đã làm cạn năng lực máy chủ.
+--- P309 [normal]
+Bước 1: Ghi ảnh Stats ban đầu, xác nhận không còn tải cũ và mở log backend. Bước 2: Lưu kết quả JMeter cũ, Clear All phần hiển thị và dùng tệp JTL mới. Bước 3: Khởi chạy kế hoạch trên K1 và K2 gần cùng thời điểm; ghi thời gian bắt đầu và kết thúc từ dữ liệu gốc. Bước 4: Khi hai nguồn kết thúc, chụp kết quả, Stats và log hai server. Bước 5: Lọc đúng mã KB3_R1, đếm số yêu cầu ở từng backend và kiểm tra khoảng chạy đồng thời.
+--- P313 [normal]
+[CHÈN HÌNH 5.8 TẠI ĐÂY] Chèn Summary hoặc Aggregate Report từ hai tệp kết quả riêng. Khoanh số mẫu, Error %, thời gian đáp ứng và throughput; ghi rõ đơn vị và mã KB3_R1.
+--- P316 [normal]
+[CHÈN HÌNH 5.9 TẠI ĐÂY] Chèn log web1 và web2 chứa /load-test.txt, cùng mã KB3_R1 và nhãn K1/K2. Khoanh xanh các mã 200; phân biệt rõ /health.txt là lưu lượng kiểm tra sức khỏe.
+--- P319 [normal]
+[CHÈN HÌNH 5.10 TẠI ĐÂY] Chèn cặp ảnh cùng các cột của web1 và web2. Khoanh Status, LastChk và số tăng thêm của bộ đếm; ghi “Sessions” đúng tên nếu dùng cột Sessions Total.
+--- P321 [normal]
+Giải thích: Ảnh Stats chức năng hiện có cho thấy hai server UP, LastChk L7OK/200, Sessions Total lần lượt 96 và 95, tổng backend 191. Nhận xét: Phân bố phiên tích lũy gần nhau hỗ trợ nhận định HAProxy đã phân phối hoạt động cho cả hai server. Đây không phải dữ liệu riêng của một lần gửi 40 yêu cầu, cũng không tự động là số HTTP Request. Đánh giá: Kết luận định lượng cho KB3 phải dùng chênh lệch bộ đếm đúng loại hoặc log lọc theo mã lần chạy.
+--- P325 [normal]
+Mức phân phối của lần chạy được tính bằng log đã lọc: web1 [ĐIỀN TỶ LỆ]%, web2 [ĐIỀN TỶ LỆ]%. Nếu cả hai cùng nhận yêu cầu và phản hồi hợp lệ, chức năng phân phối tải đã được kiểm chứng. Muốn kết luận hai backend làm tăng năng lực so với một backend, cần thêm phép đối chứng một server và hai server dưới cùng điều kiện; bộ số liệu hiện tại không tự cung cấp so sánh đó.
+--- P328 [normal]
+Mục tiêu là kiểm tra SID 1001002 có chuyển sang hành động chặn theo chính sách hay không và xác định ảnh hưởng tới lượng yêu cầu đến backend. Giữ cấu hình như KB3, bật rate_filter tại WAN và dùng mã mới KB4_R1. Không thay đổi số luồng hoặc giảm số backend đồng thời với bật chính sách, vì sẽ không tách được nguyên nhân của thay đổi kết quả.
+--- P330 [normal]
+Bước 1: Xác nhận chính sách đã nạp, hai backend UP và các trạng thái cũ đã hết ảnh hưởng. Bước 2: Ghi Stats ban đầu, dùng JTL mới và khởi chạy cùng cấu hình trên hai Kali. Bước 3: Quan sát cảnh báo theo từng nguồn; chụp sự kiện có SID 1001002 và hành động thực tế. Bước 4: Chạy một yêu cầu đối chứng nhẹ tới / bằng kết nối mới, ghi thời điểm và phản hồi. Bước 5: Lưu dữ liệu cuối, lọc log backend theo KB4_R1 và so sánh với KB3_R1 có điều kiện đầu vào tương đương.
+--- P331 [normal]
+[CHÈN HÌNH 5.11 TẠI ĐÂY] Chèn báo cáo hai nguồn của KB4_R1. Khoanh đỏ timeout hoặc lỗi; giữ tổng mẫu và thời gian thực tế, không chỉ chụp vùng phần trăm lỗi.
+--- P337 [normal]
+[CHÈN HÌNH 5.13 TẠI ĐÂY] Chèn log hai server lọc KB4_R1 và phản hồi trang gốc. Khoanh các yêu cầu tải còn tới ứng dụng; khoanh xanh phản hồi bình thường nếu có.
+--- P343 [normal]
+Gọi B0 và B1 là tổng yêu cầu tới hai backend trong KB3 và KB4. Nếu cùng số mẫu đầu vào thực tế, B0 > 0 và việc ghi log đầy đủ, tỷ lệ giảm lượng yêu cầu tới backend được tính bằng (B0 − B1)/B0 × 100%. Giá trị này là [ĐIỀN KẾT QUẢ]%. Nếu số mẫu đầu vào khác nhau, báo cáo thêm tỷ lệ yêu cầu tới backend trên mẫu đầu vào của từng lần và giải thích lý do; không dùng riêng chênh lệch B0 − B1 như hiệu quả chặn.
+--- P344 [normal]
+Khi dữ liệu cho thấy cả hai nguồn có DROP đúng SID, lượng yêu cầu tới backend giảm và yêu cầu đối chứng vẫn thành công, có thể kết luận chính sách đã thực hiện giảm lưu lượng khớp luật trong điều kiện thử nghiệm. Nếu chỉ có lỗi client mà không có action chặn hoặc backend vốn đã DOWN, chưa đủ căn cứ đưa ra kết luận đó. Trạng thái thực nghiệm KB4 của nhóm: [ĐIỀN ĐÃ KIỂM CHỨNG HOẶC PHẦN CÒN THIẾU].
+--- P362 [normal]
+Chưa thay các ô chưa đo bằng thời gian lý thuyết lấy từ interval × fall hoặc interval × rise. Các tham số health check gợi ý thời gian phản ứng, nhưng kết quả quan sát còn phụ thuộc thời điểm phép kiểm tra, timeout và lập lịch của môi trường ảo.
+--- P366 [normal]
+Các con số 96 và 95 trong Stats được giữ đúng ý nghĩa là bộ đếm phiên tích lũy của ảnh kiểm tra chức năng. Không đưa chúng vào bảng tổng yêu cầu của một lần JMeter khác. Khi hoàn thiện dữ liệu hai nguồn, nhóm cập nhật cột bằng chứng của Bảng 5.5 và phần kết luận tương ứng dựa trên ảnh, JTL và log thực tế.
+--- P378 [normal]
+Đề tài xây dựng phương án mô phỏng DDoS HTTP theo kiến trúc hai nguồn Kali/JMeter cùng hướng tới một frontend pfSense, phía sau là hai Windows web server. Suricata Inline IPS kiểm tra lưu lượng tại WAN, còn HAProxy lựa chọn backend cho các yêu cầu được tiếp nhận. Thiết kế này cho phép nghiên cứu việc phát hiện, ngăn chặn và phân phối tải trong cùng một luồng xử lý có thể quan sát.
+--- P405 [normal]
+Hồ sơ cấu hình gồm phiên bản VirtualBox, phiên bản từng hệ điều hành, Java/JMeter trên hai Kali, Python trên hai Windows, pfSense, Suricata và HAProxy. Đối với pfSense, lưu cấu hình bằng chức năng Backup của hệ thống; nếu chia sẻ tệp ra ngoài nhóm, xử lý thông tin đăng nhập và dữ liệu không cần thiết trước khi công bố.
+--- P410 [normal]
+Mỗi lần chạy dùng thư mục riêng, trong đó lưu kế hoạch, kết quả, log và ảnh. Một cấu trúc phù hợp là KB4_R1/K1, KB4_R1/K2, KB4_R1/pfsense, KB4_R1/web1, KB4_R1/web2. Không ghi đè kết quả của lần trước khi đang sử dụng làm đối chứng. Các ảnh gốc và ảnh đánh dấu được lưu ở hai nhóm tên phân biệt.
+--- P421 [Heading 2]
+B.2. Trên Windows
+--- P422 [normal]
+ipconfig
+--- P426 [normal]
+Khi cần vừa xem vừa lưu log, dừng phiên Python cũ bằng Ctrl+C, rồi chạy một phiên mới có tệp log riêng. Không mở hai tiến trình trên cùng cổng. Ví dụ ở Web 1 cho KB3_R1:
+--- P428 [normal]
+py -3 -u -m http.server 8080 --bind 0.0.0.0 --directory C:\ddos-lab 2>&1 | Tee-Object -FilePath C:\ddos-logs\KB3_R1_web1.log
+--- P432 [normal]
+$labRows = Get-Content -LiteralPath 'C:\ddos-logs\KB3_R1_web1.log' |
+--- P433 [normal]
+Where-Object { $_ -match 'GET /load-test.txt\?' -and $_ -match 'run=KB3_R1(?:&| )' }
+--- P477 [normal]
+Các đoạn dưới vị trí chèn ảnh trong báo cáo đã nêu ý nghĩa, cách giải thích và giới hạn đánh giá. Sau khi chèn ảnh thực tế, điều chỉnh nội dung để khớp với số liệu trong hình; không giữ lời nhận xét “thành công” nếu ảnh thể hiện điều ngược lại. Với phép thử chưa thực hiện, giữ trạng thái “chưa đo” thay vì viết như kết quả đã đạt.
+--- P479 [normal]
+Điền thông tin bìa, phân công, phiên bản và tài nguyên. Bổ sung ảnh thật cho các mục đã đánh dấu, hoàn tất số liệu của các kịch bản đã chạy và cập nhật kết luận tương ứng. Kiểm tra mọi ô [ĐIỀN…]; nếu một phép đo chưa thực hiện, ghi rõ trạng thái và lý do thay vì để một con số suy đoán.

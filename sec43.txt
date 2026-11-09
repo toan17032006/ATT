@@ -1,0 +1,80 @@
+========== (163, 185)
+163 | normal | Giải thích: Hình xác nhận hai nguồn .10 và .11, hai backend .20 và .21 thuộc đúng mạng. Nhận xét: Địa chỉ 169.254.x.x trên Windows cho thấy máy chưa nhận được cấu hình IPv4 mong muốn; không dùng nó làm địa chỉ backend. Đánh giá: Hai IP nguồn độc lập là điều kiện cần của mô phỏng phân tán, nhưng chưa chứng minh hai nguồn đã gửi đồng thời.
+164 | Heading 3 | 4.2.3. Kiểm tra kết nối cơ bản
+165 | normal | Từ từng Windows, mở Web GUI pfSense tại LAN. Sau khi triển khai HTTP server, dùng Diagnostics → Test Port trên pfSense để kiểm tra 10.10.20.20:8080 và 10.10.20.21:8080. Từ Kali, dùng HTTP qua frontend sau khi HAProxy đã được cấu hình. Không dùng riêng kết quả ping thất bại để kết luận mạng sai, vì ICMP có thể chưa được firewall cho phép.
+166 | Heading 2 | 4.3. Triển khai dịch vụ trên hai Windows server
+167 | normal | Python được cài và kiểm tra bằng py -3 --version. Trên Web 1, tạo thư mục riêng và bốn file kiểm tra. Các file của Web 2 có cùng tên nhưng nội dung nhận diện SERVER 2. Cách này giúp nhìn phản hồi đã biết server nào phục vụ, đồng thời vẫn bảo đảm hai backend cung cấp cùng loại tài nguyên.
+168 | normal | New-Item -ItemType Directory -Force C:\ddos-lab
+169 | normal | Set-Content -Encoding ascii C:\ddos-lab\index.html 'WEB SERVER 1'
+170 | normal | Set-Content -Encoding ascii C:\ddos-lab\health.txt 'OK'
+171 | normal | Set-Content -Encoding ascii C:\ddos-lab\ips-test.txt 'IPS TEST - SERVER 1'
+172 | normal | Set-Content -Encoding ascii C:\ddos-lab\load-test.txt 'LOAD TEST - SERVER 1'
+173 | normal | py -3 -u -m http.server 8080 --bind 0.0.0.0 --directory C:\ddos-lab
+175 | normal | Trên Web 2, thay các nhãn SERVER 1 bằng SERVER 2 trước khi chạy. Lệnh cuối khởi động HTTP server ở cổng 8080 trên các địa chỉ của máy; giữ cửa sổ này mở để dịch vụ tiếp tục chạy. -u giúp đầu ra được ghi kịp thời khi thu log. Nội dung file dùng ký tự ASCII để hạn chế khác biệt mã hóa ở bài kiểm tra.
+176 | normal | Kiểm tra cục bộ trên mỗi Windows bằng http://127.0.0.1:8080/health.txt, sau đó kiểm tra từ pfSense. Nếu cục bộ hoạt động nhưng pfSense không kết nối được, kiểm tra IP, card mạng và quy tắc cho phép TCP/8080 từ 10.10.20.1 trên Windows. Không tắt toàn bộ Windows Firewall chỉ để thay thế việc xác định nguyên nhân kết nối. Python HTTP Server phù hợp cho lab phục vụ file đơn giản và không được thiết kế như máy chủ triển khai sản xuất [12].
+177 | normal | [CHÈN HÌNH 4.4 TẠI ĐÂY] Chụp hai cửa sổ hiển thị Serving HTTP, kèm phản hồi nội dung SERVER 1 và SERVER 2. Khoanh cổng 8080, thư mục phục vụ và nhãn server.
+178 | normal | Hình 4.4. Hai Python HTTP Server và trang nhận diện backend
+179 | normal | Giải thích: Hai dịch vụ hoạt động độc lập trên hai IP, có khả năng trả file kiểm tra. Nhận xét: Phản hồi cục bộ chỉ chứng minh ứng dụng đang chạy; phản hồi từ pfSense mới xác nhận đường LAN tới backend. Đánh giá: Phải hoàn tất kiểm tra này trước khi phân tích lỗi HAProxy hoặc Suricata để tránh quy kết sai lỗi ứng dụng cho IPS.
+180 | Heading 2 | 4.4. Cấu hình đường truy cập trên pfSense
+181 | normal | Tạo alias KALI_LAB tại Firewall → Aliases, chứa đúng hai host 10.10.10.10 và 10.10.10.11. Tại Firewall → Rules → WAN, thêm luật Pass với giao thức TCP, nguồn KALI_LAB, đích WAN address và cổng đích 8080. Lưu và Apply Changes. Không cần dùng luật WAN allow any to any để phục vụ kịch bản này.
+182 | normal | Nếu đã có Port Forward từ WAN:8080 tới một Windows server, vào Firewall → NAT → Port Forward, mở luật tương ứng, bật Disable rồi lưu và áp dụng. Kiểm tra cả firewall rule liên quan do NAT tạo ra. Port forward cũ có thể làm yêu cầu đi tới một backend thay vì frontend HAProxy [10]. Giữ nguyên các luật LAN đang phục vụ quản trị.
+183 | normal | Vô hiệu hóa các luật WAN cũ cho phép Kali truy cập trực tiếp 10.10.20.20 hoặc 10.10.20.21 nếu chúng không thuộc thiết kế mới. Nếu sau thay đổi vẫn còn kết nối theo đường cũ, vào Diagnostics → States, lọc đúng IP và cổng của phép thử rồi xóa riêng các state tương ứng. Không xóa toàn bộ bảng state như một bước bắt buộc của mọi lần chạy.
+184 | normal | [CHÈN HÌNH 4.5 TẠI ĐÂY] Chèn ảnh alias chứa hai IP, rule TCP/8080 tới WAN address và Port Forward cũ đã tắt nếu có. Khoanh xanh rule frontend; đánh dấu đỏ đường chuyển tiếp cũ bị vô hiệu hóa.
+========== (370, 405)
+370 | normal | Về cân bằng tải, hai backend cùng xử lý giúp tránh tập trung toàn bộ yêu cầu được chấp nhận vào một server. Tuy nhiên, kết luận “hiệu năng tăng gấp đôi” cần một phép đo năng lực riêng; không thể suy ra từ cấu hình hai server hoặc số phiên gần bằng nhau. Khả năng tiếp tục phục vụ khi một server hỏng cũng phải được xác nhận bằng KB5, thay vì suy từ việc health check đã được bật.
+371 | Heading 2 | 5.9. Hạn chế và yếu tố ảnh hưởng kết quả
+372 | normal | Quy mô nguồn và mô hình tải: Hai Kali cung cấp hai nguồn độc lập trong một môi trường có kiểm soát. Các nguồn có thể cùng chạy trên một máy thật nên không tái hiện đường truyền, độ trễ hoặc quy mô của hệ thống phân tán trên Internet. File tĩnh nhỏ cũng không thể hiện đầy đủ chi phí xử lý của ứng dụng động.
+373 | normal | Giới hạn chính sách: track by_src theo dõi riêng từng IP. Nhiều nguồn dưới ngưỡng vẫn có thể tạo tổng tải lớn. URI lab giúp đo rõ hành vi nhưng giới hạn phạm vi kiểm tra. Hai người dùng sau cùng một IP chia sẻ bộ đếm nguồn có thể chịu ảnh hưởng lẫn nhau; việc đánh giá chặn nhầm cần dữ liệu truy cập hợp lệ phù hợp hơn.
+374 | normal | Giới hạn tài nguyên: pfSense chạy đồng thời IPS và reverse proxy nên chi phí xử lý được cộng trên cùng VM. Các lần Kali bị treo hoặc host thiếu RAM là dấu hiệu cần kiểm tra tài nguyên, không được xem tự động là kết quả DDoS vào backend. Mạng Internal Network cũng không đại diện cho băng thông đường WAN thực tế.
+375 | normal | Giới hạn bằng chứng: Ảnh chụp thể hiện một thời điểm, còn các bộ đếm có thể tích lũy qua nhiều lần chạy. Không có toàn bộ log và mã lần chạy thì khó xác định mẫu thiếu do bị chặn, do timeout, do thử lại hay do đọc nhầm kết quả cũ. Vì thế, báo cáo giữ dữ liệu gốc và chỉ kết luận trong phạm vi được đối chiếu.
+376 | Heading 1 | KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN
+377 | Heading 2 | 1. Kết luận
+378 | normal | Đề tài xây dựng phương án mô phỏng DDoS HTTP theo kiến trúc hai nguồn Kali/JMeter cùng hướng tới một frontend pfSense, phía sau là hai Windows web server. Suricata Inline IPS kiểm tra lưu lượng tại WAN, còn HAProxy lựa chọn backend cho các yêu cầu được tiếp nhận. Thiết kế này cho phép nghiên cứu việc phát hiện, ngăn chặn và phân phối tải trong cùng một luồng xử lý có thể quan sát.
+379 | normal | Các kết quả chức năng đã ghi nhận gồm khả năng trả nội dung qua frontend, hành động chặn của SID 1001001 đối với URI kiểm tra và việc cả hai backend nhận yêu cầu HTTP. Sự kết hợp giữa timeout tại Kali, sự kiện chặn tại Suricata và log backend là phương pháp đối chiếu phù hợp hơn việc chỉ nhìn một màn hình lỗi. Tương tự, hai backend UP và có log xử lý hỗ trợ kết luận HAProxy đã phân phối hoạt động, nhưng không tự chứng minh mức tăng hiệu năng.
+380 | normal | Đối với mô hình mở rộng hai nguồn, báo cáo xác định rõ quy trình đo đồng thời, chính sách theo từng IP và các dữ liệu cần so sánh. Kết quả định lượng cuối cùng của các lần chạy được ghi tại Bảng 5.2 đến Bảng 5.4. Khi chưa có bộ số liệu đầy đủ, chưa kết luận tỷ lệ giảm tải, mức cải thiện độ trễ hoặc thời gian khôi phục cụ thể. Cách trình bày này giữ kết luận phù hợp với bằng chứng và làm rõ phần cần tiếp tục kiểm chứng.
+381 | normal | Bài học chính của thực nghiệm là mỗi thành phần giải quyết một phần của vấn đề tính sẵn sàng. IPS cần đúng vị trí, đúng luật và có bằng chứng hành động; cân bằng tải cần backend đủ điều kiện và cơ chế kiểm tra sức khỏe. Hiệu quả phối hợp chỉ được xác định khi giữ điều kiện đầu vào nhất quán và theo dõi cả nguồn, điểm trung gian lẫn ứng dụng.
+382 | Heading 2 | 2. Hướng phát triển
+383 | normal | Hướng hoàn thiện gần nhất là thực hiện đủ các lần đo có mã thống nhất với hai Kali, lặp lại đối chứng để quan sát độ dao động và thu đầy đủ log của hai backend. Sau đó có thể bổ sung nguồn truy cập hợp lệ độc lập để đánh giá mức duy trì dịch vụ và khả năng chặn nhầm, đặc biệt khi truy cập cùng URI đang được theo dõi.
+384 | normal | Về chính sách, cần khảo sát kết hợp ngưỡng từng nguồn với quan sát tổng tải của dịch vụ, chọn giá trị dựa trên đường cơ sở thay vì ngưỡng minh họa. Về hiệu năng, có thể so sánh một backend với hai backend trên cùng cấu hình tải để định lượng lợi ích của cân bằng. Về độ tin cậy, có thể nghiên cứu dự phòng cho pfSense vì hai chức năng hiện đặt trên cùng một điểm trung gian.
+385 | normal | Khi mở rộng sang HTTPS hoặc môi trường mạng thật, cần đánh giá lại vị trí kiểm tra, cơ chế nhìn thấy nội dung ứng dụng và giới hạn băng thông. Đây là những hướng mở rộng riêng; kết quả HTTP rõ trong mạng ảo không được xem là bằng chứng sẵn có cho các môi trường đó.
+386 | Heading 1 | TÀI LIỆU THAM KHẢO
+387 | normal | Các tài liệu trực tuyến dưới đây được truy cập ngày 08/11/2026. Phiên bản tài liệu Suricata 7.0.11 và HAProxy 3.2 được dùng để đối chiếu cơ chế; phiên bản phần mềm thực cài của nhóm cần ghi riêng tại Bảng 3.1.
+388 | normal | [1] CERT-EU, “DDoS Overview and Response Guide”, 03/06/2024. https://cert.europa.eu/publications/security-guidance/CERT-EU_Security_Whitepaper_DDoS_17-003/
+389 | normal | [2] Apache Software Foundation, “Apache JMeter User’s Manual: Component Reference”. https://jmeter.apache.org/usermanual/component_reference.html
+390 | normal | [3] Apache Software Foundation, “Apache JMeter User’s Manual: Best Practices”. https://jmeter.apache.org/usermanual/best-practices.html
+391 | normal | [4] Netgate, “The pfSense Documentation”, phần yêu cầu tài nguyên của gói Snort/Suricata. https://docs.netgate.com/manuals/pfsense/en/latest/the-pfsense-documentation.pdf
+392 | normal | [5] Open Information Security Foundation, “HTTP Keywords”, Suricata 7.0.11 Documentation. https://docs.suricata.io/en/suricata-7.0.11/rules/http-keywords.html
+393 | normal | [6] Open Information Security Foundation, “Global-Thresholds”, Suricata 7.0.11 Documentation. https://docs.suricata.io/en/suricata-7.0.11/configuration/global-thresholds.html
+394 | normal | [7] Netgate, “HAProxy package”, pfSense Documentation. https://docs.netgate.com/pfsense/en/latest/packages/haproxy.html
+395 | normal | [8] HAProxy Technologies, “HAProxy version 3.2 Configuration Manual”, phần balance, frontend, backend và thống kê. https://docs.haproxy.org/3.2/configuration.html
+396 | normal | [9] HAProxy Technologies, “Health checks”, HAProxy Configuration Tutorials. https://www.haproxy.com/documentation/haproxy-configuration-tutorials/reliability/health-checks/
+397 | normal | [10] Netgate, “Port Forwarding”, pfSense Documentation. https://docs.netgate.com/pfsense/en/latest/nat/port-forwards.html
+398 | normal | [11] Netgate và các tác giả gói pfSense Suricata, “suricata_interfaces_edit.php”, kho mã nguồn FreeBSD-ports, nhánh devel; phần cấu hình Inline IPS và hỗ trợ netmap. https://github.com/pfsense/FreeBSD-ports/blob/devel/security/pfSense-pkg-suricata/files/usr/local/www/suricata/suricata_interfaces_edit.php
+399 | normal | [12] Python Software Foundation, “http.server — HTTP servers”, Python Documentation. https://docs.python.org/3/library/http.server.html
+400 | normal | [13] Apache Software Foundation, “Apache JMeter User’s Manual: Getting Started”. https://jmeter.apache.org/usermanual/get-started.html
+401 | normal | [14] Open Information Security Foundation, “Eve JSON Output”, Suricata 7.0.11 Documentation. https://docs.suricata.io/en/suricata-7.0.11/output/eve/eve-json-output.html
+402 | normal | [15] Netgate và các tác giả gói pfSense Suricata, “suricata_suppress_edit.php”, kho mã nguồn FreeBSD-ports, nhánh devel. https://github.com/pfsense/FreeBSD-ports/blob/devel/security/pfSense-pkg-suricata/files/usr/local/www/suricata/suricata_suppress_edit.php
+403 | Heading 1 | PHỤ LỤC A. HỒ SƠ CẤU HÌNH VÀ LẦN CHẠY
+404 | Heading 2 | A.1. Thông tin cần lưu cùng báo cáo
+========== (415, 440)
+415 | normal | java -version
+416 | normal | jmeter -v
+417 | normal | curl --noproxy '*' -i --max-time 5 "http://10.10.10.1:8080/"
+418 | normal | curl --noproxy '*' -v --max-time 5 "http://10.10.10.1:8080/ips-test.txt?case=IPS_ON_K1_R1"
+420 | normal | Lệnh đầu xác nhận địa chỉ, lệnh thứ hai xem đường đi, hai lệnh tiếp theo ghi phiên bản công cụ. Hai lệnh curl dùng để kiểm tra HTTP. Thay nhãn K1 bằng K2 trên máy thứ hai; nhãn URI không thay đổi chế độ IPS. Khi cần dừng một lệnh đang chờ, dùng Ctrl+C và ghi nhận việc dừng nếu đó là một phần của lần đo.
+421 | Heading 2 | B.2. Trên Windows
+422 | normal | ipconfig
+423 | normal | py -3 --version
+424 | normal | Get-NetTCPConnection -LocalPort 8080 -State Listen
+426 | normal | Khi cần vừa xem vừa lưu log, dừng phiên Python cũ bằng Ctrl+C, rồi chạy một phiên mới có tệp log riêng. Không mở hai tiến trình trên cùng cổng. Ví dụ ở Web 1 cho KB3_R1:
+427 | normal | New-Item -ItemType Directory -Force C:\ddos-logs
+428 | normal | py -3 -u -m http.server 8080 --bind 0.0.0.0 --directory C:\ddos-lab 2>&1 | Tee-Object -FilePath C:\ddos-logs\KB3_R1_web1.log
+430 | normal | Log được dùng để tìm đúng run và URI. Thư mục log được tách khỏi thư mục web để log không trở thành tài nguyên HTTP được phục vụ. Tên tệp không phải là bằng chứng nội dung: vẫn cần kiểm tra thời gian và query trong từng dòng.
+431 | normal | Ví dụ đếm các dòng GET của đúng mã lần chạy trong PowerShell, với đường dẫn log điều chỉnh theo tệp đã lưu:
+432 | normal | $labRows = Get-Content -LiteralPath 'C:\ddos-logs\KB3_R1_web1.log' |
+433 | normal | Where-Object { $_ -match 'GET /load-test.txt\?' -and $_ -match 'run=KB3_R1(?:&| )' }
+434 | normal | ($labRows | Measure-Object).Count
+435 | normal | $labRows
+437 | normal | Đây là số dòng yêu cầu được ứng dụng ghi, không mặc nhiên bằng số giao dịch duy nhất nếu có thử lại. Nếu dùng thứ tự tham số hoặc mã hóa query khác, điều chỉnh bộ lọc theo định dạng thực tế. Giữ toàn bộ log gốc để kiểm tra lại các dòng bị loại.
+438 | Heading 1 | PHỤ LỤC C. HỒ SƠ LUẬT SURICATA
+439 | Heading 2 | C.1. Phạm vi và trạng thái các luật
